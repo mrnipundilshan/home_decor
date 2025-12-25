@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:home_decor/core/data/api_endpoints.dart';
+import 'package:home_decor/feature/home/data/exception/exceptions.dart';
 import 'package:home_decor/feature/home/data/models/item_model.dart';
 
 abstract class ItemDatasource {
@@ -18,13 +19,17 @@ class ItemDatasourceImpl implements ItemDatasource {
     await Future.delayed(const Duration(seconds: 4));
     final response = await dio.get(ApiEndpoints.topSelling);
 
-    // final responseBody = json.decode(response.data);
-    final responseBody = response.data;
+    if (response.statusCode != 200) {
+      throw ServerException();
+    } else {
+      // final responseBody = json.decode(response.data);
+      final responseBody = response.data;
 
-    final topSellingItemList = (responseBody as List)
-        .map((json) => ItemModel.fromJson(json))
-        .toList();
+      final topSellingItemList = (responseBody as List)
+          .map((json) => ItemModel.fromJson(json))
+          .toList();
 
-    return topSellingItemList;
+      return topSellingItemList;
+    }
   }
 }

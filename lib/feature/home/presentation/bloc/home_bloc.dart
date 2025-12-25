@@ -23,8 +23,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     emit(HomeTopSellingLoadingState());
 
-    final topsellings = await itemUsecases.getTopSelling();
+    final failureOrtopsellings = await itemUsecases.getTopSelling();
 
-    emit(HomeTopSellingLoadedState(topSellingItems: topsellings));
+    failureOrtopsellings.fold(
+      (failure) => emit(HomeTopSellingErrorState()),
+      (topSellingitems) =>
+          emit(HomeTopSellingLoadedState(topSellingItems: topSellingitems)),
+    );
   }
 }

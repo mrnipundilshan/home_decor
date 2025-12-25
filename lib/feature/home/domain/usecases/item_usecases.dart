@@ -1,4 +1,6 @@
+import 'package:dartz/dartz.dart';
 import 'package:home_decor/feature/home/domain/entity/item_entity.dart';
+import 'package:home_decor/feature/home/domain/failure/failure.dart';
 import 'package:home_decor/feature/home/domain/repository/item_repository.dart';
 
 class ItemUsecases {
@@ -6,7 +8,7 @@ class ItemUsecases {
 
   ItemUsecases({required this.itemRepository});
 
-  Future<List<ItemEntity>> getTopSelling() {
+  Future<Either<Failure, List<ItemEntity>>> getTopSelling() {
     return itemRepository.getTopSellingItemsFromDatasources();
   }
 }
