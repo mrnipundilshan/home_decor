@@ -32,3 +32,5 @@ flutter:
     - assets/
     - assets/catagory/
     - assets/topselling/
+
+    - .env

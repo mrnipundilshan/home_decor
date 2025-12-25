@@ -10,6 +10,7 @@ import 'core/services/theme_service.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
+
   runApp(
     MultiProvider(
       providers: [

@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:home_decor/feature/home/data/models/item_model.dart';
 
@@ -19,15 +17,17 @@ class ItemDatasourceImpl implements ItemDatasource {
       headers: {'Content-Type': 'application/json'},
     ),
   );
+
   @override
   Future<List<ItemModel>> getTopSellingItemsFromAPI() async {
     log("Loading API");
-    await Future.delayed(const Duration(seconds: 4));
+    //await Future.delayed(const Duration(seconds: 4));
     final response = await _dio.get('topselling');
 
-    final List<dynamic> responseBody = json.decode(response.data);
+    // final responseBody = json.decode(response.data);
+    final responseBody = response.data;
 
-    final topSellingItemList = responseBody
+    final topSellingItemList = (responseBody as List)
         .map((json) => ItemModel.fromJson(json))
         .toList();
 
