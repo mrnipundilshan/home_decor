@@ -9,9 +9,9 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final ItemUsecases itemUsecases = ItemUsecases();
+  final ItemUsecases itemUsecases;
 
-  HomeBloc() : super(HomeInitial()) {
+  HomeBloc({required this.itemUsecases}) : super(HomeInitial()) {
     on<HomeEvent>((event, emit) {});
 
     on<HomePageInitialEvent>(_homePageInitialEvent);

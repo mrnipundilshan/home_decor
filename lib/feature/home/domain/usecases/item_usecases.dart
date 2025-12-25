@@ -1,9 +1,10 @@
-import 'package:home_decor/feature/home/data/repository/item_repository_impl.dart';
 import 'package:home_decor/feature/home/domain/entity/item_entity.dart';
 import 'package:home_decor/feature/home/domain/repository/item_repository.dart';
 
 class ItemUsecases {
-  final ItemRepository itemRepository = ItemRepositoryImpl();
+  final ItemRepository itemRepository;
+
+  ItemUsecases({required this.itemRepository});
 
   Future<List<ItemEntity>> getTopSelling() {
     return itemRepository.getTopSellingItemsFromDatasources();
