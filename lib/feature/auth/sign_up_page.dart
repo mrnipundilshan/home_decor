@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/core/validations/validations.dart';
+import 'package:home_decor/core/widgets/my_app_snackbar.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/core/widgets/my_textbox.dart';
 import 'package:home_decor/feature/auth/bloc/auth_bloc.dart';
@@ -103,16 +104,12 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void signupButtonClicker() {
     if (emailController.text.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Email is required')));
+      MyAppSnackbar.show(context, 'Email is required');
       return;
     }
 
     if (!Validations().isValidEmail(emailController.text)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Enter a valid email address')),
-      );
+      MyAppSnackbar.show(context, 'Enter a valid email address');
       return;
     }
 
