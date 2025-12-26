@@ -78,6 +78,12 @@ class _TopSellingState extends State<TopSelling> {
                   ),
                 );
               }
+
+              if (state is HomeTopSellingErrorState) {
+                return Center(
+                  child: Text("------", style: themeData.textTheme.labelLarge),
+                );
+              }
               return SizedBox.shrink();
             },
           ),

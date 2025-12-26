@@ -15,7 +15,7 @@ class ItemDatasourceImpl implements ItemDatasource {
 
   @override
   Future<List<ItemModel>> getTopSellingItemsFromAPI() async {
-    log("Loading API");
+    log("Calling API");
     await Future.delayed(const Duration(seconds: 4));
     final response = await dio.get(ApiEndpoints.topSelling);
 

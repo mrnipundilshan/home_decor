@@ -5,12 +5,14 @@ class MyTextbox extends StatefulWidget {
   final String placeholder;
   final IconData? prefixIcon;
   final bool obsecureText;
+  final TextEditingController controller;
 
   const MyTextbox({
     super.key,
     required this.placeholder,
     this.prefixIcon,
     required this.obsecureText,
+    required this.controller,
   });
 
   @override
@@ -33,6 +35,7 @@ class _MyTextboxState extends State<MyTextbox> {
       width: double.infinity,
       height: 50,
       child: CupertinoTextField(
+        controller: widget.controller,
         suffix: widget.obsecureText
             ? Padding(
                 padding: const EdgeInsets.only(right: 18.0),

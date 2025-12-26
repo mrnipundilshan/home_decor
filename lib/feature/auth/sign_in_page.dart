@@ -15,6 +15,9 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
@@ -43,6 +46,7 @@ class _SignInPageState extends State<SignInPage> {
                   placeholder: 'user@gmail.com',
                   prefixIcon: Icons.mail_outline_outlined,
                   obsecureText: false,
+                  controller: emailController,
                 ),
 
                 SizedBox(height: 20),
@@ -51,6 +55,7 @@ class _SignInPageState extends State<SignInPage> {
                   placeholder: 'password',
                   prefixIcon: Icons.password_outlined,
                   obsecureText: true,
+                  controller: passwordController,
                 ),
 
                 SizedBox(height: 40),

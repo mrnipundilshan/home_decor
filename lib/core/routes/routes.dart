@@ -14,7 +14,7 @@ final appRouter = GoRouter(
     GoRoute(
       name:
           'splashScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
-      path: '/n',
+      path: '/',
       builder: (context, state) => SplashScreen(),
     ),
     GoRoute(
@@ -41,8 +41,7 @@ final appRouter = GoRouter(
 
     GoRoute(
       name: 'homepageScreen',
-      path: '/',
-      //      path: '/homepage',
+      path: '/homepage',
       builder: (context, state) => HomePage(),
     ),
   ],
