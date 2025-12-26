@@ -113,6 +113,17 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
+    if (passwordController.text.isEmpty || passwordController.text.length < 6) {
+      MyAppSnackbar.show(context, 'Password must be at least 6 characters');
+      return;
+    }
+
+    if (passwordController.text.trim() !=
+        confirmPasswordController.text.trim()) {
+      MyAppSnackbar.show(context, 'Password should same with confirm password');
+      return;
+    }
+
     BlocProvider.of<AuthBloc>(context).add(
       SignupButtonClickedEvent(
         email: emailController.text.trim(),

@@ -11,7 +11,11 @@ class MyAppSnackbar {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text(message, textAlign: TextAlign.center),
+          content: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           backgroundColor: backgroundColor,
           duration: duration,
         ),

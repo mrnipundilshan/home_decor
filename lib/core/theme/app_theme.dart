@@ -20,6 +20,12 @@ class AppTheme {
 
     textTheme: AppTextStyles.lightTextTheme,
 
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: AppColors.commonPrimary, // Cursor
+      selectionColor: AppColors.commonPrimary.withAlpha(30),
+      selectionHandleColor: AppColors.commonPrimary, // Bulb/handle
+    ),
+
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.lightAppBar,
       iconTheme: IconThemeData(color: AppColors.icon),
@@ -51,6 +57,12 @@ class AppTheme {
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColors.lightAppBar,
       foregroundColor: Colors.black,
+    ),
+
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: AppColors.commonPrimary, // Cursor
+      selectionColor: AppColors.commonPrimary.withAlpha(30),
+      selectionHandleColor: AppColors.commonPrimary, // Bulb/handle
     ),
   );
 }

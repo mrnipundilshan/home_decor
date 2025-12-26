@@ -52,7 +52,7 @@ class _MyTextboxState extends State<MyTextbox> {
               )
             : null,
         obscureText: _isObscure,
-        cursorColor: themeData.colorScheme.inversePrimary,
+
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           color: Colors.transparent,
