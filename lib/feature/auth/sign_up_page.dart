@@ -21,6 +21,21 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  final FocusNode emailFocus = FocusNode();
+  final FocusNode passwordFocus = FocusNode();
+  final FocusNode confirmPasswordFocus = FocusNode();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    emailFocus.dispose();
+    passwordFocus.dispose();
+    confirmPasswordFocus.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
@@ -35,6 +50,7 @@ class _SignUpPageState extends State<SignUpPage> {
           padding: EdgeInsetsGeometry.symmetric(
             horizontal: AppSizes.defaultPadding(context),
           ),
+
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -45,11 +61,17 @@ class _SignUpPageState extends State<SignUpPage> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 40),
+
                 MyTextbox(
                   placeholder: 'user@gmail.com',
                   prefixIcon: Icons.mail_outline_outlined,
                   obsecureText: false,
                   controller: emailController,
+                  textInputAction: TextInputAction.next,
+                  focusNode: emailFocus,
+                  onSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(passwordFocus);
+                  },
                 ),
 
                 SizedBox(height: 20),
@@ -59,6 +81,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   prefixIcon: Icons.password_outlined,
                   obsecureText: true,
                   controller: passwordController,
+                  textInputAction: TextInputAction.next,
+                  focusNode: passwordFocus,
+                  onSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(confirmPasswordFocus);
+                  },
                 ),
 
                 SizedBox(height: 20),
@@ -68,6 +95,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   prefixIcon: Icons.password_outlined,
                   obsecureText: true,
                   controller: confirmPasswordController,
+                  focusNode: confirmPasswordFocus,
+                  textInputAction: TextInputAction.done,
                 ),
 
                 SizedBox(height: 40),

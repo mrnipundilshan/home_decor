@@ -6,6 +6,9 @@ class MyTextbox extends StatefulWidget {
   final IconData? prefixIcon;
   final bool obsecureText;
   final TextEditingController controller;
+  final TextInputAction? textInputAction;
+  final FocusNode? focusNode;
+  final Function(String)? onSubmitted;
 
   const MyTextbox({
     super.key,
@@ -13,6 +16,9 @@ class MyTextbox extends StatefulWidget {
     this.prefixIcon,
     required this.obsecureText,
     required this.controller,
+    this.textInputAction,
+    this.focusNode,
+    this.onSubmitted,
   });
 
   @override
@@ -35,6 +41,9 @@ class _MyTextboxState extends State<MyTextbox> {
       width: double.infinity,
       height: 50,
       child: CupertinoTextField(
+        onSubmitted: widget.onSubmitted,
+        textInputAction: widget.textInputAction,
+        focusNode: widget.focusNode,
         controller: widget.controller,
         suffix: widget.obsecureText
             ? Padding(

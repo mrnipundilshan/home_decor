@@ -28,6 +28,7 @@ class _SignInPageState extends State<SignInPage> {
         }
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         body: Padding(
           padding: EdgeInsetsGeometry.symmetric(
             horizontal: AppSizes.defaultPadding(context),
