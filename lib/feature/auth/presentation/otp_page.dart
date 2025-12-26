@@ -8,7 +8,8 @@ import 'package:home_decor/core/widgets/my_pinput.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 
 class OtpPage extends StatefulWidget {
-  const OtpPage({super.key});
+  final String email;
+  const OtpPage({super.key, required this.email});
 
   @override
   State<OtpPage> createState() => _OtpPageState();
@@ -32,7 +33,7 @@ class _OtpPageState extends State<OtpPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is SignUpSuccessState) {
-          context.go("/signup");
+          context.go("/signin");
         }
       },
       child: Scaffold(
@@ -57,9 +58,12 @@ class _OtpPageState extends State<OtpPage> {
                 MyButton(
                   buttonTitle: "Sign in",
                   function: () {
-                    BlocProvider.of<AuthBloc>(
-                      context,
-                    ).add(SinginButtonClickedEvent());
+                    BlocProvider.of<AuthBloc>(context).add(
+                      SigupOtpVerifyButtonClickedEvent(
+                        email: widget.email,
+                        otp: pinController.text,
+                      ),
+                    );
                   },
                 ),
 

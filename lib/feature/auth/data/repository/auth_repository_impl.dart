@@ -22,4 +22,16 @@ class AuthRepositoryImpl implements AuthRepository {
       return left(GeneralFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> otpVerify(String email, String otp) async {
+    try {
+      await authDatasource.signupOtpVerificationFromApi(email, otp);
+      return right(true);
+    } on ServerException catch (_) {
+      return left(ServerFailure());
+    } catch (e) {
+      return left(GeneralFailure());
+    }
+  }
 }

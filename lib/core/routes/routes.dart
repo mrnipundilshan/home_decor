@@ -15,7 +15,7 @@ final appRouter = GoRouter(
     GoRoute(
       name:
           'splashScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
-      path: '/.',
+      path: '/',
       builder: (context, state) => SplashScreen(),
     ),
     GoRoute(
@@ -42,8 +42,11 @@ final appRouter = GoRouter(
 
     GoRoute(
       name: 'otpScreen',
-      path: '/',
-      builder: (context, state) => OtpPage(),
+      path: '/otp',
+      builder: (context, state) {
+        final email = state.extra as String;
+        return OtpPage(email: email);
+      },
     ),
 
     GoRoute(

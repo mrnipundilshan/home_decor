@@ -41,8 +41,8 @@ class _SignUpPageState extends State<SignUpPage> {
     final themeData = Theme.of(context);
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is SignUpSuccessState) {
-          context.go("/homepage");
+        if (state is AuthOtpSentSuccessState) {
+          context.push("/otp", extra: emailController.text.trim());
         }
       },
       child: Scaffold(

@@ -16,4 +16,14 @@ class SignupButtonClickedEvent extends AuthEvent {
   List<Object> get props => [email, password];
 }
 
+class SigupOtpVerifyButtonClickedEvent extends AuthEvent {
+  final String email;
+  final String otp;
+
+  const SigupOtpVerifyButtonClickedEvent({
+    required this.email,
+    required this.otp,
+  });
+}
+
 class SinginButtonClickedEvent extends AuthEvent {}

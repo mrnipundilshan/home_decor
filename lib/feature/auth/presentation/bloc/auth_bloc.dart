@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:home_decor/feature/auth/domain/usecases/auth_usecases.dart';
@@ -13,6 +12,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SinginButtonClickedEvent>(_singinButtonClickedEvent);
 
     on<SignupButtonClickedEvent>(_signupButtonClickedEvent);
+
+    on<SigupOtpVerifyButtonClickedEvent>(_signupOtpVerifyButtonClickedEvent);
 
     on<AuthEvent>((event, emit) {});
   }
@@ -39,6 +40,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     failureOrOtp.fold(
       (failure) => emit(AuthErrorState()),
 
+      (right) => emit(AuthOtpSentSuccessState()),
+    );
+  }
+
+  FutureOr<void> _signupOtpVerifyButtonClickedEvent(
+    SigupOtpVerifyButtonClickedEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoadingState());
+
+    final failureOrSuccess = await authUsecases.otpVerify(
+      event.email,
+      event.otp,
+    );
+
+    failureOrSuccess.fold(
+      (failure) => emit(AuthErrorState()),
       (right) => emit(AuthOtpSentSuccessState()),
     );
   }

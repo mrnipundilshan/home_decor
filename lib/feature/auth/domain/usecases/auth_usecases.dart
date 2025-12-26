@@ -10,4 +10,8 @@ class AuthUsecases {
   Future<Either<Failure, bool>> signupUser(String email, String password) {
     return authRepository.signupUser(email, password);
   }
+
+  Future<Either<Failure, bool>> otpVerify(String email, String otp) {
+    return authRepository.otpVerify(email, otp);
+  }
 }
