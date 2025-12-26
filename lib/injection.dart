@@ -1,6 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:home_decor/core/data/dio_client.dart';
+import 'package:home_decor/feature/auth/data/datasources/auth_datasource.dart';
+import 'package:home_decor/feature/auth/data/repository/auth_repository_impl.dart';
+import 'package:home_decor/feature/auth/domain/repository/auth_repository.dart';
+import 'package:home_decor/feature/auth/domain/usecases/auth_usecases.dart';
+import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:home_decor/feature/home/data/datasource/item_datasource.dart';
 import 'package:home_decor/feature/home/data/repository/item_repository_impl.dart';
 import 'package:home_decor/feature/home/domain/repository/item_repository.dart';
@@ -12,16 +17,22 @@ final sl = GetIt.I; // service locator
 Future<void> init() async {
   // application layer
   sl.registerFactory(() => HomeBloc(itemUsecases: sl()));
+  sl.registerFactory(() => AuthBloc(authUsecases: sl()));
 
   // domain layer
   sl.registerFactory(() => ItemUsecases(itemRepository: sl()));
+  sl.registerFactory(() => AuthUsecases(authRepository: sl()));
 
   // data layer
   sl.registerFactory<ItemRepository>(
     () => ItemRepositoryImpl(itemDatasource: sl()),
   );
+  sl.registerFactory<AuthRepository>(
+    () => AuthRepositoryImpl(authDatasource: sl()),
+  );
 
   sl.registerFactory<ItemDatasource>(() => ItemDatasourceImpl(dio: sl()));
+  sl.registerFactory<AuthDatasource>(() => AuthDatasourceImpl(dio: sl()));
 
   // Dio client
   sl.registerLazySingleton<DioClient>(() => DioClient());

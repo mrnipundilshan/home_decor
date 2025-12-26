@@ -51,79 +51,88 @@ class _SignUpPageState extends State<SignUpPage> {
             horizontal: AppSizes.defaultPadding(context),
           ),
 
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Create your\ndecoze account",
-                  style: themeData.textTheme.headlineLarge,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 40),
-
-                MyTextbox(
-                  placeholder: 'user@gmail.com',
-                  prefixIcon: Icons.mail_outline_outlined,
-                  obsecureText: false,
-                  controller: emailController,
-                  textInputAction: TextInputAction.next,
-                  focusNode: emailFocus,
-                  onSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(passwordFocus);
-                  },
-                ),
-
-                SizedBox(height: 20),
-
-                MyTextbox(
-                  placeholder: 'password',
-                  prefixIcon: Icons.password_outlined,
-                  obsecureText: true,
-                  controller: passwordController,
-                  textInputAction: TextInputAction.next,
-                  focusNode: passwordFocus,
-                  onSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(confirmPasswordFocus);
-                  },
-                ),
-
-                SizedBox(height: 20),
-
-                MyTextbox(
-                  placeholder: 'confirm password',
-                  prefixIcon: Icons.password_outlined,
-                  obsecureText: true,
-                  controller: confirmPasswordController,
-                  focusNode: confirmPasswordFocus,
-                  textInputAction: TextInputAction.done,
-                ),
-
-                SizedBox(height: 40),
-
-                MyButton(buttonTitle: "sign up", function: signupButtonClicker),
-
-                SizedBox(height: 20),
-
-                Row(
-                  mainAxisAlignment: .center,
+          child: SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have an account? ",
-                      style: themeData.textTheme.bodyMedium,
+                      "Create your\ndecoze account",
+                      style: themeData.textTheme.headlineLarge,
+                      textAlign: TextAlign.center,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        context.push('/signin');
+                    SizedBox(height: 40),
+
+                    MyTextbox(
+                      placeholder: 'user@gmail.com',
+                      prefixIcon: Icons.mail_outline_outlined,
+                      obsecureText: false,
+                      controller: emailController,
+                      textInputAction: TextInputAction.next,
+                      focusNode: emailFocus,
+                      onSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(passwordFocus);
                       },
-                      child: Text(
-                        "Sign in",
-                        style: TextStyle(color: AppColors.commonPrimary),
-                      ),
+                    ),
+
+                    SizedBox(height: 20),
+
+                    MyTextbox(
+                      placeholder: 'password',
+                      prefixIcon: Icons.password_outlined,
+                      obsecureText: true,
+                      controller: passwordController,
+                      textInputAction: TextInputAction.next,
+                      focusNode: passwordFocus,
+                      onSubmitted: (_) {
+                        FocusScope.of(
+                          context,
+                        ).requestFocus(confirmPasswordFocus);
+                      },
+                    ),
+
+                    SizedBox(height: 20),
+
+                    MyTextbox(
+                      placeholder: 'confirm password',
+                      prefixIcon: Icons.password_outlined,
+                      obsecureText: true,
+                      controller: confirmPasswordController,
+                      focusNode: confirmPasswordFocus,
+                      textInputAction: TextInputAction.done,
+                    ),
+
+                    SizedBox(height: 40),
+
+                    MyButton(
+                      buttonTitle: "sign up",
+                      function: signupButtonClicker,
+                    ),
+
+                    SizedBox(height: 20),
+
+                    Row(
+                      mainAxisAlignment: .center,
+                      children: [
+                        Text(
+                          "Already have an account? ",
+                          style: themeData.textTheme.bodyMedium,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            context.push('/signin');
+                          },
+                          child: Text(
+                            "Sign in",
+                            style: TextStyle(color: AppColors.commonPrimary),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

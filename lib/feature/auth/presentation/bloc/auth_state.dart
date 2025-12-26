@@ -11,6 +11,8 @@ final class AuthInitial extends AuthState {}
 
 class AuthLoadingState extends AuthState {}
 
+class AuthOtpSentSuccessState extends AuthState {}
+
 class SignUpSuccessState extends AuthState {}
 
 class AuthErrorState extends AuthState {}
