@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:home_decor/feature/auth/presentation/otp_page.dart';
 import 'package:home_decor/feature/auth/presentation/sign_in_page.dart';
 import 'package:home_decor/feature/home/presentation/home_page.dart';
 import 'package:home_decor/feature/splash_screen/splash_screen.dart';
@@ -14,7 +15,7 @@ final appRouter = GoRouter(
     GoRoute(
       name:
           'splashScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
-      path: '/',
+      path: '/.',
       builder: (context, state) => SplashScreen(),
     ),
     GoRoute(
@@ -37,6 +38,12 @@ final appRouter = GoRouter(
       name: 'signinScreen',
       path: '/signin',
       builder: (context, state) => SignInPage(),
+    ),
+
+    GoRoute(
+      name: 'otpScreen',
+      path: '/',
+      builder: (context, state) => OtpPage(),
     ),
 
     GoRoute(
