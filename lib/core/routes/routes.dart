@@ -1,10 +1,10 @@
 import 'package:go_router/go_router.dart';
-import 'package:home_decor/feature/auth/sign_in_page.dart';
+import 'package:home_decor/feature/auth/presentation/sign_in_page.dart';
 import 'package:home_decor/feature/home/presentation/home_page.dart';
 import 'package:home_decor/feature/splash_screen/splash_screen.dart';
 import 'package:home_decor/feature/welcome_screen/welcome_screen.dart';
 
-import '../../feature/auth/sign_up_page.dart';
+import '../../feature/auth/presentation/sign_up_page.dart';
 import '../../feature/onborading_page/onboarding_page.dart';
 
 // GoRouter configuration

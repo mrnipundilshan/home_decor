@@ -5,7 +5,7 @@ import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/core/widgets/my_textbox.dart';
-import 'package:home_decor/feature/auth/bloc/auth_bloc.dart';
+import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});

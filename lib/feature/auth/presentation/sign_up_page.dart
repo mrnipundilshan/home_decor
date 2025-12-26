@@ -7,7 +7,7 @@ import 'package:home_decor/core/validations/validations.dart';
 import 'package:home_decor/core/widgets/my_app_snackbar.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/core/widgets/my_textbox.dart';
-import 'package:home_decor/feature/auth/bloc/auth_bloc.dart';
+import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

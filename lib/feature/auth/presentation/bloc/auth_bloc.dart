@@ -29,6 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) {
     emit(AuthLoadingState());
+
     emit(SignUpSuccessState());
   }
 }
