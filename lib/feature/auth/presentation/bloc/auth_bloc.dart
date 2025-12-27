@@ -38,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
 
     failureOrOtp.fold(
-      (failure) => emit(AuthErrorState()),
+      (failure) => emit(AuthErrorState(message: "Connection Error")),
 
       (right) => emit(AuthOtpSentSuccessState()),
     );
@@ -56,8 +56,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
 
     failureOrSuccess.fold(
-      (failure) => emit(AuthErrorState()),
-      (right) => emit(AuthOtpSentSuccessState()),
+      (failure) => emit(AuthErrorState(message: "Connection Error")),
+      (right) => emit(SignUpSuccessState()),
     );
   }
 }

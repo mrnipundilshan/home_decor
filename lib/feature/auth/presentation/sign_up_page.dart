@@ -44,6 +44,10 @@ class _SignUpPageState extends State<SignUpPage> {
         if (state is AuthOtpSentSuccessState) {
           context.push("/otp", extra: emailController.text.trim());
         }
+
+        if (state is AuthErrorState) {
+          MyAppSnackbar.show(context, state.message);
+        }
       },
       child: Scaffold(
         body: Padding(
@@ -105,9 +109,21 @@ class _SignUpPageState extends State<SignUpPage> {
 
                     SizedBox(height: 40),
 
-                    MyButton(
-                      buttonTitle: "sign up",
-                      function: signupButtonClicker,
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        if (state is AuthLoadingState) {
+                          return MyButton(
+                            isLoading: true,
+                            buttonTitle: "sign up",
+                            function: () {},
+                          );
+                        }
+                        return MyButton(
+                          isLoading: false,
+                          buttonTitle: "sign up",
+                          function: signupButtonClicker,
+                        );
+                      },
                     ),
 
                     SizedBox(height: 20),

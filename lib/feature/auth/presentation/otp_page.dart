@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import 'package:home_decor/core/widgets/my_app_snackbar.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/core/widgets/my_pinput.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
@@ -35,6 +36,10 @@ class _OtpPageState extends State<OtpPage> {
         if (state is SignUpSuccessState) {
           context.go("/signin");
         }
+
+        if (state is AuthErrorState) {
+          MyAppSnackbar.show(context, state.message);
+        }
       },
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -55,14 +60,26 @@ class _OtpPageState extends State<OtpPage> {
                 MyPinput(pinController: pinController, focusNode: focusNode),
                 SizedBox(height: 40),
 
-                MyButton(
-                  buttonTitle: "Sign in",
-                  function: () {
-                    BlocProvider.of<AuthBloc>(context).add(
-                      SigupOtpVerifyButtonClickedEvent(
-                        email: widget.email,
-                        otp: pinController.text,
-                      ),
+                BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    if (state is AuthLoadingState) {
+                      return MyButton(
+                        isLoading: true,
+                        buttonTitle: "sign in",
+                        function: () {},
+                      );
+                    }
+                    return MyButton(
+                      isLoading: false,
+                      buttonTitle: "Sign in",
+                      function: () {
+                        BlocProvider.of<AuthBloc>(context).add(
+                          SigupOtpVerifyButtonClickedEvent(
+                            email: widget.email,
+                            otp: pinController.text,
+                          ),
+                        );
+                      },
                     );
                   },
                 ),

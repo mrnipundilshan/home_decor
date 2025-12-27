@@ -15,4 +15,11 @@ class AuthOtpSentSuccessState extends AuthState {}
 
 class SignUpSuccessState extends AuthState {}
 
-class AuthErrorState extends AuthState {}
+class AuthErrorState extends AuthState {
+  final String message;
+
+  const AuthErrorState({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}

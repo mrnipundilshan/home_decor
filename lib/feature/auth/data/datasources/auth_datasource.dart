@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:home_decor/core/data/api_endpoints.dart';
+import 'package:home_decor/feature/home/data/exception/exceptions.dart';
 
 abstract class AuthDatasource {
   Future<bool> signupUserFromAPI(String email, String password);
@@ -26,12 +27,9 @@ class AuthDatasourceImpl implements AuthDatasource {
       log('Response: ${response.data}');
 
       return true;
-    } on DioException catch (e) {
-      log('[AuthDatasource] Dio error', error: e.response?.data ?? e.message);
-      throw _handleDioError(e);
     } catch (e) {
       log('[AuthDatasource] Unknown error', error: e);
-      rethrow;
+      throw ServerException();
     }
   }
 
@@ -49,25 +47,9 @@ class AuthDatasourceImpl implements AuthDatasource {
       log('Response: ${response.data}');
 
       return true;
-    } on DioException catch (e) {
-      log('[AuthDatasource] Dio error', error: e.response?.data ?? e.message);
-      throw _handleDioError(e);
     } catch (e) {
       log('[AuthDatasource] Unknown error', error: e);
-      rethrow;
-    }
-  }
-
-  Exception _handleDioError(DioException e) {
-    switch (e.response?.statusCode) {
-      case 400:
-        return Exception('Invalid signup data');
-      case 409:
-        return Exception('User already exists');
-      case 500:
-        return Exception('Server error');
-      default:
-        return Exception('Something went wrong');
+      throw ServerException();
     }
   }
 }
