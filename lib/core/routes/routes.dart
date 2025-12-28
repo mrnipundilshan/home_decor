@@ -17,7 +17,7 @@ final appRouter = GoRouter(
       name:
           'splashScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/',
-      builder: (context, state) => SplashScreen(authLocalDatasource: sl()),
+      builder: (context, state) => SplashScreen(authUsecases: sl()),
     ),
     GoRoute(
       name: 'welcomeScreen',

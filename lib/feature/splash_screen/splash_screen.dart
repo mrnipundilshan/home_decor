@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_decor/core/theme/app_custom_text_styles.dart';
-import 'package:home_decor/feature/auth/data/datasources/auth_local_datasource.dart';
+import 'package:home_decor/feature/auth/domain/usecases/auth_usecases.dart';
 
 import '../../core/theme/app_colors.dart';
 
 class SplashScreen extends StatefulWidget {
-  final AuthLocalDatasource authLocalDatasource;
-  const SplashScreen({super.key, required this.authLocalDatasource});
+  final AuthUsecases authUsecases;
+  const SplashScreen({super.key, required this.authUsecases});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _handleStartup() async {
-    final isLoggedIn = await widget.authLocalDatasource.isLoggedIn();
+    final isLoggedIn = await widget.authUsecases.isLogIn();
     // Wait 1.5 seconds before starting fade
     await Future.delayed(const Duration(milliseconds: 1500));
 
@@ -35,11 +35,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // Navigate after fade
     if (!mounted) return;
-    if (isLoggedIn) {
-      context.go('/homepage');
-    } else {
-      context.go('/welcome');
-    }
+
+    isLoggedIn.fold((failure) => context.go('/welcome'), (isLoggedIn) {
+      if (isLoggedIn) {
+        context.go('/homepage');
+      } else {
+        context.go('/welcome');
+      }
+    });
   }
 
   @override

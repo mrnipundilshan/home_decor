@@ -23,4 +23,8 @@ class AuthUsecases {
   Future<Either<Failure, bool>> logout() {
     return authRepository.logout();
   }
+
+  Future<Either<Failure, bool>> isLogIn() {
+    return authRepository.isLogIn();
+  }
 }

@@ -75,4 +75,16 @@ class AuthRepositoryImpl implements AuthRepository {
       return left(GeneralFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> isLogIn() async {
+    try {
+      final isLoggedIn = await authLocalDatasource.isLoggedIn();
+      return right(isLoggedIn);
+    } on CacheException catch (_) {
+      return left(CacheFailure());
+    } catch (e) {
+      return left(GeneralFailure());
+    }
+  }
 }

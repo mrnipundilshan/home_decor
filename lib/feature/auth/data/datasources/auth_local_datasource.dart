@@ -69,7 +69,8 @@ class AuthLocalDatasourceImpl implements AuthLocalDatasource {
   Future<bool> isLoggedIn() async {
     try {
       final token = await flutterSecureStorage.read(key: _accessKey);
-      return token != null && token.isNotEmpty;
+      final isLoggedIn = token != null && token.isNotEmpty;
+      return isLoggedIn;
     } catch (e) {
       log('Unknown error', error: e);
       throw CacheException();
