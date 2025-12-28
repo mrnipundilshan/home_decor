@@ -4,16 +4,16 @@ import 'package:dio/dio.dart';
 import 'package:home_decor/core/data/api_endpoints.dart';
 import 'package:home_decor/feature/home/data/exception/exceptions.dart';
 
-abstract class AuthDatasource {
+abstract class AuthRemoteDatasource {
   Future<bool> signupUserFromAPI(String email, String password);
 
   Future<bool> signupOtpVerificationFromApi(String email, String otp);
 }
 
-class AuthDatasourceImpl implements AuthDatasource {
+class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   final Dio dio;
 
-  AuthDatasourceImpl({required this.dio});
+  AuthRemoteDatasourceImpl({required this.dio});
 
   @override
   Future<bool> signupUserFromAPI(String email, String password) async {

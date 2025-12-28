@@ -23,4 +23,3 @@ class BaseApp extends StatelessWidget {
     );
   }
 }
-

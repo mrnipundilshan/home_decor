@@ -1,20 +1,26 @@
 import 'package:dartz/dartz.dart';
-import 'package:home_decor/feature/auth/data/datasources/auth_datasource.dart';
+import 'package:home_decor/feature/auth/data/datasources/auth_local_datasource.dart';
+import 'package:home_decor/feature/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:home_decor/feature/auth/domain/repository/auth_repository.dart';
 import 'package:home_decor/feature/home/data/exception/exceptions.dart';
 import 'package:home_decor/feature/home/domain/failure/failure.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthDatasource authDatasource;
+  final AuthRemoteDatasource authRemoteDatasource;
+  final AuthLocalDatasource authLocalDatasource;
 
-  AuthRepositoryImpl({required this.authDatasource});
+  AuthRepositoryImpl({
+    required this.authRemoteDatasource,
+    required this.authLocalDatasource,
+  });
+
   @override
   Future<Either<Failure, bool>> signupUser(
     String email,
     String password,
   ) async {
     try {
-      await authDatasource.signupUserFromAPI(email, password);
+      await authRemoteDatasource.signupUserFromAPI(email, password);
       return right(true);
     } on ServerException catch (_) {
       return left(ServerFailure());
@@ -26,7 +32,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, bool>> otpVerify(String email, String otp) async {
     try {
-      await authDatasource.signupOtpVerificationFromApi(email, otp);
+      await authRemoteDatasource.signupOtpVerificationFromApi(email, otp);
       return right(true);
     } on ServerException catch (_) {
       return left(ServerFailure());

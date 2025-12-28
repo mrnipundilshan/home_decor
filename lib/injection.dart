@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:home_decor/core/data/dio_client.dart';
-import 'package:home_decor/feature/auth/data/datasources/auth_datasource.dart';
+import 'package:home_decor/feature/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:home_decor/feature/auth/data/repository/auth_repository_impl.dart';
 import 'package:home_decor/feature/auth/domain/repository/auth_repository.dart';
 import 'package:home_decor/feature/auth/domain/usecases/auth_usecases.dart';
@@ -28,11 +28,16 @@ Future<void> init() async {
     () => ItemRepositoryImpl(itemDatasource: sl()),
   );
   sl.registerFactory<AuthRepository>(
-    () => AuthRepositoryImpl(authDatasource: sl()),
+    () => AuthRepositoryImpl(
+      authLocalDatasource: sl(),
+      authRemoteDatasource: sl(),
+    ),
   );
 
   sl.registerFactory<ItemDatasource>(() => ItemDatasourceImpl(dio: sl()));
-  sl.registerFactory<AuthDatasource>(() => AuthDatasourceImpl(dio: sl()));
+  sl.registerFactory<AuthRemoteDatasource>(
+    () => AuthRemoteDatasourceImpl(dio: sl()),
+  );
 
   // Dio client
   sl.registerLazySingleton<DioClient>(() => DioClient());

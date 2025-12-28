@@ -69,6 +69,7 @@ app.listen(PORT, () => {
   console.log(`  - POST http://localhost:${PORT}/api/signup`);
   console.log(`  - POST http://localhost:${PORT}/api/verify-otp`);
   console.log(`  - POST http://localhost:${PORT}/api/login`);
+  console.log(`  - POST http://localhost:${PORT}/api/refresh-token`);
   console.log(`  - GET  http://localhost:${PORT}/health`);
 });
 

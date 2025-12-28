@@ -7,6 +7,7 @@ const {
   generateOTP,
   generateAccessToken,
   generateRefreshToken,
+  verifyRefreshToken,
   isValidEmail,
   isValidPassword,
 } = require('../utils/auth');
@@ -228,6 +229,48 @@ router.post('/login', async (req, res) => {
     return res.status(500).json({
       success: false,
       error: 'Failed to login',
+      message: error.message,
+    });
+  }
+});
+
+// Refresh token endpoint
+router.post('/refresh-token', async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+
+    // Validate input
+    if (!refreshToken) {
+      return res.status(400).json({
+        success: false,
+        error: 'Refresh token is required',
+      });
+    }
+
+    // Verify refresh token
+    const decoded = verifyRefreshToken(refreshToken);
+    if (!decoded) {
+      return res.status(401).json({
+        success: false,
+        error: 'Invalid or expired refresh token',
+      });
+    }
+
+    // Extract userId from decoded token
+    const userId = decoded.userId;
+
+    // Generate new access token
+    const newAccessToken = generateAccessToken(userId);
+
+    return res.status(200).json({
+      success: true,
+      accessToken: newAccessToken,
+    });
+  } catch (error) {
+    console.error('Refresh token error:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to refresh token',
       message: error.message,
     });
   }
