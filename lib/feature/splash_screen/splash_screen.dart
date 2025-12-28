@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_decor/core/theme/app_custom_text_styles.dart';
+import 'package:home_decor/feature/auth/data/datasources/auth_local_datasource.dart';
 
 import '../../core/theme/app_colors.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  final AuthLocalDatasource authLocalDatasource;
+  const SplashScreen({super.key, required this.authLocalDatasource});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -17,10 +19,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _startFadeOut();
+    _handleStartup();
   }
 
-  void _startFadeOut() async {
+  void _handleStartup() async {
+    final isLoggedIn = await widget.authLocalDatasource.isLoggedIn();
     // Wait 1.5 seconds before starting fade
     await Future.delayed(const Duration(milliseconds: 1500));
 
@@ -32,7 +35,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // Navigate after fade
     if (!mounted) return;
-    context.go('/welcome');
+    if (isLoggedIn) {
+      context.go('/homepage');
+    } else {
+      context.go('/welcome');
+    }
   }
 
   @override
@@ -48,10 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Image.asset("assets/logo.png"),
               const SizedBox(height: 12),
-              const Text(
-                "Decoz",
-                style: AppCustomTextStyles.splashScreenText,
-              ),
+              const Text("Decoz", style: AppCustomTextStyles.splashScreenText),
             ],
           ),
         ),
@@ -59,4 +63,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-

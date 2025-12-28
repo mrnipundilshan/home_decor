@@ -63,4 +63,16 @@ class AuthRepositoryImpl implements AuthRepository {
       return left(GeneralFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> logout() async {
+    try {
+      await authLocalDatasource.clearTokens();
+      return right(true);
+    } on CacheException catch (_) {
+      return left(CacheFailure());
+    } catch (e) {
+      return left(GeneralFailure());
+    }
+  }
 }

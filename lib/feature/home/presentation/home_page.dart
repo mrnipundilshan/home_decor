@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:home_decor/core/services/theme_service.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:home_decor/feature/home/presentation/widgets/my_appbar.dart';
 import 'package:home_decor/feature/home/presentation/widgets/catgory%20carousel/my_carousel_view.dart';
 import 'package:home_decor/feature/home/presentation/widgets/my_image_slider.dart';
@@ -19,27 +22,37 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
 
-    return Scaffold(
-      backgroundColor: themeData.canvasColor,
-      appBar: MyAppBar(),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: AppSizes.screenWidth(context) * 0.02,
-          vertical: AppSizes.screenHeight(context) * 0.01,
-        ),
-        child: Column(
-          children: [
-            MyImageSlider(),
-            SizedBox(height: 15),
-            MyCarouselView(),
-            TopSelling(),
-            Switch(
-              value: Provider.of<ThemeService>(context).isDarkModeOn,
-              onChanged: (_) {
-                Provider.of<ThemeService>(context, listen: false).toggleTheme();
-              },
-            ),
-          ],
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthUnauthonticated) {
+          context.go('/signin');
+        }
+      },
+      child: Scaffold(
+        backgroundColor: themeData.canvasColor,
+        appBar: MyAppBar(),
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSizes.screenWidth(context) * 0.02,
+            vertical: AppSizes.screenHeight(context) * 0.01,
+          ),
+          child: Column(
+            children: [
+              MyImageSlider(),
+              SizedBox(height: 15),
+              MyCarouselView(),
+              TopSelling(),
+              Switch(
+                value: Provider.of<ThemeService>(context).isDarkModeOn,
+                onChanged: (_) {
+                  Provider.of<ThemeService>(
+                    context,
+                    listen: false,
+                  ).toggleTheme();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

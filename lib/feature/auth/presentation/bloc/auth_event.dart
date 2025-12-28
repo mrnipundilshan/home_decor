@@ -35,3 +35,5 @@ class SinginButtonClickedEvent extends AuthEvent {
   @override
   List<Object> get props => [email, password];
 }
+
+class LogOutButtonClickedEvent extends AuthEvent {}

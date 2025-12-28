@@ -4,6 +4,7 @@ import 'package:home_decor/feature/auth/presentation/sign_in_page.dart';
 import 'package:home_decor/feature/home/presentation/home_page.dart';
 import 'package:home_decor/feature/splash_screen/splash_screen.dart';
 import 'package:home_decor/feature/welcome_screen/welcome_screen.dart';
+import 'package:home_decor/injection.dart';
 
 import '../../feature/auth/presentation/sign_up_page.dart';
 import '../../feature/onborading_page/onboarding_page.dart';
@@ -16,7 +17,7 @@ final appRouter = GoRouter(
       name:
           'splashScreen', // Optional, add name to your routes. Allows you navigate by name instead of path
       path: '/',
-      builder: (context, state) => SplashScreen(),
+      builder: (context, state) => SplashScreen(authLocalDatasource: sl()),
     ),
     GoRoute(
       name: 'welcomeScreen',

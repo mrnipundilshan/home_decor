@@ -19,4 +19,8 @@ class AuthUsecases {
   Future<Either<Failure, bool>> otpVerify(String email, String otp) {
     return authRepository.otpVerify(email, otp);
   }
+
+  Future<Either<Failure, bool>> logout() {
+    return authRepository.logout();
+  }
 }

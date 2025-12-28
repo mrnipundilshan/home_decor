@@ -9,4 +9,6 @@ abstract class AuthRepository {
   Future<Either<Failure, UserEntity>> loginUser(String email, String password);
 
   Future<Either<Failure, bool>> otpVerify(String email, String otp);
+
+  Future<Either<Failure, bool>> logout();
 }

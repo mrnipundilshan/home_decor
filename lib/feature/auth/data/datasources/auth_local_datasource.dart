@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:home_decor/feature/home/data/exception/exceptions.dart';
 
 abstract class AuthLocalDatasource {
   Future<void> saveTokens(String accessToken, String refreshToken);
@@ -7,7 +10,9 @@ abstract class AuthLocalDatasource {
 
   Future<String?> getRefreshToken();
 
-  Future<void> clearTokens();
+  Future<bool> clearTokens();
+
+  Future<bool> isLoggedIn();
 }
 
 class AuthLocalDatasourceImpl implements AuthLocalDatasource {
@@ -19,23 +24,55 @@ class AuthLocalDatasourceImpl implements AuthLocalDatasource {
   static const _refreshKey = 'REFRESH_TOKEN';
 
   @override
-  Future<void> clearTokens() async {
-    await flutterSecureStorage.deleteAll();
+  Future<bool> clearTokens() async {
+    try {
+      await flutterSecureStorage.deleteAll();
+      return true;
+    } catch (e) {
+      log('Unknown error', error: e);
+      throw CacheException();
+    }
   }
 
   @override
   Future<String?> getAccessToken() async {
-    return await flutterSecureStorage.read(key: _accessKey);
+    try {
+      return await flutterSecureStorage.read(key: _accessKey);
+    } catch (e) {
+      log('Unknown error', error: e);
+      throw CacheException();
+    }
   }
 
   @override
   Future<String?> getRefreshToken() async {
-    return await flutterSecureStorage.read(key: _refreshKey);
+    try {
+      return await flutterSecureStorage.read(key: _refreshKey);
+    } catch (e) {
+      log('Unknown error', error: e);
+      throw CacheException();
+    }
   }
 
   @override
   Future<void> saveTokens(String accessToken, String refreshToken) async {
-    await flutterSecureStorage.write(key: _accessKey, value: accessToken);
-    await flutterSecureStorage.write(key: _refreshKey, value: refreshToken);
+    try {
+      await flutterSecureStorage.write(key: _accessKey, value: accessToken);
+      await flutterSecureStorage.write(key: _refreshKey, value: refreshToken);
+    } catch (e) {
+      log('Unknown error', error: e);
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<bool> isLoggedIn() async {
+    try {
+      final token = await flutterSecureStorage.read(key: _accessKey);
+      return token != null && token.isNotEmpty;
+    } catch (e) {
+      log('Unknown error', error: e);
+      throw CacheException();
+    }
   }
 }

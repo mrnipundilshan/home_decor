@@ -16,6 +16,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<SigupOtpVerifyButtonClickedEvent>(_signupOtpVerifyButtonClickedEvent);
 
+    on<LogOutButtonClickedEvent>(_logOutButtonClickedEvent);
+
     on<AuthEvent>((event, emit) {});
   }
 
@@ -66,6 +68,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     failureOrSuccess.fold(
       (failure) => emit(AuthErrorState(message: "Connection Error")),
       (right) => emit(SignUpSuccessState()),
+    );
+  }
+
+  FutureOr<void> _logOutButtonClickedEvent(
+    LogOutButtonClickedEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoadingState());
+    final failureOrLogout = await authUsecases.logout();
+
+    failureOrLogout.fold(
+      (failure) => emit(AuthErrorState(message: "Try Again")),
+      (right) => emit(AuthUnauthonticated()),
     );
   }
 }
