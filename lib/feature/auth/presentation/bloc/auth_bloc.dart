@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:home_decor/feature/auth/domain/entity/user_entity.dart';
 import 'package:home_decor/feature/auth/domain/usecases/auth_usecases.dart';
 
 part 'auth_event.dart';
@@ -21,10 +22,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   FutureOr<void> _singinButtonClickedEvent(
     SinginButtonClickedEvent event,
     Emitter<AuthState> emit,
-  ) {
+  ) async {
     emit(AuthLoadingState());
+    final failureOrUser = await authUsecases.loginUser(
+      event.email,
+      event.password,
+    );
 
-    emit(SignUpSuccessState());
+    failureOrUser.fold(
+      (failure) => emit(AuthErrorState(message: "Connection Error")),
+      (user) => emit(LoginSuccessState(user: user)),
+    );
   }
 
   FutureOr<void> _signupButtonClickedEvent(

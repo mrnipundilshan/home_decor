@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import 'package:home_decor/core/validations/validations.dart';
+import 'package:home_decor/core/widgets/my_app_snackbar.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/core/widgets/my_textbox.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
@@ -19,12 +21,22 @@ class _SignInPageState extends State<SignInPage> {
   TextEditingController passwordController = TextEditingController();
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is SignUpSuccessState) {
+        if (state is LoginSuccessState) {
           context.go("/homepage");
+        }
+        if (state is AuthErrorState) {
+          MyAppSnackbar.show(context, state.message);
         }
       },
       child: Scaffold(
@@ -61,12 +73,20 @@ class _SignInPageState extends State<SignInPage> {
 
                 SizedBox(height: 40),
 
-                MyButton(
-                  buttonTitle: "Sign in",
-                  function: () {
-                    BlocProvider.of<AuthBloc>(
-                      context,
-                    ).add(SinginButtonClickedEvent());
+                BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    if (state is AuthLoadingState) {
+                      return MyButton(
+                        isLoading: true,
+                        buttonTitle: "Sign in",
+                        function: () {},
+                      );
+                    }
+                    return MyButton(
+                      isLoading: false,
+                      buttonTitle: "Sign in",
+                      function: signinButtonClicker,
+                    );
                   },
                 ),
 
@@ -94,6 +114,30 @@ class _SignInPageState extends State<SignInPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void signinButtonClicker() {
+    if (emailController.text.isEmpty) {
+      MyAppSnackbar.show(context, 'Email is required');
+      return;
+    }
+
+    if (!Validations().isValidEmail(emailController.text)) {
+      MyAppSnackbar.show(context, 'Enter a valid email address');
+      return;
+    }
+
+    if (passwordController.text.isEmpty || passwordController.text.length < 6) {
+      MyAppSnackbar.show(context, 'Password must be at least 6 characters');
+      return;
+    }
+
+    BlocProvider.of<AuthBloc>(context).add(
+      SinginButtonClickedEvent(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
       ),
     );
   }

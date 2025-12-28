@@ -2,10 +2,13 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:home_decor/core/data/api_endpoints.dart';
+import 'package:home_decor/feature/auth/data/models/login_response_model.dart';
 import 'package:home_decor/feature/home/data/exception/exceptions.dart';
 
 abstract class AuthRemoteDatasource {
   Future<bool> signupUserFromAPI(String email, String password);
+
+  Future<LoginResponseModel> loginUserFromAPI(String email, String password);
 
   Future<bool> signupOtpVerificationFromApi(String email, String otp);
 }
@@ -27,6 +30,26 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       log('Response: ${response.data}');
 
       return true;
+    } catch (e) {
+      log('[AuthDatasource] Unknown error', error: e);
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<LoginResponseModel> loginUserFromAPI(
+    String email,
+    String password,
+  ) async {
+    try {
+      log("Calling Login");
+      final response = await dio.post(
+        ApiEndpoints.login,
+        data: {"email": email, "password": password},
+      );
+      log('Response: ${response.data}');
+
+      return LoginResponseModel.fromJson(response.data);
     } catch (e) {
       log('[AuthDatasource] Unknown error', error: e);
       throw ServerException();

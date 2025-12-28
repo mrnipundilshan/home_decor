@@ -1,6 +1,7 @@
 class UserEntity {
+  final String id;
   final String email;
-  final String password;
+  final String? password;
 
-  UserEntity({required this.email, required this.password});
+  UserEntity({required this.id, required this.email, this.password});
 }

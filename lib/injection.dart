@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:home_decor/core/data/dio_client.dart';
+import 'package:home_decor/feature/auth/data/datasources/auth_local_datasource.dart';
 import 'package:home_decor/feature/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:home_decor/feature/auth/data/repository/auth_repository_impl.dart';
 import 'package:home_decor/feature/auth/domain/repository/auth_repository.dart';
@@ -38,10 +40,18 @@ Future<void> init() async {
   sl.registerFactory<AuthRemoteDatasource>(
     () => AuthRemoteDatasourceImpl(dio: sl()),
   );
+  sl.registerFactory<AuthLocalDatasource>(
+    () => AuthLocalDatasourceImpl(flutterSecureStorage: sl()),
+  );
 
   // Dio client
   sl.registerLazySingleton<DioClient>(() => DioClient());
 
   // Expose Dio with baseUrl
   sl.registerLazySingleton<Dio>(() => sl<DioClient>().dio);
+
+  // External / core services
+  sl.registerLazySingleton<FlutterSecureStorage>(
+    () => const FlutterSecureStorage(),
+  );
 }

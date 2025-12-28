@@ -15,6 +15,15 @@ class AuthOtpSentSuccessState extends AuthState {}
 
 class SignUpSuccessState extends AuthState {}
 
+class LoginSuccessState extends AuthState {
+  final UserEntity? user;
+
+  const LoginSuccessState({this.user});
+
+  @override
+  List<Object> get props => user != null ? [user!] : [];
+}
+
 class AuthErrorState extends AuthState {
   final String message;
 
