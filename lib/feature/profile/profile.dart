@@ -25,7 +25,10 @@ class Profile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Dark Mode', style: Theme.of(context).textTheme.bodyLarge),
+                Text(
+                  context.translate("theme"),
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
                 Switch(
                   value: Provider.of<ThemeService>(context).isDarkModeOn,
                   onChanged: (_) {

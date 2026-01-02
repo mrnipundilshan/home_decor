@@ -55,6 +55,9 @@ class AppTranslations {
       'english': 'English',
       'sinhala': 'Sinhala',
 
+      // Theme
+      'theme': 'Theme',
+
       // Categories
       'bedroom': 'Bedroom',
       'bathroom': 'Bathroom',
@@ -68,7 +71,7 @@ class AppTranslations {
       'sign_in': 'පිවිසෙන්න',
       'sign_up': 'ලියාපදිංචි වන්න',
       'create_account': 'ඔබේ decoze\nගිණුම සාදන්න',
-      'havent_account': 'ගිණුමක් නැත? ',
+      'havent_account': 'ගිණුමක් නැත්ද? ',
       'already_have_account': 'දැනටමත් ගිණුමක් තිබේද? ',
       'enter_otp': 'OTP ඇතුළත් කරන්න',
 
@@ -84,7 +87,7 @@ class AppTranslations {
       'password_mismatch': 'මුරපදය තහවුරු කිරීමේ මුරපදයට ගැලපිය යුතුය',
 
       // Welcome
-      'welcome_to': 'සාදරයෙන් පිළිගනිමු',
+      'welcome_to': 'ආයුබෝවන්',
       'decoz': 'Decoz',
       'welcome_subtitle':
           'ඔබේ අවකාශ සැලසුම් කරන්න සහ\nඔබේ සැරසිලි අවශ්‍යතා සඳහා සාප්පු කරන්න',
@@ -110,7 +113,7 @@ class AppTranslations {
       'profile': 'පැතිකඩ',
 
       // Home
-      'top_selling': 'වැඩිපුර විකුණන',
+      'top_selling': 'වැඩිපුර විකිණූ',
       'error_state': '------',
 
       // Language
@@ -118,11 +121,14 @@ class AppTranslations {
       'english': 'ඉංග්‍රීසි',
       'sinhala': 'සිංහල',
 
+      // Theme
+      'theme': 'තේමාව',
+
       // Categories
       'bedroom': 'නිදන කාමරය',
       'bathroom': 'නාන කාමරය',
-      'dinning': 'භෝජන ශාලාව',
-      'kitchen': 'උදුන',
+      'dinning': 'කෑම කාමරය',
+      'kitchen': 'කුස්සිය',
       'living': 'ගෙදර',
     },
   };

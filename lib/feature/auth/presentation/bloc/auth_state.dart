@@ -33,4 +33,6 @@ class AuthErrorState extends AuthState {
   List<Object> get props => [message];
 }
 
-class AuthUnauthonticated extends AuthState {}
+class AuthUnauthonticatedState extends AuthState {}
+
+class AuthonticatedState extends AuthState {}

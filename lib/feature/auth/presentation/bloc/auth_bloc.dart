@@ -19,6 +19,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogOutButtonClickedEvent>(_logOutButtonClickedEvent);
 
     on<AuthEvent>((event, emit) {});
+
+    on<CheckLoggedEvent>(_checkLoggedEvent);
   }
 
   FutureOr<void> _singinButtonClickedEvent(
@@ -80,7 +82,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     failureOrLogout.fold(
       (failure) => emit(AuthErrorState(message: "Try Again")),
-      (right) => emit(AuthUnauthonticated()),
+      (right) => emit(AuthUnauthonticatedState()),
     );
+  }
+
+  FutureOr<void> _checkLoggedEvent(
+    CheckLoggedEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    final isLoggedIn = await authUsecases.isLogIn();
+
+    isLoggedIn.fold((failure) => emit(AuthUnauthonticatedState()), (
+      isLoggedIn,
+    ) {
+      if (isLoggedIn) {
+        emit(AuthonticatedState());
+      } else {
+        emit(AuthUnauthonticatedState());
+      }
+    });
   }
 }

@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthUnauthonticated) {
+        if (state is AuthUnauthonticatedState) {
           context.go('/signin');
         }
       },

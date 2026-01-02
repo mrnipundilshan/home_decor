@@ -15,9 +15,11 @@ app.use(express.json());
 
 // Import routes
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 
 // Use routes
 app.use('/api', authRoutes);
+app.use('/api', profileRoutes);
 
 // GET endpoint for top selling items
 app.get('/api/topselling', (req, res) => {
@@ -70,6 +72,8 @@ app.listen(PORT, () => {
   console.log(`  - POST http://localhost:${PORT}/api/verify-otp`);
   console.log(`  - POST http://localhost:${PORT}/api/login`);
   console.log(`  - POST http://localhost:${PORT}/api/refresh-token`);
+  console.log(`  - GET  http://localhost:${PORT}/api/profile`);
+  console.log(`  - PUT  http://localhost:${PORT}/api/profile`);
   console.log(`  - GET  http://localhost:${PORT}/health`);
 });
 

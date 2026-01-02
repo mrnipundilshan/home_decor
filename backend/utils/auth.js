@@ -64,6 +64,31 @@ const isValidPassword = (password) => {
   return password && password.length >= 6;
 };
 
+// Authentication middleware for Express
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      error: 'Access token is required',
+    });
+  }
+
+  const decoded = verifyAccessToken(token);
+  if (!decoded) {
+    return res.status(401).json({
+      success: false,
+      error: 'Invalid or expired access token',
+    });
+  }
+
+  // Attach userId to request object
+  req.user = { userId: decoded.userId };
+  next();
+};
+
 module.exports = {
   hashPassword,
   comparePassword,
@@ -74,5 +99,6 @@ module.exports = {
   verifyRefreshToken,
   isValidEmail,
   isValidPassword,
+  authenticateToken,
 };
 

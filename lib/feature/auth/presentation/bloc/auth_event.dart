@@ -37,3 +37,5 @@ class SinginButtonClickedEvent extends AuthEvent {
 }
 
 class LogOutButtonClickedEvent extends AuthEvent {}
+
+class CheckLoggedEvent extends AuthEvent {}
