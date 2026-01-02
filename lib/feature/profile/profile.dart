@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
+import 'package:home_decor/core/services/locale_service.dart';
 import 'package:home_decor/core/services/theme_service.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/feature/profile/widgets/profile_page_app_bar.dart';
@@ -17,13 +19,56 @@ class Profile extends StatelessWidget {
           vertical: AppSizes.screenHeight(context) * 0.01,
         ),
         child: Column(
-          mainAxisAlignment: .center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Switch(
-              value: Provider.of<ThemeService>(context).isDarkModeOn,
-              onChanged: (_) {
-                Provider.of<ThemeService>(context, listen: false).toggleTheme();
-              },
+            // Theme Toggle
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Dark Mode', style: Theme.of(context).textTheme.bodyLarge),
+                Switch(
+                  value: Provider.of<ThemeService>(context).isDarkModeOn,
+                  onChanged: (_) {
+                    Provider.of<ThemeService>(
+                      context,
+                      listen: false,
+                    ).toggleTheme();
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            // Language Switcher
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  context.translate('language'),
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Consumer<LocaleService>(
+                  builder: (context, localeService, child) {
+                    return DropdownButton<String>(
+                      value: localeService.currentLocale,
+                      items: [
+                        DropdownMenuItem(
+                          value: 'en',
+                          child: Text(context.translate('english')),
+                        ),
+                        DropdownMenuItem(
+                          value: 'si',
+                          child: Text(context.translate('sinhala')),
+                        ),
+                      ],
+                      onChanged: (String? newLocale) {
+                        if (newLocale != null) {
+                          localeService.setLocale(newLocale);
+                        }
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),

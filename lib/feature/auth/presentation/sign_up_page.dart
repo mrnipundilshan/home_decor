@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/core/validations/validations.dart';
@@ -62,14 +63,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Create your\ndecoze account",
+                      context.translate('create_account'),
                       style: themeData.textTheme.headlineLarge,
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 40),
 
                     MyTextbox(
-                      placeholder: 'user@gmail.com',
+                      placeholder: context.translate('email_placeholder'),
                       prefixIcon: Icons.mail_outline_outlined,
                       obsecureText: false,
                       controller: emailController,
@@ -83,7 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(height: 20),
 
                     MyTextbox(
-                      placeholder: 'password',
+                      placeholder: context.translate('password_placeholder'),
                       prefixIcon: Icons.password_outlined,
                       obsecureText: true,
                       controller: passwordController,
@@ -99,7 +100,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(height: 20),
 
                     MyTextbox(
-                      placeholder: 'confirm password',
+                      placeholder: context.translate('confirm_password_placeholder'),
                       prefixIcon: Icons.password_outlined,
                       obsecureText: true,
                       controller: confirmPasswordController,
@@ -114,13 +115,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         if (state is AuthLoadingState) {
                           return MyButton(
                             isLoading: true,
-                            buttonTitle: "sign up",
+                            buttonTitle: context.translate('sign_up'),
                             function: () {},
                           );
                         }
                         return MyButton(
                           isLoading: false,
-                          buttonTitle: "sign up",
+                          buttonTitle: context.translate('sign_up'),
                           function: signupButtonClicker,
                         );
                       },
@@ -132,7 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       mainAxisAlignment: .center,
                       children: [
                         Text(
-                          "Already have an account? ",
+                          context.translate('already_have_account'),
                           style: themeData.textTheme.bodyMedium,
                         ),
                         GestureDetector(
@@ -140,7 +141,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             context.push('/signin');
                           },
                           child: Text(
-                            "Sign in",
+                            context.translate('sign_in'),
                             style: TextStyle(color: AppColors.commonPrimary),
                           ),
                         ),
@@ -158,23 +159,23 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void signupButtonClicker() {
     if (emailController.text.isEmpty) {
-      MyAppSnackbar.show(context, 'Email is required');
+      MyAppSnackbar.show(context, context.translate('email_required'));
       return;
     }
 
     if (!Validations().isValidEmail(emailController.text)) {
-      MyAppSnackbar.show(context, 'Enter a valid email address');
+      MyAppSnackbar.show(context, context.translate('email_invalid'));
       return;
     }
 
     if (passwordController.text.isEmpty || passwordController.text.length < 6) {
-      MyAppSnackbar.show(context, 'Password must be at least 6 characters');
+      MyAppSnackbar.show(context, context.translate('password_min_length'));
       return;
     }
 
     if (passwordController.text.trim() !=
         confirmPasswordController.text.trim()) {
-      MyAppSnackbar.show(context, 'Password should same with confirm password');
+      MyAppSnackbar.show(context, context.translate('password_mismatch'));
       return;
     }
 

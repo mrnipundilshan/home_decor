@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:home_decor/feature/home/presentation/widgets/top%20selling/top_selling_card.dart';
@@ -30,7 +31,7 @@ class _TopSellingState extends State<TopSelling> {
         crossAxisAlignment: .start,
         children: [
           SizedBox(height: 15),
-          Text("Top Selling"),
+          Text(context.translate('top_selling')),
           SizedBox(height: 10),
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
@@ -81,7 +82,7 @@ class _TopSellingState extends State<TopSelling> {
 
               if (state is HomeTopSellingErrorState) {
                 return Center(
-                  child: Text("------", style: themeData.textTheme.labelLarge),
+                  child: Text(context.translate('error_state'), style: themeData.textTheme.labelLarge),
                 );
               }
               return SizedBox.shrink();

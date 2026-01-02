@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/feature/home/presentation/home_page.dart';
 import 'package:home_decor/feature/profile/profile.dart';
@@ -13,9 +14,9 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = const [
+  List<Widget> _pages(BuildContext context) => [
     HomePage(),
-    Center(child: Text("Search")),
+    Center(child: Text(context.translate('search'))),
     Profile(),
   ];
 
@@ -25,7 +26,7 @@ class _NavBarState extends State<NavBar> {
 
     return Scaffold(
       extendBody: true,
-      body: _pages[_currentIndex],
+      body: _pages(context)[_currentIndex],
       backgroundColor: Colors.transparent,
 
       bottomNavigationBar: ClipRRect(
@@ -46,27 +47,27 @@ class _NavBarState extends State<NavBar> {
           showSelectedLabels: true,
           showUnselectedLabels: true,
 
-          items: const [
+          items: [
             BottomNavigationBarItem(
               icon: Padding(
                 padding: EdgeInsets.only(top: 6.0),
                 child: Icon(Icons.home),
               ),
-              label: 'Home',
+              label: context.translate('home'),
             ),
             BottomNavigationBarItem(
               icon: Padding(
                 padding: EdgeInsets.only(top: 6.0),
                 child: Icon(Icons.search),
               ),
-              label: 'Search',
+              label: context.translate('search'),
             ),
             BottomNavigationBarItem(
               icon: Padding(
                 padding: EdgeInsets.only(top: 6.0),
                 child: Icon(Icons.person),
               ),
-              label: 'Profile',
+              label: context.translate('profile'),
             ),
           ],
         ),

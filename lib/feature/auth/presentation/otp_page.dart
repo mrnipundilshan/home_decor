@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/core/widgets/my_app_snackbar.dart';
@@ -52,7 +53,7 @@ class _OtpPageState extends State<OtpPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Enter OTP",
+                  context.translate('enter_otp'),
                   style: themeData.textTheme.headlineLarge,
                   textAlign: TextAlign.center,
                 ),
@@ -65,13 +66,13 @@ class _OtpPageState extends State<OtpPage> {
                     if (state is AuthLoadingState) {
                       return MyButton(
                         isLoading: true,
-                        buttonTitle: "sign in",
+                        buttonTitle: context.translate('sign_in'),
                         function: () {},
                       );
                     }
                     return MyButton(
                       isLoading: false,
-                      buttonTitle: "Sign in",
+                      buttonTitle: context.translate('sign_in'),
                       function: () {
                         BlocProvider.of<AuthBloc>(context).add(
                           SigupOtpVerifyButtonClickedEvent(
@@ -90,7 +91,7 @@ class _OtpPageState extends State<OtpPage> {
                   mainAxisAlignment: .center,
                   children: [
                     Text(
-                      "Already have an account? ",
+                      context.translate('already_have_account'),
                       style: themeData.textTheme.bodyMedium,
                     ),
                     GestureDetector(
@@ -98,7 +99,7 @@ class _OtpPageState extends State<OtpPage> {
                         context.push('/signin');
                       },
                       child: Text(
-                        "Sign in",
+                        context.translate('sign_in'),
                         style: TextStyle(color: AppColors.commonPrimary),
                       ),
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_custom_text_styles.dart';
 import 'package:home_decor/feature/auth/domain/usecases/auth_usecases.dart';
 
@@ -58,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Image.asset("assets/logo.png"),
               const SizedBox(height: 12),
-              const Text("Decoz", style: AppCustomTextStyles.splashScreenText),
+              Text(context.translate('decoz'), style: AppCustomTextStyles.splashScreenText),
             ],
           ),
         ),

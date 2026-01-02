@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 
 class ProfilePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ProfilePageAppBar({super.key});
@@ -8,7 +9,7 @@ class ProfilePageAppBar extends StatelessWidget implements PreferredSizeWidget {
     final themeData = Theme.of(context);
     return AppBar(
       centerTitle: true,
-      title: Text("Profile", style: themeData.appBarTheme.titleTextStyle),
+      title: Text(context.translate('profile'), style: themeData.appBarTheme.titleTextStyle),
     );
   }
 

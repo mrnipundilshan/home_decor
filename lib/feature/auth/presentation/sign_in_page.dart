@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/core/validations/validations.dart';
@@ -50,13 +51,13 @@ class _SignInPageState extends State<SignInPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Signin To decoze",
+                  context.translate('signin_to_decoze'),
                   style: themeData.textTheme.headlineLarge,
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 40),
                 MyTextbox(
-                  placeholder: 'user@gmail.com',
+                  placeholder: context.translate('email_placeholder'),
                   prefixIcon: Icons.mail_outline_outlined,
                   obsecureText: false,
                   controller: emailController,
@@ -65,7 +66,7 @@ class _SignInPageState extends State<SignInPage> {
                 SizedBox(height: 20),
 
                 MyTextbox(
-                  placeholder: 'password',
+                  placeholder: context.translate('password_placeholder'),
                   prefixIcon: Icons.password_outlined,
                   obsecureText: true,
                   controller: passwordController,
@@ -78,13 +79,13 @@ class _SignInPageState extends State<SignInPage> {
                     if (state is AuthLoadingState) {
                       return MyButton(
                         isLoading: true,
-                        buttonTitle: "Sign in",
+                        buttonTitle: context.translate('sign_in'),
                         function: () {},
                       );
                     }
                     return MyButton(
                       isLoading: false,
-                      buttonTitle: "Sign in",
+                      buttonTitle: context.translate('sign_in'),
                       function: signinButtonClicker,
                     );
                   },
@@ -96,7 +97,7 @@ class _SignInPageState extends State<SignInPage> {
                   mainAxisAlignment: .center,
                   children: [
                     Text(
-                      "Haven't an account? ",
+                      context.translate('havent_account'),
                       style: themeData.textTheme.bodyMedium,
                     ),
                     GestureDetector(
@@ -104,7 +105,7 @@ class _SignInPageState extends State<SignInPage> {
                         context.push('/signup');
                       },
                       child: Text(
-                        "Sign up",
+                        context.translate('sign_up'),
                         style: TextStyle(color: AppColors.commonPrimary),
                       ),
                     ),
@@ -120,17 +121,17 @@ class _SignInPageState extends State<SignInPage> {
 
   void signinButtonClicker() {
     if (emailController.text.isEmpty) {
-      MyAppSnackbar.show(context, 'Email is required');
+      MyAppSnackbar.show(context, context.translate('email_required'));
       return;
     }
 
     if (!Validations().isValidEmail(emailController.text)) {
-      MyAppSnackbar.show(context, 'Enter a valid email address');
+      MyAppSnackbar.show(context, context.translate('email_invalid'));
       return;
     }
 
     if (passwordController.text.isEmpty || passwordController.text.length < 6) {
-      MyAppSnackbar.show(context, 'Password must be at least 6 characters');
+      MyAppSnackbar.show(context, context.translate('password_min_length'));
       return;
     }
 

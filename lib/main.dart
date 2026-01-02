@@ -8,6 +8,7 @@ import 'package:home_decor/injection.dart' as di;
 import 'package:provider/provider.dart';
 
 import 'core/services/theme_service.dart';
+import 'core/services/locale_service.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -16,6 +17,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeService()),
+        ChangeNotifierProvider(create: (context) => LocaleService()),
         BlocProvider(create: (context) => di.sl<AuthBloc>()),
         BlocProvider(create: (context) => di.sl<HomeBloc>()),
       ],

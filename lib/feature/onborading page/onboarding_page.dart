@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
@@ -13,30 +14,27 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   int currentPage = 0;
-  List<Map<String, String>> splashData = [
+  
+  List<Map<String, String>> getSplashData(BuildContext context) => [
     {
-      "title": "Effortlessly organize your decor and shopping with decoze",
-      "subtitle":
-          "Confidently navigate your decor journey, ensuring a stylish and productive path to your dream space with decoze",
+      "title": context.translate('onboarding_title_1'),
+      "subtitle": context.translate('onboarding_subtitle_1'),
       "image": "assets/onbordingscreenimage1.png",
     },
     {
-      "title": "Stay connected with design team anytime, anywhere with decoze",
-      "subtitle":
-          "In today's dynamic decor world, staying connected with your design team is key to success with decoze",
+      "title": context.translate('onboarding_title_2'),
+      "subtitle": context.translate('onboarding_subtitle_2'),
       "image": "assets/onbordingscreenimage2.png",
     },
     {
-      "title": "Discover all the features decoze has to offer",
-      "subtitle":
-          "Dive into decoze's multitude of features by exploring its diverse functionalities",
+      "title": context.translate('onboarding_title_3'),
+      "subtitle": context.translate('onboarding_subtitle_3'),
       "image": "assets/onbordingscreenimage3.png",
     },
   ];
   @override
   Widget build(BuildContext context) {
-
-
+    final splashData = getSplashData(context);
 
     return Scaffold(
       //backgroundColor: AppColors.splashScreenColor,
@@ -94,7 +92,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             
             
                         const Spacer(flex: 3),
-                        MyButton(buttonTitle: "Skip", function: () {
+                        MyButton(buttonTitle: context.translate('skip'), function: () {
                           context.go('/signup');
                         }),
                         const SizedBox(height: 100,),

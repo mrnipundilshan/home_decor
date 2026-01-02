@@ -44,10 +44,12 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     try {
       log("Calling Login");
       await Future.delayed(const Duration(seconds: 2));
+
       final response = await dio.post(
         ApiEndpoints.login,
         data: {"email": email, "password": password},
       );
+
       log('Response: ${response.data}');
 
       return LoginResponseModel.fromJson(response.data);

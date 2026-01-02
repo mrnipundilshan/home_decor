@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/feature/home/presentation/widgets/catgory%20carousel/my_carousel_view_card.dart';
 
@@ -22,32 +23,32 @@ class MyCarouselView extends StatelessWidget {
         children: [
           MyCarouselViewCard(
             imageUrl: "assets/catagory/bedroom.svg",
-            title: "Bedroom",
+            title: context.translate('bedroom'),
           ),
 
           MyCarouselViewCard(
             imageUrl: "assets/catagory/bath.svg",
-            title: "Bathroom",
+            title: context.translate('bathroom'),
           ),
           MyCarouselViewCard(
             imageUrl: "assets/catagory/Dinning.svg",
-            title: "Dinning",
+            title: context.translate('dinning'),
           ),
           MyCarouselViewCard(
             imageUrl: "assets/catagory/kitchen.svg",
-            title: "Kitchen",
+            title: context.translate('kitchen'),
           ),
           MyCarouselViewCard(
             imageUrl: "assets/catagory/living.svg",
-            title: "Living",
+            title: context.translate('living'),
           ),
           MyCarouselViewCard(
             imageUrl: "assets/catagory/kitchen.svg",
-            title: "Test",
+            title: context.translate('kitchen'),
           ),
           MyCarouselViewCard(
             imageUrl: "assets/catagory/living.svg",
-            title: "Test",
+            title: context.translate('living'),
           ),
         ],
       ),

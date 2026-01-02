@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_custom_text_styles.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
@@ -33,12 +34,12 @@ class WelcomeScreen extends StatelessWidget {
                 children: [
                   Image.asset("assets/logo.png"),
                   SizedBox(height: 20),
-                  Text("Welcome to", style: themeData.textTheme.headlineLarge),
-                  Text("Decoz", style: AppCustomTextStyles.splashScreenText),
+                  Text(context.translate('welcome_to'), style: themeData.textTheme.headlineLarge),
+                  Text(context.translate('decoz'), style: AppCustomTextStyles.splashScreenText),
                   SizedBox(height: 10),
                   Text(
                     textAlign: TextAlign.center,
-                    "Style your spaces & shop for all\nyour decor needs",
+                    context.translate('welcome_subtitle'),
                     style: AppCustomTextStyles.splashbody,
                   ),
                 ],
@@ -47,7 +48,7 @@ class WelcomeScreen extends StatelessWidget {
               Column(
                 children: [
                   MyButton(
-                      buttonTitle: 'Get Started',
+                      buttonTitle: context.translate('get_started'),
                       function: navigateToOnbordingPage
                   ),
                   SizedBox(height: 100),
