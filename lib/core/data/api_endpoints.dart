@@ -6,4 +6,7 @@ class ApiEndpoints {
   static const String signup = 'signup';
   static const String login = 'login';
   static const String otp = 'verify-otp';
+
+  // profile
+  static const String profile = 'profile';
 }

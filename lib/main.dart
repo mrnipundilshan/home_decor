@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:home_decor/base_app.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:home_decor/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:home_decor/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:home_decor/injection.dart' as di;
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => LocaleService()),
         BlocProvider(create: (context) => di.sl<AuthBloc>()),
         BlocProvider(create: (context) => di.sl<HomeBloc>()),
+        BlocProvider(create: (context) => di.sl<ProfileBloc>()),
       ],
 
       child: const BaseApp(),

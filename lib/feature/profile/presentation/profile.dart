@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/services/locale_service.dart';
 import 'package:home_decor/core/services/theme_service.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import 'package:home_decor/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:home_decor/feature/profile/presentation/widgets/profile_page_app_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -72,6 +74,14 @@ class Profile extends StatelessWidget {
                   },
                 ),
               ],
+            ),
+            ElevatedButton(
+              onPressed: () {
+                BlocProvider.of<ProfileBloc>(
+                  context,
+                ).add(FetchUserDetailsEvent());
+              },
+              child: Text("data"),
             ),
           ],
         ),

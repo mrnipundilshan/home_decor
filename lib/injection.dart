@@ -13,6 +13,11 @@ import 'package:home_decor/feature/home/data/repository/item_repository_impl.dar
 import 'package:home_decor/feature/home/domain/repository/item_repository.dart';
 import 'package:home_decor/feature/home/domain/usecases/item_usecases.dart';
 import 'package:home_decor/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:home_decor/feature/profile/data/datasource/profile_datasource.dart';
+import 'package:home_decor/feature/profile/data/repository/profile_repository_impl.dart';
+import 'package:home_decor/feature/profile/domain/repository/profile_repository.dart';
+import 'package:home_decor/feature/profile/domain/usecases/profile_usecases.dart';
+import 'package:home_decor/feature/profile/presentation/bloc/profile_bloc.dart';
 
 final sl = GetIt.I; // service locator
 
@@ -20,10 +25,12 @@ Future<void> init() async {
   // application layer
   sl.registerFactory(() => HomeBloc(itemUsecases: sl()));
   sl.registerFactory(() => AuthBloc(authUsecases: sl()));
+  sl.registerFactory(() => ProfileBloc(profileUsecases: sl()));
 
   // domain layer
   sl.registerFactory(() => ItemUsecases(itemRepository: sl()));
   sl.registerFactory(() => AuthUsecases(authRepository: sl()));
+  sl.registerFactory(() => ProfileUsecases(profileRepository: sl()));
 
   // data layer
   sl.registerFactory<ItemRepository>(
@@ -35,6 +42,9 @@ Future<void> init() async {
       authRemoteDatasource: sl(),
     ),
   );
+  sl.registerFactory<ProfileRepository>(
+    () => ProfileRepositoryImpl(profileDatasource: sl()),
+  );
 
   sl.registerFactory<ItemDatasource>(() => ItemDatasourceImpl(dio: sl()));
   sl.registerFactory<AuthRemoteDatasource>(
@@ -43,6 +53,7 @@ Future<void> init() async {
   sl.registerFactory<AuthLocalDatasource>(
     () => AuthLocalDatasourceImpl(flutterSecureStorage: sl()),
   );
+  sl.registerFactory<ProfileDatasource>(() => ProfileDatasourceImpl(dio: sl()));
 
   // Dio client
   sl.registerLazySingleton<DioClient>(() => DioClient());
