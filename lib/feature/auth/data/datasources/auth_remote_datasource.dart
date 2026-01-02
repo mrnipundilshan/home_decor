@@ -43,6 +43,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   ) async {
     try {
       log("Calling Login");
+      await Future.delayed(const Duration(seconds: 2));
       final response = await dio.post(
         ApiEndpoints.login,
         data: {"email": email, "password": password},

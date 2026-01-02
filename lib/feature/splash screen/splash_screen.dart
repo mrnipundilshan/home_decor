@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     isLoggedIn.fold((failure) => context.go('/welcome'), (isLoggedIn) {
       if (isLoggedIn) {
-        context.go('/homepage');
+        context.go('/navbar');
       } else {
         context.go('/welcome');
       }
