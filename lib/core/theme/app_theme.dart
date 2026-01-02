@@ -29,6 +29,11 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.lightAppBar,
       iconTheme: IconThemeData(color: AppColors.icon),
+      titleTextStyle: TextStyle(
+        color: Colors.black,
+        fontWeight: .bold,
+        fontSize: 29,
+      ),
     ),
 
     floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -53,6 +58,11 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.darkAppBar,
       iconTheme: const IconThemeData(color: AppColors.icon),
+      titleTextStyle: TextStyle(
+        color: Colors.white,
+        fontWeight: .bold,
+        fontSize: 29,
+      ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColors.lightAppBar,

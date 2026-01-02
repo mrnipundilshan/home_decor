@@ -4,8 +4,8 @@ import 'package:home_decor/core/theme/app_custom_text_styles.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MyAppBar({super.key});
+class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const HomePageAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {

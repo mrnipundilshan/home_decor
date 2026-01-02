@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:home_decor/core/services/theme_service.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
-import 'package:home_decor/feature/home/presentation/widgets/my_appbar.dart';
+import 'package:home_decor/feature/home/presentation/widgets/home_page_app_bar.dart';
 import 'package:home_decor/feature/home/presentation/widgets/catgory%20carousel/my_carousel_view.dart';
 import 'package:home_decor/feature/home/presentation/widgets/my_image_slider.dart';
 import 'package:home_decor/feature/home/presentation/widgets/top%20selling/top_selling.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       },
       child: Scaffold(
         backgroundColor: themeData.canvasColor,
-        appBar: MyAppBar(),
+        appBar: HomePageAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: AppSizes.screenWidth(context) * 0.02,
@@ -42,15 +40,6 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 15),
               MyCarouselView(),
               TopSelling(),
-              Switch(
-                value: Provider.of<ThemeService>(context).isDarkModeOn,
-                onChanged: (_) {
-                  Provider.of<ThemeService>(
-                    context,
-                    listen: false,
-                  ).toggleTheme();
-                },
-              ),
             ],
           ),
         ),
