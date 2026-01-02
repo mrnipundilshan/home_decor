@@ -62,7 +62,7 @@ class Profile extends StatelessWidget {
                       ],
                       onChanged: (String? newLocale) {
                         if (newLocale != null) {
-                          localeService.setLocale(newLocale);
+                          localeService.toggleLocale(newLocale);
                         }
                       },
                     );

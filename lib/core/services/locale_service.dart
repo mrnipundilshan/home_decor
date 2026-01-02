@@ -18,20 +18,12 @@ class LocaleService extends ChangeNotifier {
   }
 
   // set and save locale
-  Future<void> setLocale(String localeCode) async {
+  Future<void> toggleLocale(String localeCode) async {
     if (currentLocale != localeCode) {
       currentLocale = localeCode;
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_localeKey, localeCode);
       notifyListeners();
     }
-  }
-
-  // toggle between English and Sinhala
-  Future<void> toggleLocale() async {
-    currentLocale = currentLocale == 'en' ? 'si' : 'en';
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_localeKey, currentLocale);
-    notifyListeners();
   }
 }
