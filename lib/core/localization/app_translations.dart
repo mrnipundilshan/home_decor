@@ -130,8 +130,4 @@ class AppTranslations {
   static String translate(String locale, String key) {
     return _translations[locale]?[key] ?? _translations['en']?[key] ?? key;
   }
-
-  static Map<String, String> getTranslations(String locale) {
-    return _translations[locale] ?? _translations['en']!;
-  }
 }

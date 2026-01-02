@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 extension TranslationExtension on BuildContext {
   String translate(String key) {
-    final localeService = Provider.of<LocaleService>(this, listen: true);
-    return AppTranslations.translate(localeService.currentLocale, key);
+    final locale = read<LocaleService>().currentLocale;
+    return AppTranslations.translate(locale, key);
   }
 }
