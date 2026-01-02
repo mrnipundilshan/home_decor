@@ -16,15 +16,16 @@ class ProfileDatasourceImpl implements ProfileDatasource {
   @override
   Future<ProfileModel> getUserDetailsFromAPI() async {
     log("Calling Top Profile Data Fetch API");
-    await Future.delayed(const Duration(seconds: 4));
+    //await Future.delayed(const Duration(seconds: 4));
     final response = await dio.get(ApiEndpoints.profile);
-
+    print(response);
     if (response.statusCode != 200) {
+      print(response.statusCode);
       throw ServerException();
     } else {
       // final responseBody = json.decode(response.data);
       final responseBody = response.data;
-
+      print(responseBody);
       final profileDetails = ProfileModel.fromJson(responseBody);
       print(profileDetails.email);
       return profileDetails;

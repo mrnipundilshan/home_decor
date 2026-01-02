@@ -11,6 +11,8 @@ abstract class AuthRemoteDatasource {
   Future<LoginResponseModel> loginUserFromAPI(String email, String password);
 
   Future<bool> signupOtpVerificationFromApi(String email, String otp);
+
+  Future<String> refreshAccessToken(String refreshToken);
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -75,6 +77,29 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       return true;
     } catch (e) {
       log('[AuthDatasource] Unknown error', error: e);
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<String> refreshAccessToken(String refreshToken) async {
+    try {
+      log('Refreshing access token');
+      final response = await dio.post(
+        ApiEndpoints.refreshToken,
+        data: {"refreshToken": refreshToken},
+      );
+
+      log('Refresh token response: ${response.data}');
+
+      if (response.data['success'] == true &&
+          response.data['accessToken'] != null) {
+        return response.data['accessToken'] as String;
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      log('[AuthDatasource] Refresh token error', error: e);
       throw ServerException();
     }
   }

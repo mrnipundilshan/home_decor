@@ -56,7 +56,9 @@ Future<void> init() async {
   sl.registerFactory<ProfileDatasource>(() => ProfileDatasourceImpl(dio: sl()));
 
   // Dio client
-  sl.registerLazySingleton<DioClient>(() => DioClient());
+  sl.registerLazySingleton<DioClient>(
+    () => DioClient(authLocalDatasource: sl()),
+  );
 
   // Expose Dio with baseUrl
   sl.registerLazySingleton<Dio>(() => sl<DioClient>().dio);
