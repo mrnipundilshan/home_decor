@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/feature/home/presentation/home_page.dart';
-import 'package:home_decor/feature/profile/profile.dart';
+import 'package:home_decor/feature/profile/presentation/profile.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
