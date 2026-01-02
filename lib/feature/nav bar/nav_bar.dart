@@ -46,9 +46,27 @@ class _NavBarState extends State<NavBar> {
           showUnselectedLabels: true,
 
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(top: 6.0),
+                child: Icon(Icons.home),
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(top: 6.0),
+                child: Icon(Icons.search),
+              ),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(top: 6.0),
+                child: Icon(Icons.person),
+              ),
+              label: 'Profile',
+            ),
           ],
         ),
       ),
