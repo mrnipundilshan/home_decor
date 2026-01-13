@@ -9,7 +9,10 @@ class ProfilePageAppBar extends StatelessWidget implements PreferredSizeWidget {
     final themeData = Theme.of(context);
     return AppBar(
       centerTitle: true,
-      title: Text(context.translate('profile'), style: themeData.appBarTheme.titleTextStyle),
+      title: Text(
+        context.translate('profile'),
+        style: themeData.appBarTheme.titleTextStyle,
+      ),
     );
   }
 

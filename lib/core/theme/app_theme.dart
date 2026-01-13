@@ -32,7 +32,7 @@ class AppTheme {
       titleTextStyle: TextStyle(
         color: Colors.black,
         fontWeight: .bold,
-        fontSize: 29,
+        fontSize: 24,
       ),
     ),
 
@@ -61,7 +61,7 @@ class AppTheme {
       titleTextStyle: TextStyle(
         color: Colors.white,
         fontWeight: .bold,
-        fontSize: 29,
+        fontSize: 24,
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
