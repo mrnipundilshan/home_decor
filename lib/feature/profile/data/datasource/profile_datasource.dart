@@ -13,9 +13,6 @@ class ProfileDatasourceImpl implements ProfileDatasource {
 
   ProfileDatasourceImpl({required this.dio});
 
-  // pull request
-  // hbddjudfv
-
   @override
   Future<ProfileModel> getUserDetailsFromAPI() async {
     log("Calling Top Profile Data Fetch API");
