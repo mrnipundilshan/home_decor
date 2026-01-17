@@ -1,5 +1,5 @@
 class ApiEndpoints {
-  // itmes
+  // items
   static const String topSelling = 'topselling';
 
   //auth

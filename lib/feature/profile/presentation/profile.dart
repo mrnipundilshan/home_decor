@@ -18,7 +18,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   void initState() {
-    //BlocProvider.of<ProfileBloc>(context).add(FetchUserDetailsEvent());
+    BlocProvider.of<ProfileBloc>(context).add(FetchUserDetailsEvent());
     super.initState();
   }
 
@@ -34,76 +34,78 @@ class _ProfileState extends State<Profile> {
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
             if (state is ProfileDataFetchSuccessState) {
-              Column(children: [CircleAvatar(), Text(state.profile.email)]);
+              return Column(
+                children: [
+                  CircleAvatar(),
+                  Text(state.profile.email, style: TextStyle(fontSize: 80)),
+                  ElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<ProfileBloc>(
+                        context,
+                      ).add(FetchUserDetailsEvent());
+                    },
+                    child: Text("data"),
+                  ),
+
+                  // Theme Toggle
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        context.translate("theme"),
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Switch(
+                        value: Provider.of<ThemeService>(context).isDarkModeOn,
+                        onChanged: (_) {
+                          Provider.of<ThemeService>(
+                            context,
+                            listen: false,
+                          ).toggleTheme();
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  // Language Switcher
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        context.translate('language'),
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Consumer<LocaleService>(
+                        builder: (context, localeService, child) {
+                          return DropdownButton<String>(
+                            value: localeService.currentLocale,
+                            items: [
+                              DropdownMenuItem(
+                                value: 'en',
+                                child: Text(context.translate('english')),
+                              ),
+                              DropdownMenuItem(
+                                value: 'si',
+                                child: Text(context.translate('sinhala')),
+                              ),
+                            ],
+                            onChanged: (String? newLocale) {
+                              if (newLocale != null) {
+                                localeService.toggleLocale(newLocale);
+                              }
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              );
             }
             if (state is ProfileDataFetchLoadingState) {
-              CircularProgressIndicator(color: Colors.white);
+              return CircularProgressIndicator(color: Colors.white);
             }
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Theme Toggle
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      context.translate("theme"),
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Switch(
-                      value: Provider.of<ThemeService>(context).isDarkModeOn,
-                      onChanged: (_) {
-                        Provider.of<ThemeService>(
-                          context,
-                          listen: false,
-                        ).toggleTheme();
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                // Language Switcher
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      context.translate('language'),
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Consumer<LocaleService>(
-                      builder: (context, localeService, child) {
-                        return DropdownButton<String>(
-                          value: localeService.currentLocale,
-                          items: [
-                            DropdownMenuItem(
-                              value: 'en',
-                              child: Text(context.translate('english')),
-                            ),
-                            DropdownMenuItem(
-                              value: 'si',
-                              child: Text(context.translate('sinhala')),
-                            ),
-                          ],
-                          onChanged: (String? newLocale) {
-                            if (newLocale != null) {
-                              localeService.toggleLocale(newLocale);
-                            }
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<ProfileBloc>(
-                      context,
-                    ).add(FetchUserDetailsEvent());
-                  },
-                  child: Text("data"),
-                ),
-              ],
-            );
+            return SizedBox.shrink();
           },
         ),
       ),
