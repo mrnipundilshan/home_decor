@@ -4,15 +4,24 @@ import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 
 class ProfilePageAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const ProfilePageAppBar({super.key});
+  final bool isEditing;
+  final VoidCallback onToggleEdit;
+
+  const ProfilePageAppBar({
+    super.key,
+    required this.isEditing,
+    required this.onToggleEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     return AppBar(
       actions: [
-        Icon(Icons.edit_outlined),
-        SizedBox(width: 15),
+        IconButton(
+          onPressed: onToggleEdit,
+          icon: Icon(isEditing ? Icons.close : Icons.edit_outlined),
+        ),
 
         IconButton(
           onPressed: () {

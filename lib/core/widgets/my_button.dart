@@ -8,11 +8,13 @@ class MyButton extends StatefulWidget {
   final String buttonTitle;
   final VoidCallback function;
   final bool? isLoading;
+  final bool? isEnabled;
 
   const MyButton({
     super.key,
     required this.buttonTitle,
     required this.function,
+    this.isEnabled = true,
     this.isLoading = false,
   });
 
@@ -23,21 +25,24 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: AppSizes.screenHeight(context) * 0.06,
-      child: CupertinoButton(
-        sizeStyle: CupertinoButtonSize.medium,
-        borderRadius: BorderRadius.circular(40),
-        onPressed: () => widget.function(),
-        color: AppColors.commonPrimary,
-        child: widget.isLoading!
-            ? SizedBox(
-                height: AppSizes.screenHeight(context) * 0.04,
-                width: AppSizes.screenHeight(context) * 0.04,
-                child: CircularProgressIndicator(),
-              )
-            : Text(widget.buttonTitle, style: AppCustomTextStyles.buttonText),
+    return Opacity(
+      opacity: widget.isEnabled! ? 1 : 0.1,
+      child: SizedBox(
+        width: double.infinity,
+        height: AppSizes.screenHeight(context) * 0.06,
+        child: CupertinoButton(
+          sizeStyle: CupertinoButtonSize.medium,
+          borderRadius: BorderRadius.circular(40),
+          onPressed: () => widget.isEnabled! ? widget.function() : null,
+          color: AppColors.commonPrimary,
+          child: widget.isLoading!
+              ? SizedBox(
+                  height: AppSizes.screenHeight(context) * 0.04,
+                  width: AppSizes.screenHeight(context) * 0.04,
+                  child: CircularProgressIndicator(),
+                )
+              : Text(widget.buttonTitle, style: AppCustomTextStyles.buttonText),
+        ),
       ),
     );
   }

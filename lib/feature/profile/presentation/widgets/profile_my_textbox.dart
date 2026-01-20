@@ -6,12 +6,14 @@ class ProfileMyTextbox extends StatefulWidget {
   final TextEditingController controller;
   final TextInputType? keyboardInputType;
   final IconData? iconData;
+  final bool enabled;
   const ProfileMyTextbox({
     super.key,
     required this.textFieldName,
     this.iconData,
     required this.controller,
     this.keyboardInputType,
+    this.enabled = false,
   });
 
   @override
@@ -27,6 +29,7 @@ class _ProfileMyTextboxState extends State<ProfileMyTextbox> {
       height: 50,
       child: CupertinoTextField(
         keyboardType: widget.keyboardInputType,
+        enabled: widget.enabled,
         suffix: Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: Icon(widget.iconData),

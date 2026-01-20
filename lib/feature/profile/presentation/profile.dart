@@ -5,6 +5,7 @@ import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/services/locale_service.dart';
 import 'package:home_decor/core/services/theme_service.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:home_decor/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:home_decor/feature/profile/presentation/widgets/profile_my_textbox.dart';
@@ -26,6 +27,49 @@ class _ProfileState extends State<Profile> {
   late TextEditingController dobController;
   late TextEditingController phoneNumberController;
   late TextEditingController genderController;
+
+  bool isEditClicked = false;
+
+  String _loadedFirstName = '';
+  String _loadedLastName = '';
+  String _loadedEmail = '';
+  String _loadedDob = '';
+  String _loadedPhoneNumber = '';
+  String _loadedGender = '';
+  bool _hasLoadedProfile = false;
+
+  void _updateLoadedSnapshot(ProfileDataFetchSuccessState state) {
+    _loadedFirstName = state.profile.firstName ?? '';
+    _loadedLastName = state.profile.lastName ?? '';
+    _loadedDob = state.profile.dob == null
+        ? ''
+        : DateFormat('yyyy-MM-dd').format(state.profile.dob!);
+    _loadedGender = state.profile.gender ?? '';
+    _loadedPhoneNumber = state.profile.phoneNumber ?? '';
+    _loadedEmail = state.profile.email;
+    _hasLoadedProfile = true;
+  }
+
+  void _restoreControllersFromSnapshot() {
+    if (!_hasLoadedProfile) return;
+    firstNameController.text = _loadedFirstName;
+    lastNameController.text = _loadedLastName;
+    dobController.text = _loadedDob;
+    genderController.text = _loadedGender;
+    phoneNumberController.text = _loadedPhoneNumber;
+    emailController.text = _loadedEmail;
+  }
+
+  void _toggleEdit() {
+    setState(() {
+      if (isEditClicked) {
+        _restoreControllersFromSnapshot();
+        isEditClicked = false;
+      } else {
+        isEditClicked = true;
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -60,7 +104,10 @@ class _ProfileState extends State<Profile> {
         }
       },
       child: Scaffold(
-        appBar: ProfilePageAppBar(),
+        appBar: ProfilePageAppBar(
+          isEditing: isEditClicked,
+          onToggleEdit: _toggleEdit,
+        ),
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: AppSizes.screenWidth(context) * 0.02,
@@ -69,15 +116,12 @@ class _ProfileState extends State<Profile> {
           child: BlocListener<ProfileBloc, ProfileState>(
             listener: (context, state) {
               if (state is ProfileDataFetchSuccessState) {
-                // Initialize controllers with API values when state is received
-                firstNameController.text = state.profile.firstName ?? '';
-                lastNameController.text = state.profile.lastName ?? '';
-                dobController.text = DateFormat(
-                  'yyyy-MM-dd',
-                ).format(state.profile.dob!);
-                genderController.text = state.profile.gender ?? '';
-                phoneNumberController.text = state.profile.phoneNumber ?? '';
-                emailController.text = state.profile.email;
+                _updateLoadedSnapshot(state);
+
+                // Initialize controllers with API values (only when not editing)
+                if (!isEditClicked) {
+                  _restoreControllersFromSnapshot();
+                }
               }
             },
             child: BlocBuilder<ProfileBloc, ProfileState>(
@@ -96,6 +140,7 @@ class _ProfileState extends State<Profile> {
                             ProfileMyTextbox(
                               textFieldName: firstNameController.text,
                               controller: firstNameController,
+                              enabled: isEditClicked,
                             ),
 
                             SizedBox(height: 15),
@@ -103,6 +148,7 @@ class _ProfileState extends State<Profile> {
                             ProfileMyTextbox(
                               textFieldName: lastNameController.text,
                               controller: lastNameController,
+                              enabled: isEditClicked,
                             ),
 
                             SizedBox(height: 15),
@@ -111,6 +157,7 @@ class _ProfileState extends State<Profile> {
                               textFieldName: emailController.text,
                               keyboardInputType: TextInputType.emailAddress,
                               controller: emailController,
+                              enabled: false,
                             ),
 
                             SizedBox(height: 15),
@@ -119,6 +166,7 @@ class _ProfileState extends State<Profile> {
                               textFieldName: dobController.text,
                               controller: dobController,
                               iconData: Icons.date_range_outlined,
+                              enabled: isEditClicked,
                             ),
 
                             SizedBox(height: 15),
@@ -127,6 +175,7 @@ class _ProfileState extends State<Profile> {
                               textFieldName: phoneNumberController.text,
                               keyboardInputType: TextInputType.number,
                               controller: phoneNumberController,
+                              enabled: isEditClicked,
                             ),
                             SizedBox(height: 15),
 
@@ -134,8 +183,15 @@ class _ProfileState extends State<Profile> {
                               textFieldName: genderController.text,
                               iconData: Icons.manage_accounts_outlined,
                               controller: genderController,
+                              enabled: isEditClicked,
                             ),
                           ],
+                        ),
+                        SizedBox(height: 15),
+                        MyButton(
+                          buttonTitle: "Save",
+                          function: () {},
+                          isEnabled: false,
                         ),
 
                         // Theme Toggle
