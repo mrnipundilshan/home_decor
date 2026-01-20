@@ -8,6 +8,7 @@ class ProfilePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     return AppBar(
+      actions: [Icon(Icons.edit_outlined), SizedBox(width: 15)],
       centerTitle: true,
       title: Text(
         context.translate('profile'),

@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 class ProfileMyTextbox extends StatefulWidget {
   final String textFieldName;
   final TextEditingController controller;
-
+  final TextInputType? keyboardInputType;
+  final IconData? iconData;
   const ProfileMyTextbox({
     super.key,
     required this.textFieldName,
+    this.iconData,
     required this.controller,
+    this.keyboardInputType,
   });
 
   @override
@@ -23,6 +26,11 @@ class _ProfileMyTextboxState extends State<ProfileMyTextbox> {
       width: double.infinity,
       height: 50,
       child: CupertinoTextField(
+        keyboardType: widget.keyboardInputType,
+        suffix: Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: Icon(widget.iconData),
+        ),
         controller: widget.controller,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),

@@ -79,6 +79,7 @@ class _ProfileState extends State<Profile> {
                   child: Column(
                     crossAxisAlignment: .start,
                     children: [
+                      SizedBox(height: 15),
                       Center(child: CircleAvatar(radius: 50)),
                       SizedBox(height: 15),
                       Column(
@@ -86,7 +87,6 @@ class _ProfileState extends State<Profile> {
                         children: [
                           ProfileMyTextbox(
                             textFieldName: firstNameController.text,
-
                             controller: firstNameController,
                           ),
 
@@ -94,7 +94,6 @@ class _ProfileState extends State<Profile> {
 
                           ProfileMyTextbox(
                             textFieldName: lastNameController.text,
-
                             controller: lastNameController,
                           ),
 
@@ -102,7 +101,7 @@ class _ProfileState extends State<Profile> {
 
                           ProfileMyTextbox(
                             textFieldName: emailController.text,
-
+                            keyboardInputType: TextInputType.emailAddress,
                             controller: emailController,
                           ),
 
@@ -111,20 +110,21 @@ class _ProfileState extends State<Profile> {
                           ProfileMyTextbox(
                             textFieldName: dobController.text,
                             controller: dobController,
+                            iconData: Icons.date_range_outlined,
                           ),
 
                           SizedBox(height: 15),
 
                           ProfileMyTextbox(
                             textFieldName: phoneNumberController.text,
-
+                            keyboardInputType: TextInputType.number,
                             controller: phoneNumberController,
                           ),
                           SizedBox(height: 15),
 
                           ProfileMyTextbox(
                             textFieldName: genderController.text,
-
+                            iconData: Icons.manage_accounts_outlined,
                             controller: genderController,
                           ),
                         ],
