@@ -9,7 +9,7 @@ class AppCustomTextStyles {
   );
 
   static const TextStyle buttonText = TextStyle(
-    fontSize: 26,
+    fontSize: 21,
     fontWeight: FontWeight.w700,
     color: Colors.black,
   );
@@ -26,6 +26,4 @@ class AppCustomTextStyles {
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
-
-  
 }

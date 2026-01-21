@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +15,7 @@ import 'package:home_decor/feature/profile/presentation/widgets/profile_my_textb
 import 'package:home_decor/feature/profile/presentation/widgets/profile_page_app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -28,6 +31,7 @@ class _ProfileState extends State<Profile> {
   late TextEditingController dobController;
   late TextEditingController phoneNumberController;
   late TextEditingController genderController;
+  TextEditingController loadingController = TextEditingController();
 
   bool isEditClicked = false;
 
@@ -98,6 +102,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    final themeData = Theme.of(context);
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthUnauthonticatedState) {
@@ -127,186 +132,257 @@ class _ProfileState extends State<Profile> {
                 ).add(FetchUserDetailsEvent());
               }
               if (state is ProfileErrorState) {
-                print("Error");
+                log("Error");
               }
             },
-            child: BlocBuilder<ProfileBloc, ProfileState>(
-              builder: (context, state) {
-                if (state is ProfileDataFetchSuccessState) {
-                  return SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: .start,
-                      children: [
-                        SizedBox(height: 15),
-                        Center(child: CircleAvatar(radius: 50)),
-                        SizedBox(height: 15),
-                        Column(
-                          crossAxisAlignment: .start,
-                          children: [
-                            ProfileMyTextbox(
-                              textFieldName: firstNameController.text.trim(),
-                              controller: firstNameController,
-                              enabled: isEditClicked,
-                            ),
-
-                            SizedBox(height: 15),
-
-                            ProfileMyTextbox(
-                              textFieldName: lastNameController.text.trim(),
-                              controller: lastNameController,
-                              enabled: isEditClicked,
-                            ),
-
-                            SizedBox(height: 15),
-
-                            ProfileMyTextbox(
-                              textFieldName: emailController.text.trim(),
-                              keyboardInputType: TextInputType.emailAddress,
-                              controller: emailController,
-                              enabled: false,
-                            ),
-
-                            SizedBox(height: 15),
-
-                            ProfileMyTextbox(
-                              textFieldName: dobController.text.trim(),
-                              controller: dobController,
-                              iconData: Icons.date_range_outlined,
-                              enabled: isEditClicked,
-                            ),
-
-                            SizedBox(height: 15),
-
-                            ProfileMyTextbox(
-                              textFieldName: phoneNumberController.text,
-                              keyboardInputType: TextInputType.number,
-                              controller: phoneNumberController,
-                              enabled: isEditClicked,
-                            ),
-                            SizedBox(height: 15),
-
-                            ProfileMyTextbox(
-                              textFieldName: genderController.text.trim(),
-                              iconData: Icons.manage_accounts_outlined,
-                              controller: genderController,
-                              enabled: isEditClicked,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 15),
-                        Row(
-                          children: [
-                            MyButton(
-                              buttonTitle: isEditClicked ? "Cancel" : "Edit",
-                              function: _toggleEdit,
-
-                              isEnabled: true,
-                            ),
-                            SizedBox(width: 15),
-                            MyButton(
-                              buttonTitle: "Save",
-                              function: () {
-                                final updatedProfile = ProfileEntity(
-                                  firstName: firstNameController.text.trim(),
-                                  lastName: lastNameController.text.trim(),
-                                  email: state
-                                      .profile
-                                      .email, // email usually not editable
-                                  phoneNumber: phoneNumberController.text
-                                      .trim(),
-                                  gender: genderController.text.trim(),
-                                  dob: dobController.text.isEmpty
-                                      ? null
-                                      : DateTime.parse(
-                                          dobController.text.trim(),
-                                        ),
-                                );
-
-                                BlocProvider.of<ProfileBloc>(context).add(
-                                  SetUserDetailsEvent(
-                                    profileEntity: updatedProfile,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  BlocBuilder<ProfileBloc, ProfileState>(
+                    builder: (context, state) {
+                      if (state is ProfileDataFetchSuccessState) {
+                        return SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: .start,
+                            children: [
+                              SizedBox(height: 15),
+                              Center(child: CircleAvatar(radius: 50)),
+                              SizedBox(height: 15),
+                              Column(
+                                crossAxisAlignment: .start,
+                                children: [
+                                  ProfileMyTextbox(
+                                    textFieldName: firstNameController.text
+                                        .trim(),
+                                    controller: firstNameController,
+                                    enabled: isEditClicked,
                                   ),
-                                );
 
-                                setState(() {
-                                  isEditClicked = false;
-                                });
-                              },
-                              isEnabled: isEditClicked,
-                            ),
-                          ],
-                        ),
+                                  SizedBox(height: 15),
 
-                        // Theme Toggle
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              context.translate("theme"),
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                            Switch(
-                              value: Provider.of<ThemeService>(
-                                context,
-                              ).isDarkModeOn,
-                              onChanged: (_) {
-                                Provider.of<ThemeService>(
-                                  context,
-                                  listen: false,
-                                ).toggleTheme();
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                        // Language Switcher
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              context.translate('language'),
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                            Consumer<LocaleService>(
-                              builder: (context, localeService, child) {
-                                return DropdownButton<String>(
-                                  value: localeService.currentLocale,
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: 'en',
-                                      child: Text(context.translate('english')),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 'si',
-                                      child: Text(context.translate('sinhala')),
-                                    ),
-                                  ],
-                                  onChanged: (String? newLocale) {
-                                    if (newLocale != null) {
-                                      localeService.toggleLocale(newLocale);
-                                    }
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 150),
-                      ],
-                    ),
-                  );
-                }
-                if (state is ProfileDataFetchLoadingState) {
-                  return Center(
-                    child: CircularProgressIndicator(color: Colors.white),
-                  );
-                }
-                return SizedBox.shrink();
-              },
+                                  ProfileMyTextbox(
+                                    textFieldName: lastNameController.text
+                                        .trim(),
+                                    controller: lastNameController,
+                                    enabled: isEditClicked,
+                                  ),
+
+                                  SizedBox(height: 15),
+
+                                  ProfileMyTextbox(
+                                    textFieldName: emailController.text.trim(),
+                                    keyboardInputType:
+                                        TextInputType.emailAddress,
+                                    controller: emailController,
+                                    enabled: false,
+                                  ),
+
+                                  SizedBox(height: 15),
+
+                                  ProfileMyTextbox(
+                                    textFieldName: dobController.text.trim(),
+                                    controller: dobController,
+                                    iconData: Icons.date_range_outlined,
+                                    enabled: isEditClicked,
+                                  ),
+
+                                  SizedBox(height: 15),
+
+                                  ProfileMyTextbox(
+                                    textFieldName: phoneNumberController.text,
+                                    keyboardInputType: TextInputType.number,
+                                    controller: phoneNumberController,
+                                    enabled: isEditClicked,
+                                  ),
+                                  SizedBox(height: 15),
+
+                                  ProfileMyTextbox(
+                                    textFieldName: genderController.text.trim(),
+                                    iconData: Icons.manage_accounts_outlined,
+                                    controller: genderController,
+                                    enabled: isEditClicked,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  MyButton(
+                                    buttonTitle: isEditClicked
+                                        ? context.translate("cancel")
+                                        : context.translate("edit"),
+                                    function: _toggleEdit,
+
+                                    isEnabled: true,
+                                  ),
+                                  SizedBox(width: 15),
+                                  MyButton(
+                                    buttonTitle: context.translate('save'),
+                                    function: () {
+                                      final updatedProfile = ProfileEntity(
+                                        firstName: firstNameController.text
+                                            .trim(),
+                                        lastName: lastNameController.text
+                                            .trim(),
+                                        email: state
+                                            .profile
+                                            .email, // email usually not editable
+                                        phoneNumber: phoneNumberController.text
+                                            .trim(),
+                                        gender: genderController.text.trim(),
+                                        dob: dobController.text.isEmpty
+                                            ? null
+                                            : DateTime.parse(
+                                                dobController.text.trim(),
+                                              ),
+                                      );
+
+                                      BlocProvider.of<ProfileBloc>(context).add(
+                                        SetUserDetailsEvent(
+                                          profileEntity: updatedProfile,
+                                        ),
+                                      );
+
+                                      setState(() {
+                                        isEditClicked = false;
+                                      });
+                                    },
+                                    isEnabled: isEditClicked,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      if (state is ProfileDataFetchLoadingState) {
+                        return Shimmer.fromColors(
+                          baseColor: themeData.colorScheme.inversePrimary,
+                          highlightColor: themeData.colorScheme.primary,
+                          enabled: true,
+                          child: loading_shimmer_state(),
+                        );
+                      }
+                      return SizedBox.shrink();
+                    },
+                  ),
+                  theme_and_language(),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+
+  Column loading_shimmer_state() {
+    return Column(
+      crossAxisAlignment: .start,
+      children: [
+        SizedBox(height: 15),
+        Center(child: CircleAvatar(radius: 50)),
+        SizedBox(height: 15),
+        Column(
+          crossAxisAlignment: .start,
+          children: [
+            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+
+            SizedBox(height: 15),
+
+            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+
+            SizedBox(height: 15),
+
+            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+
+            SizedBox(height: 15),
+
+            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+
+            SizedBox(height: 15),
+
+            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            SizedBox(height: 15),
+
+            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+          ],
+        ),
+        SizedBox(height: 15),
+        Row(
+          children: [
+            MyButton(
+              buttonTitle: isEditClicked ? "Cancel" : "Edit",
+              function: () {},
+
+              isEnabled: true,
+            ),
+            SizedBox(width: 15),
+            MyButton(
+              buttonTitle: "Save",
+              function: () {},
+              isEnabled: isEditClicked,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Column theme_and_language() => Column(
+    children: [
+      // Theme Toggle
+      SizedBox(height: 20),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            context.translate("theme"),
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          Switch(
+            value: Provider.of<ThemeService>(context).isDarkModeOn,
+            onChanged: (_) {
+              Provider.of<ThemeService>(context, listen: false).toggleTheme();
+            },
+          ),
+        ],
+      ),
+
+      SizedBox(height: 20),
+      // Language Switcher
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            context.translate('language'),
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          Consumer<LocaleService>(
+            builder: (context, localeService, child) {
+              return DropdownButton<String>(
+                value: localeService.currentLocale,
+                items: [
+                  DropdownMenuItem(
+                    value: 'en',
+                    child: Text(context.translate('english')),
+                  ),
+                  DropdownMenuItem(
+                    value: 'si',
+                    child: Text(context.translate('sinhala')),
+                  ),
+                ],
+                onChanged: (String? newLocale) {
+                  if (newLocale != null) {
+                    localeService.toggleLocale(newLocale);
+                  }
+                },
+              );
+            },
+          ),
+        ],
+      ),
+      SizedBox(height: 150),
+    ],
+  );
 }

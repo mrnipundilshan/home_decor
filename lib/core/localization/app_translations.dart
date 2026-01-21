@@ -64,6 +64,11 @@ class AppTranslations {
       'dinning': 'Dinning',
       'kitchen': 'Kitchen',
       'living': 'Living',
+
+      // Profile
+      'edit': "Edit",
+      'cancel': "Cancel",
+      'save': "Save",
     },
     'si': {
       // Auth
@@ -130,6 +135,11 @@ class AppTranslations {
       'dinning': 'කෑම කාමරය',
       'kitchen': 'කුස්සිය',
       'living': 'ගෙදර',
+
+      // Profile
+      'edit': "සකසන්න",
+      'cancel': "අවලංගු කරන්න",
+      'save': 'සුරකින්න',
     },
   };
 
