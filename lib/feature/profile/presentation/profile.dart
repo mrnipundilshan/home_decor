@@ -105,10 +105,7 @@ class _ProfileState extends State<Profile> {
         }
       },
       child: Scaffold(
-        appBar: ProfilePageAppBar(
-          isEditing: isEditClicked,
-          onToggleEdit: _toggleEdit,
-        ),
+        appBar: ProfilePageAppBar(),
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: AppSizes.screenWidth(context) * 0.02,
