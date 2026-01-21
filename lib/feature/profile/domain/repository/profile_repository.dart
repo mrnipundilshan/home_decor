@@ -4,4 +4,8 @@ import 'package:home_decor/feature/profile/domain/entity/profile_entity.dart';
 
 abstract class ProfileRepository {
   Future<Either<Failure, ProfileEntity>> getUserProfileDetails();
+
+  Future<Either<Failure, bool>> setUserProfileDetails(
+    ProfileEntity userProfile,
+  );
 }

@@ -8,3 +8,9 @@ sealed class ProfileEvent extends Equatable {
 }
 
 class FetchUserDetailsEvent extends ProfileEvent {}
+
+class SetUserDetailsEvent extends ProfileEvent {
+  final ProfileEntity profileEntity;
+
+  const SetUserDetailsEvent({required this.profileEntity});
+}

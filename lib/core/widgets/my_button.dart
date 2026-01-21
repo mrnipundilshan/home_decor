@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
@@ -33,7 +35,8 @@ class _MyButtonState extends State<MyButton> {
         child: CupertinoButton(
           sizeStyle: CupertinoButtonSize.medium,
           borderRadius: BorderRadius.circular(40),
-          onPressed: () => widget.isEnabled! ? widget.function() : null,
+          onPressed: () =>
+              widget.isEnabled! ? widget.function() : log("Button Not Enabled"),
           color: AppColors.commonPrimary,
           child: widget.isLoading!
               ? SizedBox(

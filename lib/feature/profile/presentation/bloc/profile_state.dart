@@ -17,4 +17,8 @@ class ProfileDataFetchSuccessState extends ProfileState {
   const ProfileDataFetchSuccessState({required this.profile});
 }
 
-class ProfileDataFetchErrorState extends ProfileState {}
+class ProfileErrorState extends ProfileState {}
+
+class ProfileDataSetLoadingState extends ProfileState {}
+
+class ProfileUpdateSuccessState extends ProfileState {}

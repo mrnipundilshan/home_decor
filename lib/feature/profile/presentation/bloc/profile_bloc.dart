@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:home_decor/feature/profile/domain/entity/profile_entity.dart';
@@ -14,6 +13,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileEvent>((event, emit) {});
 
     on<FetchUserDetailsEvent>(_fetchUserDetailsEvent);
+
+    on<SetUserDetailsEvent>(_setUserDetailsEvent);
   }
 
   Future<void> _fetchUserDetailsEvent(
@@ -24,8 +25,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final failureOrProfile = await profileUsecases.getProfileDetails();
 
     failureOrProfile.fold(
-      (failure) => emit(ProfileDataFetchErrorState()),
+      (failure) => emit(ProfileErrorState()),
       (profile) => emit(ProfileDataFetchSuccessState(profile: profile)),
+    );
+  }
+
+  FutureOr<void> _setUserDetailsEvent(
+    SetUserDetailsEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
+    emit(ProfileDataFetchLoadingState());
+
+    final failureOrSuccess = await profileUsecases.setProfileDetails(
+      event.profileEntity,
+    );
+
+    failureOrSuccess.fold(
+      (failure) => emit(ProfileErrorState()),
+      (right) => emit(ProfileUpdateSuccessState()),
     );
   }
 }

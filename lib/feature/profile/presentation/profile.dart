@@ -7,6 +7,7 @@ import 'package:home_decor/core/services/theme_service.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:home_decor/feature/profile/domain/entity/profile_entity.dart';
 import 'package:home_decor/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:home_decor/feature/profile/presentation/widgets/profile_my_textbox.dart';
 import 'package:home_decor/feature/profile/presentation/widgets/profile_page_app_bar.dart';
@@ -123,6 +124,14 @@ class _ProfileState extends State<Profile> {
                   _restoreControllersFromSnapshot();
                 }
               }
+              if (state is ProfileUpdateSuccessState) {
+                BlocProvider.of<ProfileBloc>(
+                  context,
+                ).add(FetchUserDetailsEvent());
+              }
+              if (state is ProfileErrorState) {
+                print("Error");
+              }
             },
             child: BlocBuilder<ProfileBloc, ProfileState>(
               builder: (context, state) {
@@ -138,7 +147,7 @@ class _ProfileState extends State<Profile> {
                           crossAxisAlignment: .start,
                           children: [
                             ProfileMyTextbox(
-                              textFieldName: firstNameController.text,
+                              textFieldName: firstNameController.text.trim(),
                               controller: firstNameController,
                               enabled: isEditClicked,
                             ),
@@ -146,7 +155,7 @@ class _ProfileState extends State<Profile> {
                             SizedBox(height: 15),
 
                             ProfileMyTextbox(
-                              textFieldName: lastNameController.text,
+                              textFieldName: lastNameController.text.trim(),
                               controller: lastNameController,
                               enabled: isEditClicked,
                             ),
@@ -154,7 +163,7 @@ class _ProfileState extends State<Profile> {
                             SizedBox(height: 15),
 
                             ProfileMyTextbox(
-                              textFieldName: emailController.text,
+                              textFieldName: emailController.text.trim(),
                               keyboardInputType: TextInputType.emailAddress,
                               controller: emailController,
                               enabled: false,
@@ -163,7 +172,7 @@ class _ProfileState extends State<Profile> {
                             SizedBox(height: 15),
 
                             ProfileMyTextbox(
-                              textFieldName: dobController.text,
+                              textFieldName: dobController.text.trim(),
                               controller: dobController,
                               iconData: Icons.date_range_outlined,
                               enabled: isEditClicked,
@@ -180,7 +189,7 @@ class _ProfileState extends State<Profile> {
                             SizedBox(height: 15),
 
                             ProfileMyTextbox(
-                              textFieldName: genderController.text,
+                              textFieldName: genderController.text.trim(),
                               iconData: Icons.manage_accounts_outlined,
                               controller: genderController,
                               enabled: isEditClicked,
@@ -190,8 +199,31 @@ class _ProfileState extends State<Profile> {
                         SizedBox(height: 15),
                         MyButton(
                           buttonTitle: "Save",
-                          function: () {},
-                          isEnabled: false,
+                          function: () {
+                            final updatedProfile = ProfileEntity(
+                              firstName: firstNameController.text.trim(),
+                              lastName: lastNameController.text.trim(),
+                              email: state
+                                  .profile
+                                  .email, // email usually not editable
+                              phoneNumber: phoneNumberController.text.trim(),
+                              gender: genderController.text.trim(),
+                              dob: dobController.text.isEmpty
+                                  ? null
+                                  : DateTime.parse(dobController.text.trim()),
+                            );
+
+                            BlocProvider.of<ProfileBloc>(context).add(
+                              SetUserDetailsEvent(
+                                profileEntity: updatedProfile,
+                              ),
+                            );
+
+                            setState(() {
+                              isEditClicked = false;
+                            });
+                          },
+                          isEnabled: isEditClicked,
                         ),
 
                         // Theme Toggle

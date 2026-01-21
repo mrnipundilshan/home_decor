@@ -11,4 +11,8 @@ class ProfileUsecases {
   Future<Either<Failure, ProfileEntity>> getProfileDetails() {
     return profileRepository.getUserProfileDetails();
   }
+
+  Future<Either<Failure, bool>> setProfileDetails(ProfileEntity userEntity) {
+    return profileRepository.setUserProfileDetails(userEntity);
+  }
 }

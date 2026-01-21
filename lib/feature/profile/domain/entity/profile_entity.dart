@@ -1,5 +1,4 @@
 class ProfileEntity {
-  final String id;
   final String email;
   final String? imageUrl;
   final String? firstName;
@@ -9,7 +8,6 @@ class ProfileEntity {
   final String? gender;
 
   ProfileEntity({
-    required this.id,
     required this.email,
     this.imageUrl,
     this.firstName,
@@ -18,4 +16,12 @@ class ProfileEntity {
     this.phoneNumber,
     this.gender,
   });
+
+  copyWith({
+    required String firstName,
+    required String lastName,
+    DateTime? dob,
+    required String phoneNumber,
+    required String gender,
+  }) {}
 }

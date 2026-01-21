@@ -2,7 +2,6 @@ import 'package:home_decor/feature/profile/domain/entity/profile_entity.dart';
 
 class ProfileModel extends ProfileEntity {
   ProfileModel({
-    required super.id,
     required super.email,
     super.imageUrl,
     super.firstName,
@@ -14,7 +13,6 @@ class ProfileModel extends ProfileEntity {
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
-      id: json['id'],
       email: json['email'],
       imageUrl: json['profileImage'],
       firstName: json['firstName'],
@@ -23,5 +21,29 @@ class ProfileModel extends ProfileEntity {
       phoneNumber: json['phoneNumber'],
       gender: json['gender'],
     );
+  }
+
+  factory ProfileModel.fromEntity(ProfileEntity entity) {
+    return ProfileModel(
+      email: entity.email,
+      imageUrl: entity.imageUrl,
+      firstName: entity.firstName,
+      lastName: entity.lastName,
+      dob: entity.dob,
+      phoneNumber: entity.phoneNumber,
+      gender: entity.gender,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+      'profileImage': imageUrl,
+      'firstName': firstName,
+      'lastName': lastName,
+      'dob': dob?.toIso8601String(),
+      'phoneNumber': phoneNumber,
+      'gender': gender,
+    };
   }
 }

@@ -6,6 +6,7 @@ import 'package:home_decor/feature/profile/data/models/profile_model.dart';
 
 abstract class ProfileDatasource {
   Future<ProfileModel> getUserDetailsFromAPI();
+  Future<bool> setUserDetailsFromAPI(ProfileModel userProfile);
 }
 
 class ProfileDatasourceImpl implements ProfileDatasource {
@@ -27,6 +28,22 @@ class ProfileDatasourceImpl implements ProfileDatasource {
       final profileDetails = ProfileModel.fromJson(responseBody['profile']);
 
       return profileDetails;
+    }
+  }
+
+  @override
+  Future<bool> setUserDetailsFromAPI(ProfileModel userProfile) async {
+    log("Setting new User Profile Data From API");
+    await Future.delayed(const Duration(seconds: 3));
+    print(userProfile.toJson());
+    final response = await dio.put(
+      ApiEndpoints.profile,
+      data: userProfile.toJson(),
+    );
+    if (response.statusCode != 200) {
+      throw ServerException();
+    } else {
+      return true;
     }
   }
 }
