@@ -184,6 +184,10 @@ class _ProfileState extends State<Profile> {
                                     controller: dobController,
                                     iconData: Icons.date_range_outlined,
                                     enabled: isEditClicked,
+                                    // NEW: Add callback when icon is tapped
+                                    onIconTap: isEditClicked
+                                        ? () => _selectDate(context)
+                                        : null,
                                   ),
 
                                   SizedBox(height: 15),
@@ -200,7 +204,7 @@ class _ProfileState extends State<Profile> {
                                     textFieldName: genderController.text.trim(),
                                     iconData: Icons.manage_accounts_outlined,
                                     controller: genderController,
-                                    enabled: isEditClicked,
+                                    enabled: false,
                                   ),
                                 ],
                               ),
@@ -385,4 +389,36 @@ class _ProfileState extends State<Profile> {
       SizedBox(height: 150),
     ],
   );
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900), // Adjust as needed
+      lastDate: DateTime.now(), // Typically DOB can't be in the future
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: Theme.of(context).colorScheme.primary,
+              onPrimary: Colors.white,
+              onSurface: Theme.of(context).colorScheme.onSurface,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      setState(() {
+        dobController.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
 }
