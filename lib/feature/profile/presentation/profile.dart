@@ -197,33 +197,47 @@ class _ProfileState extends State<Profile> {
                           ],
                         ),
                         SizedBox(height: 15),
-                        MyButton(
-                          buttonTitle: "Save",
-                          function: () {
-                            final updatedProfile = ProfileEntity(
-                              firstName: firstNameController.text.trim(),
-                              lastName: lastNameController.text.trim(),
-                              email: state
-                                  .profile
-                                  .email, // email usually not editable
-                              phoneNumber: phoneNumberController.text.trim(),
-                              gender: genderController.text.trim(),
-                              dob: dobController.text.isEmpty
-                                  ? null
-                                  : DateTime.parse(dobController.text.trim()),
-                            );
+                        Row(
+                          children: [
+                            MyButton(
+                              buttonTitle: isEditClicked ? "Cancel" : "Edit",
+                              function: _toggleEdit,
 
-                            BlocProvider.of<ProfileBloc>(context).add(
-                              SetUserDetailsEvent(
-                                profileEntity: updatedProfile,
-                              ),
-                            );
+                              isEnabled: true,
+                            ),
+                            SizedBox(width: 15),
+                            MyButton(
+                              buttonTitle: "Save",
+                              function: () {
+                                final updatedProfile = ProfileEntity(
+                                  firstName: firstNameController.text.trim(),
+                                  lastName: lastNameController.text.trim(),
+                                  email: state
+                                      .profile
+                                      .email, // email usually not editable
+                                  phoneNumber: phoneNumberController.text
+                                      .trim(),
+                                  gender: genderController.text.trim(),
+                                  dob: dobController.text.isEmpty
+                                      ? null
+                                      : DateTime.parse(
+                                          dobController.text.trim(),
+                                        ),
+                                );
 
-                            setState(() {
-                              isEditClicked = false;
-                            });
-                          },
-                          isEnabled: isEditClicked,
+                                BlocProvider.of<ProfileBloc>(context).add(
+                                  SetUserDetailsEvent(
+                                    profileEntity: updatedProfile,
+                                  ),
+                                );
+
+                                setState(() {
+                                  isEditClicked = false;
+                                });
+                              },
+                              isEnabled: isEditClicked,
+                            ),
+                          ],
                         ),
 
                         // Theme Toggle
