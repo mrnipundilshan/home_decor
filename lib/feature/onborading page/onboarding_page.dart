@@ -14,7 +14,7 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   int currentPage = 0;
-  
+
   List<Map<String, String>> getSplashData(BuildContext context) => [
     {
       "title": context.translate('onboarding_title_1'),
@@ -42,7 +42,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
         child: SizedBox(
           width: double.infinity,
           child: Padding(
-            padding:  EdgeInsets.symmetric(horizontal: AppSizes.defaultPadding(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: AppSizes.defaultPadding(context),
+            ),
             child: Column(
               children: [
                 SizedBox(height: 50),
@@ -62,15 +64,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     ),
                   ),
                 ),
-            
-            
+
                 Flexible(
-                  flex: 1,
+                  flex: 2,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: <Widget>[
-            
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: List.generate(
@@ -89,19 +89,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             ),
                           ),
                         ),
-            
-            
+
                         const Spacer(flex: 3),
-                        MyButton(buttonTitle: context.translate('skip'), function: () {
-                          context.go('/signup');
-                        }),
-                        const SizedBox(height: 100,),
+
+                        MyButton(
+                          buttonTitle: context.translate('skip'),
+                          function: () {
+                            context.go('/signup');
+                          },
+                        ),
+                        const SizedBox(height: 100),
                       ],
                     ),
                   ),
                 ),
-            
-            
               ],
             ),
           ),
@@ -132,11 +133,13 @@ class _SplashContentState extends State<SplashContent> {
         Text(widget.title!, textAlign: TextAlign.center),
         const SizedBox(height: 10),
 
-        Text(widget.subtitle!,style: themeData.textTheme.bodySmall, textAlign: TextAlign.center),
+        Text(
+          widget.subtitle!,
+          style: themeData.textTheme.bodySmall,
+          textAlign: TextAlign.center,
+        ),
         const Spacer(flex: 2),
-
       ],
     );
   }
 }
-

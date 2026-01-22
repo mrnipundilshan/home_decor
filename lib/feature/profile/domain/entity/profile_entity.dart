@@ -3,7 +3,7 @@ class ProfileEntity {
   final String? imageUrl;
   final String? firstName;
   final String? lastName;
-  final DateTime? dob;
+  final String? dob;
   final String? phoneNumber;
   final String? gender;
 
@@ -16,12 +16,4 @@ class ProfileEntity {
     this.phoneNumber,
     this.gender,
   });
-
-  copyWith({
-    required String firstName,
-    required String lastName,
-    DateTime? dob,
-    required String phoneNumber,
-    required String gender,
-  }) {}
 }

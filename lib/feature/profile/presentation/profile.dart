@@ -46,9 +46,7 @@ class _ProfileState extends State<Profile> {
   void _updateLoadedSnapshot(ProfileDataFetchSuccessState state) {
     _loadedFirstName = state.profile.firstName ?? '';
     _loadedLastName = state.profile.lastName ?? '';
-    _loadedDob = state.profile.dob == null
-        ? ''
-        : DateFormat('yyyy-MM-dd').format(state.profile.dob!);
+    _loadedDob = state.profile.dob ?? '';
     _loadedGender = state.profile.gender ?? '';
     _loadedPhoneNumber = state.profile.phoneNumber ?? '';
     _loadedEmail = state.profile.email;
@@ -184,7 +182,6 @@ class _ProfileState extends State<Profile> {
                                     controller: dobController,
                                     iconData: Icons.date_range_outlined,
                                     enabled: isEditClicked,
-                                    // NEW: Add callback when icon is tapped
                                     onIconTap: isEditClicked
                                         ? () => _selectDate(context)
                                         : null,
@@ -234,11 +231,7 @@ class _ProfileState extends State<Profile> {
                                         phoneNumber: phoneNumberController.text
                                             .trim(),
                                         gender: genderController.text.trim(),
-                                        dob: dobController.text.isEmpty
-                                            ? null
-                                            : DateTime.parse(
-                                                dobController.text.trim(),
-                                              ),
+                                        dob: dobController.text.trim(),
                                       );
 
                                       BlocProvider.of<ProfileBloc>(context).add(
@@ -264,13 +257,13 @@ class _ProfileState extends State<Profile> {
                           baseColor: themeData.colorScheme.inversePrimary,
                           highlightColor: themeData.colorScheme.primary,
                           enabled: true,
-                          child: loading_shimmer_state(),
+                          child: loadingShimmerState(),
                         );
                       }
                       return SizedBox.shrink();
                     },
                   ),
-                  theme_and_language(),
+                  themeAndLanguage(),
                 ],
               ),
             ),
@@ -280,7 +273,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Column loading_shimmer_state() {
+  Column loadingShimmerState() {
     return Column(
       crossAxisAlignment: .start,
       children: [
@@ -333,7 +326,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Column theme_and_language() => Column(
+  Column themeAndLanguage() => Column(
     children: [
       // Theme Toggle
       SizedBox(height: 20),

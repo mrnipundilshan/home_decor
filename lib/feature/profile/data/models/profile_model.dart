@@ -17,7 +17,7 @@ class ProfileModel extends ProfileEntity {
       imageUrl: json['profileImage'],
       firstName: json['firstName'],
       lastName: json['lastName'],
-      dob: json['dob'] != null ? DateTime.parse(json['dob']) : null,
+      dob: json['dob'],
       phoneNumber: json['phoneNumber'],
       gender: json['gender'],
     );
@@ -41,7 +41,7 @@ class ProfileModel extends ProfileEntity {
       'profileImage': imageUrl,
       'firstName': firstName,
       'lastName': lastName,
-      'dob': dob?.toIso8601String(),
+      'dob': dob,
       'phoneNumber': phoneNumber,
       'gender': gender,
     };

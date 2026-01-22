@@ -60,6 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Center(
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisSize: .min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -100,7 +101,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(height: 20),
 
                     MyTextbox(
-                      placeholder: context.translate('confirm_password_placeholder'),
+                      placeholder: context.translate(
+                        'confirm_password_placeholder',
+                      ),
                       prefixIcon: Icons.password_outlined,
                       obsecureText: true,
                       controller: confirmPasswordController,

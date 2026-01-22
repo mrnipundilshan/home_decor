@@ -32,10 +32,12 @@ class _ProfileMyTextboxState extends State<ProfileMyTextbox> {
       child: CupertinoTextField(
         keyboardType: widget.keyboardInputType,
         enabled: widget.enabled,
-        suffix: IconButton(
-          onPressed: () => widget.onIconTap,
-          icon: Icon(widget.iconData),
-        ),
+        suffix: widget.iconData == null
+            ? null
+            : IconButton(
+                onPressed: widget.onIconTap,
+                icon: Icon(widget.iconData),
+              ),
         controller: widget.controller,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),

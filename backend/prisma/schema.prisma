@@ -29,7 +29,7 @@ model Profile {
   profileImage String?
   firstName   String?
   lastName    String?
-  dob         DateTime?
+  dob         String?
   phoneNumber String?
   gender      String?
   createdAt   DateTime @default(now())

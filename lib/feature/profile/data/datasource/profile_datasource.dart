@@ -19,7 +19,6 @@ class ProfileDatasourceImpl implements ProfileDatasource {
     log("Calling Top Profile Data Fetch API");
     await Future.delayed(const Duration(seconds: 3));
     final response = await dio.get(ApiEndpoints.profile);
-
     if (response.statusCode != 200) {
       throw ServerException();
     } else {
