@@ -9,11 +9,9 @@ import 'package:home_decor/core/widgets/my_button.dart';
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-
-    void navigateToOnbordingPage(){
+    void navigateToOnbordingPage() {
       context.push('/onboarding');
     }
 
@@ -34,8 +32,14 @@ class WelcomeScreen extends StatelessWidget {
                 children: [
                   Image.asset("assets/logo.png"),
                   SizedBox(height: 20),
-                  Text(context.translate('welcome_to'), style: themeData.textTheme.headlineLarge),
-                  Text(context.translate('decoz'), style: AppCustomTextStyles.splashScreenText),
+                  Text(
+                    context.translate('welcome_to'),
+                    style: themeData.textTheme.headlineLarge,
+                  ),
+                  Text(
+                    context.translate('decoz'),
+                    style: AppCustomTextStyles.splashScreenText,
+                  ),
                   SizedBox(height: 10),
                   Text(
                     textAlign: TextAlign.center,
@@ -44,18 +48,16 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-
               Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   MyButton(
-                      buttonTitle: context.translate('get_started'),
-                      function: navigateToOnbordingPage
+                    buttonTitle: context.translate('get_started'),
+                    function: navigateToOnbordingPage,
                   ),
                   SizedBox(height: 100),
                 ],
               ),
-
-
             ],
           ),
         ),

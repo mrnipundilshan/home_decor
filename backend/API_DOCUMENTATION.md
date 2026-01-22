@@ -312,7 +312,7 @@ Authorization: Bearer <access_token>
     "profileImage": "https://example.com/image.jpg",
     "firstName": "John",
     "lastName": "Doe",
-    "dob": "1990-01-15T00:00:00.000Z",
+    "dob": "1990-01-15",
     "phoneNumber": "+1234567890",
     "gender": "male",
     "createdAt": "2024-01-01T00:00:00.000Z",
@@ -390,7 +390,7 @@ Authorization: Bearer <access_token>
     "profileImage": "https://example.com/image.jpg",
     "firstName": "John",
     "lastName": "Doe",
-    "dob": "1990-01-15T00:00:00.000Z",
+    "dob": "1990-01-15",
     "phoneNumber": "+1234567890",
     "gender": "male",
     "createdAt": "2024-01-01T00:00:00.000Z",
@@ -538,7 +538,7 @@ Some errors may also include a `message` field with additional details:
 - **profileImage** (String, optional): URL to the user's profile image
 - **firstName** (String, optional): User's first name
 - **lastName** (String, optional): User's last name
-- **dob** (DateTime, optional): Date of birth in ISO 8601 format (e.g., "1990-01-15")
+- **dob** (String, optional): Date of birth (recommended format: ISO 8601, e.g., "1990-01-15")
 - **phoneNumber** (String, optional): User's phone number
 - **gender** (String, optional): User's gender (e.g., "male", "female", "other")
 

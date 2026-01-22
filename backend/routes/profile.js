@@ -21,11 +21,16 @@ router.get('/profile', authenticateToken, async (req, res) => {
       });
     }
 
-    // If profile doesn't exist, return 404
-    if (!user.profile) {
-      return res.status(404).json({
-        success: false,
-        error: 'Profile not found',
+    // If profile doesn't exist, create it automatically
+    let profile = user.profile;
+    if (!profile) {
+      // Create a minimal profile with just userId (all other fields will be null)
+      profile = await prisma.profile.upsert({
+        where: { userId },
+        update: {}, // No update needed if it exists
+        create: {
+          userId,
+        },
       });
     }
 
@@ -33,16 +38,16 @@ router.get('/profile', authenticateToken, async (req, res) => {
     return res.status(200).json({
       success: true,
       profile: {
-        id: user.profile.id,
+        id: profile.id,
         email: user.email,
-        profileImage: user.profile.profileImage,
-        firstName: user.profile.firstName,
-        lastName: user.profile.lastName,
-        dob: user.profile.dob,
-        phoneNumber: user.profile.phoneNumber,
-        gender: user.profile.gender,
-        createdAt: user.profile.createdAt,
-        updatedAt: user.profile.updatedAt,
+        profileImage: profile.profileImage,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        dob: profile.dob,
+        phoneNumber: profile.phoneNumber,
+        gender: profile.gender,
+        createdAt: profile.createdAt,
+        updatedAt: profile.updatedAt,
       },
     });
   } catch (error) {
@@ -78,16 +83,7 @@ router.put('/profile', authenticateToken, async (req, res) => {
     if (profileImage !== undefined) updateData.profileImage = profileImage;
     if (firstName !== undefined) updateData.firstName = firstName;
     if (lastName !== undefined) updateData.lastName = lastName;
-    if (dob !== undefined) {
-      // Validate date format if provided
-      if (dob && isNaN(Date.parse(dob))) {
-        return res.status(400).json({
-          success: false,
-          error: 'Invalid date format for dob',
-        });
-      }
-      updateData.dob = dob ? new Date(dob) : null;
-    }
+    if (dob !== undefined) updateData.dob = dob;
     if (phoneNumber !== undefined) updateData.phoneNumber = phoneNumber;
     if (gender !== undefined) updateData.gender = gender;
 

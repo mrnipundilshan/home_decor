@@ -7,12 +7,14 @@ class ProfileMyTextbox extends StatefulWidget {
   final TextInputType? keyboardInputType;
   final IconData? iconData;
   final bool enabled;
+  final VoidCallback? onIconTap;
   const ProfileMyTextbox({
     super.key,
     required this.textFieldName,
     this.iconData,
     required this.controller,
     this.keyboardInputType,
+    this.onIconTap,
     this.enabled = false,
   });
 
@@ -30,10 +32,12 @@ class _ProfileMyTextboxState extends State<ProfileMyTextbox> {
       child: CupertinoTextField(
         keyboardType: widget.keyboardInputType,
         enabled: widget.enabled,
-        suffix: Padding(
-          padding: const EdgeInsets.only(right: 16.0),
-          child: Icon(widget.iconData),
-        ),
+        suffix: widget.iconData == null
+            ? null
+            : IconButton(
+                onPressed: widget.onIconTap,
+                icon: Icon(widget.iconData),
+              ),
         controller: widget.controller,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
