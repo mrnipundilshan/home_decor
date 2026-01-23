@@ -7,6 +7,7 @@ class ApiEndpoints {
   static const String login = 'login';
   static const String otp = 'verify-otp';
   static const String refreshToken = 'refresh-token';
+  static const String checkEmail = 'check-email';
 
   // profile
   static const String profile = 'profile';

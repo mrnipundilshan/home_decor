@@ -13,6 +13,8 @@ abstract class AuthRemoteDatasource {
   Future<bool> signupOtpVerificationFromApi(String email, String otp);
 
   Future<String> refreshAccessToken(String refreshToken);
+
+  Future<bool> isEmailExists(String email);
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -64,7 +66,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   @override
   Future<bool> signupOtpVerificationFromApi(String email, String otp) async {
     try {
-      log('OTP Verfication Started');
+      log('OTP Verification Started');
       await Future.delayed(const Duration(seconds: 2));
 
       final response = await dio.post(
@@ -100,6 +102,28 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       }
     } catch (e) {
       log('[AuthDatasource] Refresh token error', error: e);
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<bool> isEmailExists(String email) async {
+    try {
+      log('Checking email existence');
+      final response = await dio.post(
+        ApiEndpoints.checkEmail,
+        data: {"email": email},
+      );
+
+      log('Check email response: ${response.data}');
+
+      if (response.data['success'] == true) {
+        return response.data['exists'] == true;
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      log('[AuthDatasource] Check email error', error: e);
       throw ServerException();
     }
   }
