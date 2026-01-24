@@ -7,6 +7,7 @@ import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/services/locale_service.dart';
 import 'package:home_decor/core/services/theme_service.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import 'package:home_decor/core/widgets/my_bottom_sheet.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:home_decor/feature/profile/domain/entity/profile_entity.dart';
@@ -154,6 +155,7 @@ class _ProfileState extends State<Profile> {
                                         .trim(),
                                     controller: firstNameController,
                                     enabled: isEditClicked,
+                                    label: "First Name",
                                   ),
 
                                   SizedBox(height: 15),
@@ -163,6 +165,7 @@ class _ProfileState extends State<Profile> {
                                         .trim(),
                                     controller: lastNameController,
                                     enabled: isEditClicked,
+                                    label: "Last Name",
                                   ),
 
                                   SizedBox(height: 15),
@@ -173,6 +176,7 @@ class _ProfileState extends State<Profile> {
                                         TextInputType.emailAddress,
                                     controller: emailController,
                                     enabled: false,
+                                    label: "Email",
                                   ),
 
                                   SizedBox(height: 15),
@@ -182,9 +186,12 @@ class _ProfileState extends State<Profile> {
                                     controller: dobController,
                                     iconData: Icons.date_range_outlined,
                                     enabled: isEditClicked,
+
                                     onIconTap: isEditClicked
                                         ? () => _selectDate(context)
                                         : null,
+                                    label: "Date of Birth",
+                                    readOnly: true,
                                   ),
 
                                   SizedBox(height: 15),
@@ -194,6 +201,7 @@ class _ProfileState extends State<Profile> {
                                     keyboardInputType: TextInputType.number,
                                     controller: phoneNumberController,
                                     enabled: isEditClicked,
+                                    label: "Phone",
                                   ),
                                   SizedBox(height: 15),
 
@@ -201,7 +209,13 @@ class _ProfileState extends State<Profile> {
                                     textFieldName: genderController.text.trim(),
                                     iconData: Icons.manage_accounts_outlined,
                                     controller: genderController,
-                                    enabled: false,
+                                    enabled: isEditClicked,
+
+                                    onIconTap: isEditClicked
+                                        ? () => _showGenderBottomSheet(context)
+                                        : null,
+                                    label: "Gender",
+                                    readOnly: true,
                                   ),
                                 ],
                               ),
@@ -283,26 +297,50 @@ class _ProfileState extends State<Profile> {
         Column(
           crossAxisAlignment: .start,
           children: [
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: "First Name",
+            ),
 
             SizedBox(height: 15),
 
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: "Last Name",
+            ),
 
             SizedBox(height: 15),
 
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: "Email",
+            ),
 
             SizedBox(height: 15),
 
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: "Date of Birth",
+            ),
 
             SizedBox(height: 15),
 
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: "Phone",
+            ),
             SizedBox(height: 15),
 
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: "Gender",
+            ),
           ],
         ),
         SizedBox(height: 15),
@@ -355,30 +393,13 @@ class _ProfileState extends State<Profile> {
             context.translate('language'),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-          Consumer<LocaleService>(
-            builder: (context, localeService, child) {
-              return DropdownButton<String>(
-                value: localeService.currentLocale,
-                items: [
-                  DropdownMenuItem(
-                    value: 'en',
-                    child: Text(context.translate('english')),
-                  ),
-                  DropdownMenuItem(
-                    value: 'si',
-                    child: Text(context.translate('sinhala')),
-                  ),
-                ],
-                onChanged: (String? newLocale) {
-                  if (newLocale != null) {
-                    localeService.toggleLocale(newLocale);
-                  }
-                },
-              );
-            },
+          IconButton(
+            icon: const Icon(Icons.arrow_drop_down),
+            onPressed: () => _showLanguageBottomSheet(context),
           ),
         ],
       ),
+
       SizedBox(height: 150),
     ],
   );
@@ -399,7 +420,7 @@ class _ProfileState extends State<Profile> {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.inversePrimary,
               ),
             ),
           ),
@@ -413,5 +434,43 @@ class _ProfileState extends State<Profile> {
         dobController.text = DateFormat('yyyy-MM-dd').format(picked);
       });
     }
+  }
+
+  void _showGenderBottomSheet(BuildContext context) {
+    if (!isEditClicked) return;
+
+    SelectionBottomSheet.show<String>(
+      context,
+      title: context.translate("Gender"),
+      selectedValue: genderController.text,
+      items: [
+        SelectionItem(value: "Male", label: "Male"),
+        SelectionItem(value: "Female", label: "Female"),
+        SelectionItem(value: "Other", label: "Other"),
+      ],
+      onSelected: (value) {
+        setState(() {
+          genderController.text = value;
+        });
+      },
+    );
+  }
+
+  void _showLanguageBottomSheet(BuildContext context) {
+    SelectionBottomSheet.show<String>(
+      context,
+      title: context.translate("language"),
+      selectedValue: Provider.of<LocaleService>(
+        context,
+        listen: false,
+      ).currentLocale,
+      items: [
+        SelectionItem(value: 'en', label: context.translate('english')),
+        SelectionItem(value: 'si', label: context.translate('sinhala')),
+      ],
+      onSelected: (value) {
+        Provider.of<LocaleService>(context, listen: false).toggleLocale(value);
+      },
+    );
   }
 }
