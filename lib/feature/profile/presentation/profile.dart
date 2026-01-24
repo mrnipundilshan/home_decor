@@ -386,18 +386,18 @@ class _ProfileState extends State<Profile> {
 
       SizedBox(height: 20),
       // Language Switcher
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            context.translate('language'),
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          IconButton(
-            icon: const Icon(Icons.arrow_drop_down),
-            onPressed: () => _showLanguageBottomSheet(context),
-          ),
-        ],
+      GestureDetector(
+        onTap: () => _showLanguageBottomSheet(context),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              context.translate('language'),
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const Icon(Icons.arrow_drop_down),
+          ],
+        ),
       ),
 
       SizedBox(height: 150),
