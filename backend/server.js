@@ -10,8 +10,8 @@ const PORT = process.env.PORT || 3000;
 // Enable CORS for all routes
 app.use(cors());
 
-// Middleware to parse JSON
-app.use(express.json());
+// Middleware to parse JSON with increased limit for image uploads (10MB)
+app.use(express.json({ limit: '10mb' }));
 
 // Import routes
 const authRoutes = require('./routes/auth');

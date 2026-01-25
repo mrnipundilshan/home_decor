@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../prisma/client');
 const { authenticateToken } = require('../utils/auth');
+const { uploadProfileImage, isBase64Image } = require('../utils/r2Upload');
 
 // GET /api/profile - Retrieve user profile
 router.get('/profile', authenticateToken, async (req, res) => {
@@ -80,7 +81,31 @@ router.put('/profile', authenticateToken, async (req, res) => {
 
     // Prepare update data (only include provided fields)
     const updateData = {};
-    if (profileImage !== undefined) updateData.profileImage = profileImage;
+    
+    // Handle profile image upload to R2 if it's a base64 string
+    if (profileImage !== undefined) {
+      if (isBase64Image(profileImage)) {
+        try {
+          // Upload base64 image to R2 and get public URL
+          const publicUrl = await uploadProfileImage(profileImage, userId);
+          updateData.profileImage = publicUrl;
+        } catch (uploadError) {
+          console.error('R2 upload error:', uploadError);
+          return res.status(500).json({
+            success: false,
+            error: 'Failed to upload profile image',
+            message: uploadError.message || 'Image upload failed',
+          });
+        }
+      } else if (profileImage === null || profileImage === '') {
+        // Allow clearing the profile image
+        updateData.profileImage = null;
+      } else {
+        // Already a URL, use as-is
+        updateData.profileImage = profileImage;
+      }
+    }
+    
     if (firstName !== undefined) updateData.firstName = firstName;
     if (lastName !== undefined) updateData.lastName = lastName;
     if (dob !== undefined) updateData.dob = dob;

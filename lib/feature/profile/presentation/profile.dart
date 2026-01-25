@@ -132,6 +132,11 @@ class _ProfileState extends State<Profile> {
                 }
               }
               if (state is ProfileUpdateSuccessState) {
+                // Clear local image selection so network image can be displayed
+                setState(() {
+                  _selectedImage = null;
+                  _avatarBase64 = null;
+                });
                 BlocProvider.of<ProfileBloc>(
                   context,
                 ).add(FetchUserDetailsEvent());
@@ -158,13 +163,67 @@ class _ProfileState extends State<Profile> {
                                     children: [
                                       CircleAvatar(
                                         radius: 50,
-                                        backgroundImage: _selectedImage != null
-                                            ? FileImage(_selectedImage!)
-                                            : null,
-                                        child: _selectedImage == null
-                                            ? const Icon(Icons.person, size: 50)
-                                            : null,
+                                        backgroundColor: Colors.grey.shade200,
+                                        child: ClipOval(
+                                          child: SizedBox(
+                                            width: 100,
+                                            height: 100,
+                                            child: _selectedImage != null
+                                                ? Image.file(
+                                                    _selectedImage!,
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                : (state.profile.imageUrl !=
+                                                          null &&
+                                                      state
+                                                          .profile
+                                                          .imageUrl!
+                                                          .isNotEmpty)
+                                                ? Image.network(
+                                                    state.profile.imageUrl!,
+                                                    fit: BoxFit.cover,
+                                                    loadingBuilder:
+                                                        (
+                                                          context,
+                                                          child,
+                                                          loadingProgress,
+                                                        ) {
+                                                          if (loadingProgress ==
+                                                              null) {
+                                                            return child;
+                                                          }
+                                                          return const Center(
+                                                            child: SizedBox(
+                                                              width: 24,
+                                                              height: 24,
+                                                              child:
+                                                                  CircularProgressIndicator(
+                                                                    strokeWidth:
+                                                                        2,
+                                                                  ),
+                                                            ),
+                                                          );
+                                                        },
+                                                    errorBuilder:
+                                                        (
+                                                          context,
+                                                          error,
+                                                          stackTrace,
+                                                        ) {
+                                                          return const Icon(
+                                                            Icons.person,
+                                                            size: 50,
+                                                          );
+                                                        },
+                                                  )
+                                                : const Icon(
+                                                    Icons.person,
+                                                    size: 50,
+                                                  ),
+                                          ),
+                                        ),
                                       ),
+
                                       if (isEditClicked)
                                         Positioned(
                                           bottom: 0,
