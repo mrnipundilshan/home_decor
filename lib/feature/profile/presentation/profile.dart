@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +16,7 @@ import 'package:home_decor/feature/profile/domain/entity/profile_entity.dart';
 import 'package:home_decor/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:home_decor/feature/profile/presentation/widgets/profile_my_textbox.dart';
 import 'package:home_decor/feature/profile/presentation/widgets/profile_page_app_bar.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -26,6 +29,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  File? _selectedImage;
+  String? _avatarBase64;
+
   late TextEditingController firstNameController;
   late TextEditingController emailController;
   late TextEditingController lastNameController;
@@ -145,7 +151,41 @@ class _ProfileState extends State<Profile> {
                             crossAxisAlignment: .start,
                             children: [
                               SizedBox(height: 15),
-                              Center(child: CircleAvatar(radius: 50)),
+                              Center(
+                                child: GestureDetector(
+                                  onTap: _pickAvatar,
+                                  child: Stack(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 50,
+                                        backgroundImage: _selectedImage != null
+                                            ? FileImage(_selectedImage!)
+                                            : null,
+                                        child: _selectedImage == null
+                                            ? const Icon(Icons.person, size: 50)
+                                            : null,
+                                      ),
+                                      if (isEditClicked)
+                                        Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: CircleAvatar(
+                                            radius: 16,
+                                            backgroundColor: Theme.of(
+                                              context,
+                                            ).colorScheme.primary,
+                                            child: const Icon(
+                                              Icons.camera_alt,
+                                              size: 16,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
                               SizedBox(height: 15),
                               Column(
                                 crossAxisAlignment: .start,
@@ -246,6 +286,7 @@ class _ProfileState extends State<Profile> {
                                             .trim(),
                                         gender: genderController.text.trim(),
                                         dob: dobController.text.trim(),
+                                        imageUrl: _avatarBase64,
                                       );
 
                                       BlocProvider.of<ProfileBloc>(context).add(
@@ -472,5 +513,23 @@ class _ProfileState extends State<Profile> {
         Provider.of<LocaleService>(context, listen: false).toggleLocale(value);
       },
     );
+  }
+
+  Future<void> _pickAvatar() async {
+    if (!isEditClicked) return;
+
+    final picker = ImagePicker();
+    final XFile? picked = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 70, // reduce size
+    );
+
+    if (picked != null) {
+      final bytes = await picked.readAsBytes();
+      setState(() {
+        _selectedImage = File(picked.path);
+        _avatarBase64 = base64Encode(bytes);
+      });
+    }
   }
 }
