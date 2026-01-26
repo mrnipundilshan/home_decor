@@ -1,4 +1,4 @@
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 
 // Initialize S3 client for Cloudflare R2
 const s3Client = new S3Client({
@@ -211,7 +211,61 @@ function isBase64Image(str) {
   return false;
 }
 
+/**
+ * Extracts the filename from an R2 public URL
+ * @param {string} url - The public URL of the file in R2
+ * @returns {string|null} - The filename, or null if URL is invalid
+ */
+function extractFileNameFromUrl(url) {
+  if (!url || typeof url !== 'string') {
+    return null;
+  }
+
+  try {
+    // Extract filename from URL (everything after the last '/')
+    const urlObj = new URL(url);
+    const pathname = urlObj.pathname;
+    // Remove leading slash if present
+    const fileName = pathname.startsWith('/') ? pathname.substring(1) : pathname;
+    
+    // Validate that it looks like a profile image filename
+    if (fileName && fileName.startsWith('profile-')) {
+      return fileName;
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error extracting filename from URL:', error);
+    return null;
+  }
+}
+
+/**
+ * Deletes a file from Cloudflare R2
+ * @param {string} fileName - The filename to delete from R2
+ * @returns {Promise<void>}
+ */
+async function deleteFromR2(fileName) {
+  try {
+    if (!fileName) {
+      throw new Error('Filename is required for deletion');
+    }
+
+    const command = new DeleteObjectCommand({
+      Bucket: process.env.R2_BUCKET,
+      Key: fileName,
+    });
+
+    await s3Client.send(command);
+  } catch (error) {
+    console.error('R2 delete error:', error);
+    throw new Error(`Failed to delete image from R2: ${error.message}`);
+  }
+}
+
 module.exports = {
   uploadProfileImage,
   isBase64Image,
+  deleteFromR2,
+  extractFileNameFromUrl,
 };

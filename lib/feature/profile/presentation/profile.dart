@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -179,42 +180,31 @@ class _ProfileState extends State<Profile> {
                                                           .profile
                                                           .imageUrl!
                                                           .isNotEmpty)
-                                                ? Image.network(
-                                                    state.profile.imageUrl!,
+                                                ? CachedNetworkImage(
+                                                    imageUrl:
+                                                        state.profile.imageUrl!,
                                                     fit: BoxFit.cover,
-                                                    loadingBuilder:
+                                                    placeholder:
                                                         (
                                                           context,
-                                                          child,
-                                                          loadingProgress,
-                                                        ) {
-                                                          if (loadingProgress ==
-                                                              null) {
-                                                            return child;
-                                                          }
-                                                          return const Center(
-                                                            child: SizedBox(
-                                                              width: 24,
-                                                              height: 24,
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                                    strokeWidth:
-                                                                        2,
-                                                                  ),
+                                                          url,
+                                                        ) => const Center(
+                                                          child: SizedBox(
+                                                            width: 24,
+                                                            height: 24,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                                  strokeWidth:
+                                                                      2,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            const Icon(
+                                                              Icons.person,
+                                                              size: 50,
                                                             ),
-                                                          );
-                                                        },
-                                                    errorBuilder:
-                                                        (
-                                                          context,
-                                                          error,
-                                                          stackTrace,
-                                                        ) {
-                                                          return const Icon(
-                                                            Icons.person,
-                                                            size: 50,
-                                                          );
-                                                        },
                                                   )
                                                 : const Icon(
                                                     Icons.person,
@@ -254,7 +244,7 @@ class _ProfileState extends State<Profile> {
                                         .trim(),
                                     controller: firstNameController,
                                     enabled: isEditClicked,
-                                    label: "First Name",
+                                    label: context.translate("first_name"),
                                   ),
 
                                   SizedBox(height: 15),
@@ -264,7 +254,7 @@ class _ProfileState extends State<Profile> {
                                         .trim(),
                                     controller: lastNameController,
                                     enabled: isEditClicked,
-                                    label: "Last Name",
+                                    label: context.translate("last_name"),
                                   ),
 
                                   SizedBox(height: 15),
@@ -275,7 +265,7 @@ class _ProfileState extends State<Profile> {
                                         TextInputType.emailAddress,
                                     controller: emailController,
                                     enabled: false,
-                                    label: "Email",
+                                    label: context.translate("email"),
                                   ),
 
                                   SizedBox(height: 15),
@@ -289,7 +279,7 @@ class _ProfileState extends State<Profile> {
                                     onIconTap: isEditClicked
                                         ? () => _selectDate(context)
                                         : null,
-                                    label: "Date of Birth",
+                                    label: context.translate("date_of_birth"),
                                     readOnly: true,
                                   ),
 
@@ -300,7 +290,7 @@ class _ProfileState extends State<Profile> {
                                     keyboardInputType: TextInputType.number,
                                     controller: phoneNumberController,
                                     enabled: isEditClicked,
-                                    label: "Phone",
+                                    label: context.translate("phone"),
                                   ),
                                   SizedBox(height: 15),
 
@@ -313,7 +303,7 @@ class _ProfileState extends State<Profile> {
                                     onIconTap: isEditClicked
                                         ? () => _showGenderBottomSheet(context)
                                         : null,
-                                    label: "Gender",
+                                    label: context.translate("gender"),
                                     readOnly: true,
                                   ),
                                 ],
@@ -400,7 +390,7 @@ class _ProfileState extends State<Profile> {
             ProfileMyTextbox(
               textFieldName: "",
               controller: loadingController,
-              label: "First Name",
+              label: context.translate("first_name"),
             ),
 
             SizedBox(height: 15),
@@ -408,7 +398,7 @@ class _ProfileState extends State<Profile> {
             ProfileMyTextbox(
               textFieldName: "",
               controller: loadingController,
-              label: "Last Name",
+              label: context.translate("last_name"),
             ),
 
             SizedBox(height: 15),
@@ -416,7 +406,7 @@ class _ProfileState extends State<Profile> {
             ProfileMyTextbox(
               textFieldName: "",
               controller: loadingController,
-              label: "Email",
+              label: context.translate("email"),
             ),
 
             SizedBox(height: 15),
@@ -424,7 +414,7 @@ class _ProfileState extends State<Profile> {
             ProfileMyTextbox(
               textFieldName: "",
               controller: loadingController,
-              label: "Date of Birth",
+              label: context.translate("date_of_birth"),
             ),
 
             SizedBox(height: 15),
@@ -432,14 +422,14 @@ class _ProfileState extends State<Profile> {
             ProfileMyTextbox(
               textFieldName: "",
               controller: loadingController,
-              label: "Phone",
+              label: context.translate("phone"),
             ),
             SizedBox(height: 15),
 
             ProfileMyTextbox(
               textFieldName: "",
               controller: loadingController,
-              label: "Gender",
+              label: context.translate("gender"),
             ),
           ],
         ),
@@ -447,14 +437,16 @@ class _ProfileState extends State<Profile> {
         Row(
           children: [
             MyButton(
-              buttonTitle: isEditClicked ? "Cancel" : "Edit",
+              buttonTitle: isEditClicked
+                  ? context.translate("cancel")
+                  : context.translate("edit"),
               function: () {},
 
               isEnabled: true,
             ),
             SizedBox(width: 15),
             MyButton(
-              buttonTitle: "Save",
+              buttonTitle: context.translate('save'),
               function: () {},
               isEnabled: isEditClicked,
             ),
@@ -544,9 +536,9 @@ class _ProfileState extends State<Profile> {
       title: context.translate("Gender"),
       selectedValue: genderController.text,
       items: [
-        SelectionItem(value: "Male", label: "Male"),
-        SelectionItem(value: "Female", label: "Female"),
-        SelectionItem(value: "Other", label: "Other"),
+        SelectionItem(value: "Male", label: context.translate("male")),
+        SelectionItem(value: "Female", label: context.translate("female")),
+        SelectionItem(value: "Other", label: context.translate("other")),
       ],
       onSelected: (value) {
         setState(() {

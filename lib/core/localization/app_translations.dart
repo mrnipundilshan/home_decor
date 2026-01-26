@@ -69,6 +69,15 @@ class AppTranslations {
       'edit': "Edit",
       'cancel': "Cancel",
       'save': "Save",
+      'first_name': "First Name",
+      'last_name': "Last Name",
+      'email': "Email",
+      'date_of_birth': "Date of Birth",
+      'phone': "Phone",
+      'gender': "Gender",
+      "male": "Male",
+      "female": "Female",
+      "other": "Other",
     },
     'si': {
       // Auth
@@ -140,6 +149,15 @@ class AppTranslations {
       'edit': "සකසන්න",
       'cancel': "අවලංගු කරන්න",
       'save': 'සුරකින්න',
+      'first_name': "පළමු නම",
+      'last_name': "අවසාන නම",
+      'email': "Email",
+      'date_of_birth': "උපන් දිනය",
+      'phone': "දුරකථන අංකය",
+      'gender': "ස්ත්‍රි/පුරුෂ",
+      "male": "පුරුෂ",
+      "female": "ස්ත්‍රී",
+      "other": "වෙනත්",
     },
   };
 

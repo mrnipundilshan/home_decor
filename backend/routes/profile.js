@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../prisma/client');
 const { authenticateToken } = require('../utils/auth');
-const { uploadProfileImage, isBase64Image } = require('../utils/r2Upload');
+const { uploadProfileImage, isBase64Image, deleteFromR2, extractFileNameFromUrl } = require('../utils/r2Upload');
 
 // GET /api/profile - Retrieve user profile
 router.get('/profile', authenticateToken, async (req, res) => {
@@ -70,6 +70,7 @@ router.put('/profile', authenticateToken, async (req, res) => {
     // Validate that user exists
     const user = await prisma.user.findUnique({
       where: { id: userId },
+      include: { profile: true },
     });
 
     if (!user) {
@@ -86,6 +87,21 @@ router.put('/profile', authenticateToken, async (req, res) => {
     if (profileImage !== undefined) {
       if (isBase64Image(profileImage)) {
         try {
+          // Delete old profile image if it exists
+          if (user.profile && user.profile.profileImage) {
+            const oldFileName = extractFileNameFromUrl(user.profile.profileImage);
+            if (oldFileName) {
+              try {
+                await deleteFromR2(oldFileName);
+                console.log(`Deleted old profile image: ${oldFileName}`);
+              } catch (deleteError) {
+                // Log error but don't fail the upload if deletion fails
+                console.error('Failed to delete old profile image:', deleteError);
+                // Continue with upload even if deletion fails
+              }
+            }
+          }
+
           // Upload base64 image to R2 and get public URL
           const publicUrl = await uploadProfileImage(profileImage, userId);
           updateData.profileImage = publicUrl;
@@ -99,6 +115,19 @@ router.put('/profile', authenticateToken, async (req, res) => {
         }
       } else if (profileImage === null || profileImage === '') {
         // Allow clearing the profile image
+        // Delete old profile image if it exists
+        if (user.profile && user.profile.profileImage) {
+          const oldFileName = extractFileNameFromUrl(user.profile.profileImage);
+          if (oldFileName) {
+            try {
+              await deleteFromR2(oldFileName);
+              console.log(`Deleted old profile image: ${oldFileName}`);
+            } catch (deleteError) {
+              // Log error but don't fail the update if deletion fails
+              console.error('Failed to delete old profile image:', deleteError);
+            }
+          }
+        }
         updateData.profileImage = null;
       } else {
         // Already a URL, use as-is
