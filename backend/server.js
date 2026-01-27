@@ -24,7 +24,7 @@ app.use('/api', profileRoutes);
 // GET endpoint for top selling items
 app.get('/api/topselling', (req, res) => {
   try {
-    const filePath = path.join(__dirname, 'data', 'topselling.json');
+    const filePath = path.join(__dirname, 'data', 'items.json');
 
     // Read the JSON file
     const jsonData = fs.readFileSync(filePath, 'utf8');

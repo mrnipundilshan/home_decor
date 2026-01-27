@@ -1,0 +1,242 @@
+[
+  {
+    "title": "Modern King Size Bed",
+    "subtitle": "Bed",
+    "category": "beds",
+    "imageUrl": "assets/beds/bed_1.png",
+    "price": 8999.0,
+    "rating": 4.6
+  },
+  {
+    "title": "Minimal Wooden Bed",
+    "subtitle": "Bed",
+    "category": "beds",
+    "imageUrl": "assets/beds/bed_2.png",
+    "price": 7499.0,
+    "rating": 4.4
+  },
+  {
+    "title": "Luxury Upholstered Bed",
+    "subtitle": "Bed",
+    "category": "beds",
+    "imageUrl": "assets/beds/bed_3.png",
+    "price": 10999.0,
+    "rating": 4.8
+  },
+  {
+    "title": "Classic Storage Bed",
+    "subtitle": "Bed",
+    "category": "beds",
+    "imageUrl": "assets/beds/bed_4.png",
+    "price": 8299.0,
+    "rating": 4.5
+  },
+  {
+    "title": "Modern Queen Bed",
+    "subtitle": "Bed",
+    "category": "beds",
+    "imageUrl": "assets/beds/bed_5.png",
+    "price": 6999.0,
+    "rating": 4.3
+  },
+  {
+    "title": "Comfort Lounge Chair",
+    "subtitle": "Chair",
+    "category": "chairs",
+    "imageUrl": "assets/chairs/chair_1.png",
+    "price": 1299.0,
+    "rating": 4.4
+  },
+  {
+    "title": "Modern Arm Chair",
+    "subtitle": "Chair",
+    "category": "chairs",
+    "imageUrl": "assets/chairs/chair_2.png",
+    "price": 1599.0,
+    "rating": 4.6
+  },
+  {
+    "title": "Velvet Accent Chair",
+    "subtitle": "Chair",
+    "category": "chairs",
+    "imageUrl": "assets/chairs/chair_3.png",
+    "price": 1799.0,
+    "rating": 4.5
+  },
+  {
+    "title": "Minimal Dining Chair",
+    "subtitle": "Chair",
+    "category": "chairs",
+    "imageUrl": "assets/chairs/chair_4.png",
+    "price": 999.0,
+    "rating": 4.2
+  },
+  {
+    "title": "Classic Wooden Chair",
+    "subtitle": "Chair",
+    "category": "chairs",
+    "imageUrl": "assets/chairs/chair_5.png",
+    "price": 1199.0,
+    "rating": 4.3
+  },
+  {
+    "title": "Modern White Sofa",
+    "subtitle": "Sofa",
+    "category": "sofas",
+    "imageUrl": "assets/sofas/sofa_1.png",
+    "price": 5137.0,
+    "rating": 4.5
+  },
+  {
+    "title": "Luxury 3-Seater Sofa",
+    "subtitle": "Sofa",
+    "category": "sofas",
+    "imageUrl": "assets/sofas/sofa_2.png",
+    "price": 6899.0,
+    "rating": 4.7
+  },
+  {
+    "title": "Compact Fabric Sofa",
+    "subtitle": "Sofa",
+    "category": "sofas",
+    "imageUrl": "assets/sofas/sofa_3.png",
+    "price": 4599.0,
+    "rating": 4.3
+  },
+  {
+    "title": "Scandinavian Sofa",
+    "subtitle": "Sofa",
+    "category": "sofas",
+    "imageUrl": "assets/sofas/sofa_4.png",
+    "price": 5999.0,
+    "rating": 4.6
+  },
+  {
+    "title": "Corner Sectional Sofa",
+    "subtitle": "Sofa",
+    "category": "sofas",
+    "imageUrl": "assets/sofas/sofa_5.png",
+    "price": 7999.0,
+    "rating": 4.8
+  },
+  {
+    "title": "Vintage Pillow Case",
+    "subtitle": "Decor",
+    "category": "decors",
+    "imageUrl": "assets/decors/decor_1.png",
+    "price": 89.99,
+    "rating": 4.0
+  },
+  {
+    "title": "Decorative Vase",
+    "subtitle": "Decor",
+    "category": "decors",
+    "imageUrl": "assets/decors/decor_2.png",
+    "price": 249.99,
+    "rating": 4.3
+  },
+  {
+    "title": "Wall Art Frame",
+    "subtitle": "Decor",
+    "category": "decors",
+    "imageUrl": "assets/decors/decor_3.png",
+    "price": 399.99,
+    "rating": 4.5
+  },
+  {
+    "title": "Purple Ottoman Chair",
+    "subtitle": "Decor",
+    "category": "decors",
+    "imageUrl": "assets/decors/decor_4.png",
+    "price": 899.99,
+    "rating": 4.6
+  },
+  {
+    "title": "Modern Sculpture Decor",
+    "subtitle": "Decor",
+    "category": "decors",
+    "imageUrl": "assets/decors/decor_5.png",
+    "price": 699.99,
+    "rating": 4.4
+  },
+  {
+    "title": "Writing Desk",
+    "subtitle": "Table",
+    "category": "tables",
+    "imageUrl": "assets/tables/table_1.png",
+    "price": 1499.0,
+    "rating": 4.2
+  },
+  {
+    "title": "Modern Coffee Table",
+    "subtitle": "Table",
+    "category": "tables",
+    "imageUrl": "assets/tables/table_2.png",
+    "price": 1999.0,
+    "rating": 4.5
+  },
+  {
+    "title": "Minimal Side Table",
+    "subtitle": "Table",
+    "category": "tables",
+    "imageUrl": "assets/tables/table_3.png",
+    "price": 899.0,
+    "rating": 4.3
+  },
+  {
+    "title": "Dining Table Set",
+    "subtitle": "Table",
+    "category": "tables",
+    "imageUrl": "assets/tables/table_4.png",
+    "price": 5599.0,
+    "rating": 4.6
+  },
+  {
+    "title": "Wooden Console Table",
+    "subtitle": "Table",
+    "category": "tables",
+    "imageUrl": "assets/tables/table_5.png",
+    "price": 2899.0,
+    "rating": 4.4
+  },
+  {
+    "title": "Himalayan Salt Lamp",
+    "subtitle": "Light",
+    "category": "lights",
+    "imageUrl": "assets/lights/light_1.png",
+    "price": 699.99,
+    "rating": 4.7
+  },
+  {
+    "title": "Modern Table Lamp",
+    "subtitle": "Light",
+    "category": "lights",
+    "imageUrl": "assets/lights/light_2.png",
+    "price": 1299.0,
+    "rating": 4.5
+  },
+  {
+    "title": "Pendant Ceiling Light",
+    "subtitle": "Light",
+    "category": "lights",
+    "imageUrl": "assets/lights/light_3.png",
+    "price": 2199.0,
+    "rating": 4.6
+  },
+  {
+    "title": "Minimal Night Lamp",
+    "subtitle": "Light",
+    "category": "lights",
+    "imageUrl": "assets/lights/light_4.png",
+    "price": 899.0,
+    "rating": 4.3
+  },
+  {
+    "title": "Decorative Floor Lamp",
+    "subtitle": "Light",
+    "category": "lights",
+    "imageUrl": "assets/lights/light_5.png",
+    "price": 2499.0,
+    "rating": 4.8
+  }
+]

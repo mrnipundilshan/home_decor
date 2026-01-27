@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
+import 'package:home_decor/feature/category/presentation/bloc/category_bloc.dart';
 import 'package:home_decor/feature/category/presentation/widgets/top%20selling/item_card.dart';
 import 'package:home_decor/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -15,7 +16,7 @@ class TopSelling extends StatefulWidget {
 class _TopSellingState extends State<TopSelling> {
   @override
   void initState() {
-    BlocProvider.of<HomeBloc>(context).add(HomePageInitialEvent());
+    BlocProvider.of<CategoryBloc>(context).add(CategoryInitialEvent());
     super.initState();
   }
 
@@ -25,9 +26,9 @@ class _TopSellingState extends State<TopSelling> {
 
     return SizedBox(
       width: double.infinity,
-      child: BlocBuilder<HomeBloc, HomeState>(
+      child: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
-          if (state is HomeTopSellingLoadingState) {
+          if (state is CategoryLoadingState) {
             return Shimmer.fromColors(
               baseColor: themeData.colorScheme.inversePrimary,
               highlightColor: themeData.colorScheme.primary,
@@ -52,7 +53,7 @@ class _TopSellingState extends State<TopSelling> {
               ),
             );
           }
-          if (state is HomeTopSellingLoadedState) {
+          if (state is CategoryLoadedState) {
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -74,7 +75,7 @@ class _TopSellingState extends State<TopSelling> {
             );
           }
 
-          if (state is HomeTopSellingErrorState) {
+          if (state is CategoryErrorState) {
             return Center(
               child: Text(
                 context.translate('error_state'),

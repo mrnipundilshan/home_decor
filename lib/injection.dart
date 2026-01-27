@@ -8,6 +8,11 @@ import 'package:home_decor/feature/auth/data/repository/auth_repository_impl.dar
 import 'package:home_decor/feature/auth/domain/repository/auth_repository.dart';
 import 'package:home_decor/feature/auth/domain/usecases/auth_usecases.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:home_decor/feature/category/data/datasource/category_datasource.dart';
+import 'package:home_decor/feature/category/data/repository/category_repository_impl.dart';
+import 'package:home_decor/feature/category/domain/repository/category_repository.dart';
+import 'package:home_decor/feature/category/domain/usecases/category_usecases.dart';
+import 'package:home_decor/feature/category/presentation/bloc/category_bloc.dart';
 import 'package:home_decor/feature/home/data/datasource/item_datasource.dart';
 import 'package:home_decor/feature/home/data/repository/item_repository_impl.dart';
 import 'package:home_decor/feature/home/domain/repository/item_repository.dart';
@@ -26,11 +31,13 @@ Future<void> init() async {
   sl.registerFactory(() => HomeBloc(itemUsecases: sl()));
   sl.registerFactory(() => AuthBloc(authUsecases: sl()));
   sl.registerFactory(() => ProfileBloc(profileUsecases: sl()));
+  sl.registerFactory(() => CategoryBloc(categoryUsecases: sl()));
 
   // domain layer
   sl.registerFactory(() => ItemUsecases(itemRepository: sl()));
   sl.registerFactory(() => AuthUsecases(authRepository: sl()));
   sl.registerFactory(() => ProfileUsecases(profileRepository: sl()));
+  sl.registerFactory(() => CategoryUsecases(categoryRepository: sl()));
 
   // data layer
   sl.registerFactory<ItemRepository>(
@@ -46,6 +53,10 @@ Future<void> init() async {
     () => ProfileRepositoryImpl(profileDatasource: sl()),
   );
 
+  sl.registerFactory<CategoryRepository>(
+    () => CategoryRepositoryImpl(categoryDatasource: sl()),
+  );
+
   sl.registerFactory<ItemDatasource>(() => ItemDatasourceImpl(dio: sl()));
   sl.registerFactory<AuthRemoteDatasource>(
     () => AuthRemoteDatasourceImpl(dio: sl()),
@@ -54,6 +65,9 @@ Future<void> init() async {
     () => AuthLocalDatasourceImpl(flutterSecureStorage: sl()),
   );
   sl.registerFactory<ProfileDatasource>(() => ProfileDatasourceImpl(dio: sl()));
+  sl.registerFactory<CategoryDatasource>(
+    () => CategoryDatasourceImpl(dio: sl()),
+  );
 
   // Dio client
   sl.registerLazySingleton<DioClient>(

@@ -1,4 +1,4 @@
-import 'package:home_decor/feature/home/domain/entity/item_entity.dart';
+import 'package:home_decor/feature/category/domain/entity/item_entity.dart';
 
 class ItemModel extends ItemEntity {
   ItemModel({
