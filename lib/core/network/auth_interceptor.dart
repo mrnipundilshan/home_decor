@@ -15,6 +15,7 @@ class AuthInterceptor extends Interceptor {
     ApiEndpoints.otp,
     ApiEndpoints.refreshToken,
     ApiEndpoints.checkEmail,
+    ApiEndpoints.items,
   ];
 
   @override

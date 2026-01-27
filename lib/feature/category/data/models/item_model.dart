@@ -4,6 +4,7 @@ class ItemModel extends ItemEntity {
   ItemModel({
     required super.title,
     required super.subtitle,
+    required super.category,
     required super.imageUrl,
     required super.price,
     required super.rating,
@@ -13,6 +14,7 @@ class ItemModel extends ItemEntity {
     return ItemModel(
       title: json['title'],
       subtitle: json['subtitle'],
+      category: json['category'],
       imageUrl: json['imageUrl'],
       price: json['price'],
       rating: json['rating'],

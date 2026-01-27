@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/feature/category/presentation/bloc/category_bloc.dart';
-import 'package:home_decor/feature/category/presentation/widgets/top%20selling/item_card.dart';
-import 'package:home_decor/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:home_decor/feature/category/presentation/widgets/Items/item_card.dart';
 import 'package:shimmer/shimmer.dart';
 
-class TopSelling extends StatefulWidget {
-  const TopSelling({super.key});
+class Items extends StatefulWidget {
+  const Items({super.key});
 
   @override
-  State<TopSelling> createState() => _TopSellingState();
+  State<Items> createState() => _ItemsState();
 }
 
-class _TopSellingState extends State<TopSelling> {
+class _ItemsState extends State<Items> {
   @override
   void initState() {
     BlocProvider.of<CategoryBloc>(context).add(CategoryInitialEvent());
@@ -61,9 +60,9 @@ class _TopSellingState extends State<TopSelling> {
               ),
               physics: BouncingScrollPhysics(),
               scrollDirection: .vertical,
-              itemCount: state.topSellingItems.length,
+              itemCount: state.itemList.length,
               itemBuilder: (context, index) {
-                final topSellingItem = state.topSellingItems[index];
+                final topSellingItem = state.itemList[index];
                 return ItemCard(
                   title: topSellingItem.title,
                   subtitle: topSellingItem.subtitle,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/feature/category/presentation/widgets/category%20list/my_category_list_view.dart';
 import 'package:home_decor/feature/category/presentation/widgets/home_page_app_bar.dart';
-import 'package:home_decor/feature/category/presentation/widgets/top%20selling/items.dart';
+import 'package:home_decor/feature/category/presentation/widgets/Items/items.dart';
 
 class Category extends StatefulWidget {
   const Category({super.key});
@@ -37,10 +37,7 @@ class _CategoryState extends State<Category> {
         child: Stack(
           children: [
             // The scrollable content
-            Padding(
-              padding: const EdgeInsets.only(top: 80),
-              child: TopSelling(),
-            ),
+            Padding(padding: const EdgeInsets.only(top: 80), child: Items()),
             // The pinned carousel
             Positioned(
               top: 10,

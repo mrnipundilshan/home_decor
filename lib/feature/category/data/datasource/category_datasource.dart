@@ -17,19 +17,19 @@ class CategoryDatasourceImpl implements CategoryDatasource {
   Future<List<ItemModel>> getTopSellingItemsFromAPI() async {
     log("Calling Category List");
     await Future.delayed(const Duration(seconds: 4));
-    final response = await dio.get(ApiEndpoints.topSelling);
+    final response = await dio.get(ApiEndpoints.items);
 
     if (response.statusCode != 200) {
       throw ServerException();
     } else {
-      // final responseBody = json.decode(response.data);
+      //final responseBody = json.decode(response.data);
       final responseBody = response.data;
-
-      final topSellingItemList = (responseBody as List)
+      print(responseBody);
+      final itemList = (responseBody as List)
           .map((json) => ItemModel.fromJson(json))
           .toList();
 
-      return topSellingItemList;
+      return itemList;
     }
   }
 }

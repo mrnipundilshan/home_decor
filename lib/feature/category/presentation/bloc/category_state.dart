@@ -14,7 +14,7 @@ class CategoryLoadingState extends CategoryState {}
 class CategoryErrorState extends CategoryState {}
 
 class CategoryLoadedState extends CategoryState {
-  final List<ItemEntity> topSellingItems;
+  final List<ItemEntity> itemList;
 
-  const CategoryLoadedState({required this.topSellingItems});
+  const CategoryLoadedState({required this.itemList});
 }

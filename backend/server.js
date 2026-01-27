@@ -24,7 +24,7 @@ app.use('/api', profileRoutes);
 // GET endpoint for top selling items
 app.get('/api/topselling', (req, res) => {
   try {
-    const filePath = path.join(__dirname, 'data', 'items.json');
+    const filePath = path.join(__dirname, 'data', 'topselling.json');
 
     // Read the JSON file
     const jsonData = fs.readFileSync(filePath, 'utf8');
@@ -36,6 +36,26 @@ app.get('/api/topselling', (req, res) => {
     console.error('Error reading topselling.json:', error);
     res.status(500).json({
       error: 'Failed to fetch top selling items',
+      message: error.message
+    });
+  }
+});
+
+// GET endpoint for all selling items
+app.get('/api/items', (req, res) => {
+  try {
+    const filePath = path.join(__dirname, 'data', 'items.json');
+
+    // Read the JSON file
+    const jsonData = fs.readFileSync(filePath, 'utf8');
+    const data = JSON.parse(jsonData);
+
+    // Return the data as JSON response
+    res.status(200).json(data);
+  } catch (error) {
+    console.error('Error reading items.json:', error);
+    res.status(500).json({
+      error: 'Failed to fetch items',
       message: error.message
     });
   }
@@ -76,5 +96,6 @@ app.listen(PORT, () => {
   console.log(`  - GET  http://localhost:${PORT}/api/profile`);
   console.log(`  - PUT  http://localhost:${PORT}/api/profile`);
   console.log(`  - GET  http://localhost:${PORT}/health`);
+  console.log(`  - GET  http://localhost:${PORT}/items`);
 });
 

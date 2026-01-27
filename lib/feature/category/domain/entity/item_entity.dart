@@ -1,6 +1,7 @@
 class ItemEntity {
   final String title;
   final String subtitle;
+  final String category;
   final String imageUrl;
   final double price;
   final double rating;
@@ -8,6 +9,7 @@ class ItemEntity {
   ItemEntity({
     required this.title,
     required this.subtitle,
+    required this.category,
     required this.imageUrl,
     required this.price,
     required this.rating,

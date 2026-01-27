@@ -27,8 +27,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
     failureOrtopsellings.fold(
       (failure) => emit(CategoryErrorState()),
-      (topSellingitems) =>
-          emit(CategoryLoadedState(topSellingItems: topSellingitems)),
+      (itemList) => emit(CategoryLoadedState(itemList: itemList)),
     );
   }
 }

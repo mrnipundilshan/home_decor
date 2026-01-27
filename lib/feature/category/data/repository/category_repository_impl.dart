@@ -14,9 +14,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
   Future<Either<Failure, List<ItemEntity>>>
   getTopSellingItemsFromDatasources() async {
     try {
-      final topSellingitems = await categoryDatasource
-          .getTopSellingItemsFromAPI();
-      return right(topSellingitems);
+      final itemList = await categoryDatasource.getTopSellingItemsFromAPI();
+      return right(itemList);
     } on ServerException catch (_) {
       return left(ServerFailure());
     } catch (e) {
