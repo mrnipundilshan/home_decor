@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
-import 'package:home_decor/core/theme/app_sizes.dart';
 
-class TopSellingCard extends StatefulWidget {
+class ItemCard extends StatefulWidget {
   final String title;
   final String subtitle;
   final String imageUrl;
   final double price;
   final double rating;
-  const TopSellingCard({
+  const ItemCard({
     super.key,
     required this.title,
     required this.subtitle,
@@ -18,25 +17,23 @@ class TopSellingCard extends StatefulWidget {
   });
 
   @override
-  State<TopSellingCard> createState() => _TopSellingCardState();
+  State<ItemCard> createState() => _ItemCardState();
 }
 
-class _TopSellingCardState extends State<TopSellingCard> {
+class _ItemCardState extends State<ItemCard> {
   bool isFav = false;
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
 
-    final double width = AppSizes.screenWidth(context);
-
     return Container(
-      margin: EdgeInsets.only(right: width * 0.03),
+      margin: EdgeInsets.only(left: 8, right: 8, bottom: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: themeData.colorScheme.inversePrimary.withAlpha(25),
       ),
-      width: width * 0.4,
+
       child: Column(
         crossAxisAlignment: .start,
         children: [
@@ -47,6 +44,7 @@ class _TopSellingCardState extends State<TopSellingCard> {
                 : Stack(
                     children: [
                       Image(
+                        width: double.infinity,
                         image: AssetImage(widget.imageUrl),
                         fit: BoxFit.fitWidth,
                       ),

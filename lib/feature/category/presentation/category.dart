@@ -5,8 +5,7 @@ import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:home_decor/feature/category/presentation/widgets/category%20list/my_category_list_view.dart';
 import 'package:home_decor/feature/category/presentation/widgets/home_page_app_bar.dart';
-
-import 'package:home_decor/feature/home/presentation/widgets/top%20selling/top_selling.dart';
+import 'package:home_decor/feature/category/presentation/widgets/top%20selling/items.dart';
 
 class Category extends StatefulWidget {
   const Category({super.key});
@@ -34,8 +33,21 @@ class _CategoryState extends State<Category> {
             horizontal: AppSizes.screenWidth(context) * 0.02,
             vertical: AppSizes.screenHeight(context) * 0.01,
           ),
-          child: Column(
-            children: [SizedBox(height: 15), MyCarouselView(), TopSelling()],
+          child: Stack(
+            children: [
+              // The scrollable content
+              Padding(
+                padding: const EdgeInsets.only(top: 80),
+                child: TopSelling(),
+              ),
+              // The pinned carousel
+              Positioned(
+                top: 10,
+                left: 0,
+                right: 0,
+                child: MyCategoryListView(),
+              ),
+            ],
           ),
         ),
       ),

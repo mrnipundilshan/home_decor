@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/feature/category/presentation/widgets/category%20list/my_view_card.dart';
 
-class MyCarouselView extends StatefulWidget {
-  const MyCarouselView({super.key});
+class MyCategoryListView extends StatefulWidget {
+  const MyCategoryListView({super.key});
 
   @override
-  State<MyCarouselView> createState() => _MyCarouselViewState();
+  State<MyCategoryListView> createState() => _MyCategoryListViewState();
 }
 
-class _MyCarouselViewState extends State<MyCarouselView> {
+class _MyCategoryListViewState extends State<MyCategoryListView> {
   String selectedCategory = "all";
 
   void _onCategorySelected(String category) {
