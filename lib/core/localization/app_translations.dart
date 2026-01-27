@@ -79,8 +79,15 @@ class AppTranslations {
       "female": "Female",
       "other": "Other",
 
-      // catagory
+      // category
       "category": "Category",
+      "beds": "Beds",
+      "sofa": "Sofa",
+      "decor": "Decor",
+      "chair": "Chair",
+      "light": "Light",
+      "table": "Table",
+      "all": "All",
     },
     'si': {
       // Auth
@@ -164,6 +171,13 @@ class AppTranslations {
 
       // catagory
       "category": "වර්ග",
+      "beds": "ඇදන්",
+      "sofa": "සෝෆා",
+      "decor": "සැරසිලි",
+      "light": "බල්බ",
+      "chair": "පුටු",
+      "table": "මේස",
+      "all": "සියලුම",
     },
   };
 

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
-import 'package:home_decor/feature/category/presentation/widgets/category%20carousel/my_carousel_view.dart';
+import 'package:home_decor/feature/category/presentation/widgets/category%20list/my_category_list_view.dart';
 import 'package:home_decor/feature/category/presentation/widgets/home_page_app_bar.dart';
 
 import 'package:home_decor/feature/home/presentation/widgets/top%20selling/top_selling.dart';
