@@ -29,6 +29,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
           Icons.favorite_border,
           color: themeData.colorScheme.inversePrimary,
         ),
+        SizedBox(width: 10),
       ],
     );
   }
