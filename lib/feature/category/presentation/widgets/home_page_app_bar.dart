@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 
 class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CategoryAppBar({super.key});
+  final String? selectedCategory;
+  const CategoryAppBar({super.key, this.selectedCategory});
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
+    String displayTitle;
+    
+    if (selectedCategory != null && selectedCategory!.isNotEmpty) {
+      displayTitle = context.translate(selectedCategory!);
+    } else {
+      displayTitle = context.translate("category");
+    }
+    
     return AppBar(
-      title: Text("Beds", style: themeData.appBarTheme.titleTextStyle),
+      title: Text(
+        displayTitle,
+        style: themeData.appBarTheme.titleTextStyle,
+      ),
     );
   }
 

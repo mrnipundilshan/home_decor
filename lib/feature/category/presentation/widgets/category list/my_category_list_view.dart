@@ -2,24 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/feature/category/presentation/widgets/category%20list/my_view_card.dart';
 
-class MyCategoryListView extends StatefulWidget {
-  const MyCategoryListView({super.key});
+class MyCategoryListView extends StatelessWidget {
+  final String selectedCategory;
+  final Function(String) onCategorySelected;
 
-  @override
-  State<MyCategoryListView> createState() => _MyCategoryListViewState();
-}
-
-class _MyCategoryListViewState extends State<MyCategoryListView> {
-  String selectedCategory = "all";
-
-  void _onCategorySelected(String category) {
-    if (selectedCategory != category) {
-      setState(() {
-        selectedCategory = category;
-      });
-      print(selectedCategory);
-    }
-  }
+  const MyCategoryListView({
+    super.key,
+    required this.selectedCategory,
+    required this.onCategorySelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,43 +24,43 @@ class _MyCategoryListViewState extends State<MyCategoryListView> {
               title: context.translate('all'),
               category: "all",
               isSelected: selectedCategory == "all",
-              onTap: () => _onCategorySelected("all"),
+              onTap: () => onCategorySelected("all"),
             ),
             MyCarouselViewCard(
               title: context.translate('beds'),
               category: "beds",
               isSelected: selectedCategory == "beds",
-              onTap: () => _onCategorySelected("beds"),
+              onTap: () => onCategorySelected("beds"),
             ),
             MyCarouselViewCard(
               title: context.translate('sofa'),
               category: "sofa",
               isSelected: selectedCategory == "sofa",
-              onTap: () => _onCategorySelected("sofa"),
+              onTap: () => onCategorySelected("sofa"),
             ),
             MyCarouselViewCard(
               title: context.translate('decor'),
               category: "decor",
               isSelected: selectedCategory == "decor",
-              onTap: () => _onCategorySelected("decor"),
+              onTap: () => onCategorySelected("decor"),
             ),
             MyCarouselViewCard(
               title: context.translate('chair'),
               category: "chair",
               isSelected: selectedCategory == "chair",
-              onTap: () => _onCategorySelected("chair"),
+              onTap: () => onCategorySelected("chair"),
             ),
             MyCarouselViewCard(
               title: context.translate('light'),
               category: "light",
               isSelected: selectedCategory == "light",
-              onTap: () => _onCategorySelected("light"),
+              onTap: () => onCategorySelected("light"),
             ),
             MyCarouselViewCard(
               title: context.translate('table'),
               category: "table",
               isSelected: selectedCategory == "table",
-              onTap: () => _onCategorySelected("table"),
+              onTap: () => onCategorySelected("table"),
             ),
           ],
         ),

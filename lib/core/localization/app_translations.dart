@@ -82,11 +82,11 @@ class AppTranslations {
       // category
       "category": "Category",
       "beds": "Beds",
-      "sofa": "Sofa",
-      "decor": "Decor",
-      "chair": "Chair",
-      "light": "Light",
-      "table": "Table",
+      "sofa": "Sofas",
+      "decor": "Decors",
+      "chair": "Chairs",
+      "light": "Lights",
+      "table": "Tables",
       "all": "All",
     },
     'si': {
