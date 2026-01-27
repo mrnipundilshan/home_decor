@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
+import 'package:home_decor/feature/category/presentation/category.dart';
 import 'package:home_decor/feature/home/presentation/home_page.dart';
 import 'package:home_decor/feature/profile/presentation/profile.dart';
 
@@ -16,6 +17,7 @@ class _NavBarState extends State<NavBar> {
 
   List<Widget> _pages(BuildContext context) => [
     HomePage(),
+    Category(),
     Center(child: Text(context.translate('search'))),
     Profile(),
   ];
@@ -55,6 +57,15 @@ class _NavBarState extends State<NavBar> {
               ),
               label: context.translate('home'),
             ),
+
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(top: 6.0),
+                child: Icon(Icons.category),
+              ),
+              label: context.translate('category'),
+            ),
+
             BottomNavigationBarItem(
               icon: Padding(
                 padding: EdgeInsets.only(top: 6.0),

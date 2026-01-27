@@ -78,6 +78,9 @@ class AppTranslations {
       "male": "Male",
       "female": "Female",
       "other": "Other",
+
+      // catagory
+      "category": "Category",
     },
     'si': {
       // Auth
@@ -158,6 +161,9 @@ class AppTranslations {
       "male": "පුරුෂ",
       "female": "ස්ත්‍රී",
       "other": "වෙනත්",
+
+      // catagory
+      "category": "වර්ග",
     },
   };
 

@@ -39,7 +39,7 @@ flutter:
 
   assets:
     - assets/
-    - assets/catagory/
+    - assets/category/
     - assets/topselling/
 
     - .env

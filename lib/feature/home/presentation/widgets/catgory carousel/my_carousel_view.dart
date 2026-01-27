@@ -22,32 +22,32 @@ class MyCarouselView extends StatelessWidget {
         itemExtent: AppSizes.screenWidth(context) * 0.2,
         children: [
           MyCarouselViewCard(
-            imageUrl: "assets/catagory/bedroom.svg",
+            imageUrl: "assets/category/bedroom.svg",
             title: context.translate('bedroom'),
           ),
 
           MyCarouselViewCard(
-            imageUrl: "assets/catagory/bath.svg",
+            imageUrl: "assets/category/bath.svg",
             title: context.translate('bathroom'),
           ),
           MyCarouselViewCard(
-            imageUrl: "assets/catagory/Dinning.svg",
+            imageUrl: "assets/category/Dinning.svg",
             title: context.translate('dinning'),
           ),
           MyCarouselViewCard(
-            imageUrl: "assets/catagory/kitchen.svg",
+            imageUrl: "assets/category/kitchen.svg",
             title: context.translate('kitchen'),
           ),
           MyCarouselViewCard(
-            imageUrl: "assets/catagory/living.svg",
+            imageUrl: "assets/category/living.svg",
             title: context.translate('living'),
           ),
           MyCarouselViewCard(
-            imageUrl: "assets/catagory/kitchen.svg",
+            imageUrl: "assets/category/kitchen.svg",
             title: context.translate('kitchen'),
           ),
           MyCarouselViewCard(
-            imageUrl: "assets/catagory/living.svg",
+            imageUrl: "assets/category/living.svg",
             title: context.translate('living'),
           ),
         ],
