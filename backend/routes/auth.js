@@ -276,5 +276,45 @@ router.post('/refresh-token', async (req, res) => {
   }
 });
 
+// Check email existence endpoint
+router.post('/check-email', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Validate input
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        error: 'Email is required',
+      });
+    }
+
+    // Validate email format
+    if (!isValidEmail(email)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid email format',
+      });
+    }
+
+    // Check if user exists
+    const user = await prisma.user.findUnique({
+      where: { email: email.toLowerCase() },
+    });
+
+    return res.status(200).json({
+      success: true,
+      exists: !!user,
+    });
+  } catch (error) {
+    console.error('Check email error:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to check email',
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;
 

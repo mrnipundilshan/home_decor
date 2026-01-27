@@ -44,6 +44,9 @@ class AuthRepositoryImpl implements AuthRepository {
         loginResponse.accessToken,
         loginResponse.refreshToken,
       );
+
+      await authLocalDatasource.saveEmail(loginResponse.user.email);
+
       return right(loginResponse.user);
     } on ServerException catch (_) {
       return left(ServerFailure());
@@ -79,8 +82,13 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, bool>> isLogIn() async {
     try {
-      final isLoggedIn = await authLocalDatasource.isLoggedIn();
-      return right(isLoggedIn);
+      final email = await authLocalDatasource.getEmail();
+      final userExists = await authRemoteDatasource.isEmailExists(email ?? '');
+      if (userExists) {
+        final isLoggedIn = await authLocalDatasource.isLoggedIn();
+        return right(isLoggedIn);
+      }
+      return left(GeneralFailure());
     } on CacheException catch (_) {
       return left(CacheFailure());
     } catch (e) {

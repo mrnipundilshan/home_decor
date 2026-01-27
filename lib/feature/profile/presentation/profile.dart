@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -7,12 +10,14 @@ import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/services/locale_service.dart';
 import 'package:home_decor/core/services/theme_service.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import 'package:home_decor/core/widgets/my_bottom_sheet.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:home_decor/feature/profile/domain/entity/profile_entity.dart';
 import 'package:home_decor/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:home_decor/feature/profile/presentation/widgets/profile_my_textbox.dart';
 import 'package:home_decor/feature/profile/presentation/widgets/profile_page_app_bar.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -25,6 +30,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  File? _selectedImage;
+  String? _avatarBase64;
+
   late TextEditingController firstNameController;
   late TextEditingController emailController;
   late TextEditingController lastNameController;
@@ -125,6 +133,11 @@ class _ProfileState extends State<Profile> {
                 }
               }
               if (state is ProfileUpdateSuccessState) {
+                // Clear local image selection so network image can be displayed
+                setState(() {
+                  _selectedImage = null;
+                  _avatarBase64 = null;
+                });
                 BlocProvider.of<ProfileBloc>(
                   context,
                 ).add(FetchUserDetailsEvent());
@@ -144,7 +157,84 @@ class _ProfileState extends State<Profile> {
                             crossAxisAlignment: .start,
                             children: [
                               SizedBox(height: 15),
-                              Center(child: CircleAvatar(radius: 50)),
+                              Center(
+                                child: GestureDetector(
+                                  onTap: _pickAvatar,
+                                  child: Stack(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 50,
+                                        backgroundColor: Colors.grey.shade200,
+                                        child: ClipOval(
+                                          child: SizedBox(
+                                            width: 100,
+                                            height: 100,
+                                            child: _selectedImage != null
+                                                ? Image.file(
+                                                    _selectedImage!,
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                : (state.profile.imageUrl !=
+                                                          null &&
+                                                      state
+                                                          .profile
+                                                          .imageUrl!
+                                                          .isNotEmpty)
+                                                ? CachedNetworkImage(
+                                                    imageUrl:
+                                                        state.profile.imageUrl!,
+                                                    fit: BoxFit.cover,
+                                                    placeholder:
+                                                        (
+                                                          context,
+                                                          url,
+                                                        ) => const Center(
+                                                          child: SizedBox(
+                                                            width: 24,
+                                                            height: 24,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                                  strokeWidth:
+                                                                      2,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            const Icon(
+                                                              Icons.person,
+                                                              size: 50,
+                                                            ),
+                                                  )
+                                                : const Icon(
+                                                    Icons.person,
+                                                    size: 50,
+                                                  ),
+                                          ),
+                                        ),
+                                      ),
+
+                                      if (isEditClicked)
+                                        Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: CircleAvatar(
+                                            radius: 16,
+                                            backgroundColor: Theme.of(
+                                              context,
+                                            ).colorScheme.primary,
+                                            child: const Icon(
+                                              Icons.camera_alt,
+                                              size: 16,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
                               SizedBox(height: 15),
                               Column(
                                 crossAxisAlignment: .start,
@@ -154,6 +244,7 @@ class _ProfileState extends State<Profile> {
                                         .trim(),
                                     controller: firstNameController,
                                     enabled: isEditClicked,
+                                    label: context.translate("first_name"),
                                   ),
 
                                   SizedBox(height: 15),
@@ -163,6 +254,7 @@ class _ProfileState extends State<Profile> {
                                         .trim(),
                                     controller: lastNameController,
                                     enabled: isEditClicked,
+                                    label: context.translate("last_name"),
                                   ),
 
                                   SizedBox(height: 15),
@@ -173,6 +265,7 @@ class _ProfileState extends State<Profile> {
                                         TextInputType.emailAddress,
                                     controller: emailController,
                                     enabled: false,
+                                    label: context.translate("email"),
                                   ),
 
                                   SizedBox(height: 15),
@@ -182,9 +275,12 @@ class _ProfileState extends State<Profile> {
                                     controller: dobController,
                                     iconData: Icons.date_range_outlined,
                                     enabled: isEditClicked,
+
                                     onIconTap: isEditClicked
                                         ? () => _selectDate(context)
                                         : null,
+                                    label: context.translate("date_of_birth"),
+                                    readOnly: true,
                                   ),
 
                                   SizedBox(height: 15),
@@ -194,6 +290,7 @@ class _ProfileState extends State<Profile> {
                                     keyboardInputType: TextInputType.number,
                                     controller: phoneNumberController,
                                     enabled: isEditClicked,
+                                    label: context.translate("phone"),
                                   ),
                                   SizedBox(height: 15),
 
@@ -201,7 +298,13 @@ class _ProfileState extends State<Profile> {
                                     textFieldName: genderController.text.trim(),
                                     iconData: Icons.manage_accounts_outlined,
                                     controller: genderController,
-                                    enabled: false,
+                                    enabled: isEditClicked,
+
+                                    onIconTap: isEditClicked
+                                        ? () => _showGenderBottomSheet(context)
+                                        : null,
+                                    label: context.translate("gender"),
+                                    readOnly: true,
                                   ),
                                 ],
                               ),
@@ -232,6 +335,7 @@ class _ProfileState extends State<Profile> {
                                             .trim(),
                                         gender: genderController.text.trim(),
                                         dob: dobController.text.trim(),
+                                        imageUrl: _avatarBase64,
                                       );
 
                                       BlocProvider.of<ProfileBloc>(context).add(
@@ -283,40 +387,66 @@ class _ProfileState extends State<Profile> {
         Column(
           crossAxisAlignment: .start,
           children: [
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: context.translate("first_name"),
+            ),
 
             SizedBox(height: 15),
 
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: context.translate("last_name"),
+            ),
 
             SizedBox(height: 15),
 
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: context.translate("email"),
+            ),
 
             SizedBox(height: 15),
 
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: context.translate("date_of_birth"),
+            ),
 
             SizedBox(height: 15),
 
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: context.translate("phone"),
+            ),
             SizedBox(height: 15),
 
-            ProfileMyTextbox(textFieldName: "", controller: loadingController),
+            ProfileMyTextbox(
+              textFieldName: "",
+              controller: loadingController,
+              label: context.translate("gender"),
+            ),
           ],
         ),
         SizedBox(height: 15),
         Row(
           children: [
             MyButton(
-              buttonTitle: isEditClicked ? "Cancel" : "Edit",
+              buttonTitle: isEditClicked
+                  ? context.translate("cancel")
+                  : context.translate("edit"),
               function: () {},
 
               isEnabled: true,
             ),
             SizedBox(width: 15),
             MyButton(
-              buttonTitle: "Save",
+              buttonTitle: context.translate('save'),
               function: () {},
               isEnabled: isEditClicked,
             ),
@@ -348,37 +478,20 @@ class _ProfileState extends State<Profile> {
 
       SizedBox(height: 20),
       // Language Switcher
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            context.translate('language'),
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          Consumer<LocaleService>(
-            builder: (context, localeService, child) {
-              return DropdownButton<String>(
-                value: localeService.currentLocale,
-                items: [
-                  DropdownMenuItem(
-                    value: 'en',
-                    child: Text(context.translate('english')),
-                  ),
-                  DropdownMenuItem(
-                    value: 'si',
-                    child: Text(context.translate('sinhala')),
-                  ),
-                ],
-                onChanged: (String? newLocale) {
-                  if (newLocale != null) {
-                    localeService.toggleLocale(newLocale);
-                  }
-                },
-              );
-            },
-          ),
-        ],
+      GestureDetector(
+        onTap: () => _showLanguageBottomSheet(context),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              context.translate('language'),
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const Icon(Icons.arrow_drop_down),
+          ],
+        ),
       ),
+
       SizedBox(height: 150),
     ],
   );
@@ -399,7 +512,7 @@ class _ProfileState extends State<Profile> {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.inversePrimary,
               ),
             ),
           ),
@@ -411,6 +524,62 @@ class _ProfileState extends State<Profile> {
     if (picked != null) {
       setState(() {
         dobController.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
+
+  void _showGenderBottomSheet(BuildContext context) {
+    if (!isEditClicked) return;
+
+    SelectionBottomSheet.show<String>(
+      context,
+      title: context.translate("Gender"),
+      selectedValue: genderController.text,
+      items: [
+        SelectionItem(value: "Male", label: context.translate("male")),
+        SelectionItem(value: "Female", label: context.translate("female")),
+        SelectionItem(value: "Other", label: context.translate("other")),
+      ],
+      onSelected: (value) {
+        setState(() {
+          genderController.text = value;
+        });
+      },
+    );
+  }
+
+  void _showLanguageBottomSheet(BuildContext context) {
+    SelectionBottomSheet.show<String>(
+      context,
+      title: context.translate("language"),
+      selectedValue: Provider.of<LocaleService>(
+        context,
+        listen: false,
+      ).currentLocale,
+      items: [
+        SelectionItem(value: 'en', label: context.translate('english')),
+        SelectionItem(value: 'si', label: context.translate('sinhala')),
+      ],
+      onSelected: (value) {
+        Provider.of<LocaleService>(context, listen: false).toggleLocale(value);
+      },
+    );
+  }
+
+  Future<void> _pickAvatar() async {
+    if (!isEditClicked) return;
+
+    final picker = ImagePicker();
+    final XFile? picked = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 70, // reduce size
+    );
+
+    if (picked != null) {
+      final bytes = await picked.readAsBytes();
+      setState(() {
+        _selectedImage = File(picked.path);
+        _avatarBase64 = base64Encode(bytes);
       });
     }
   }

@@ -14,6 +14,7 @@ class AuthInterceptor extends Interceptor {
     ApiEndpoints.login,
     ApiEndpoints.otp,
     ApiEndpoints.refreshToken,
+    ApiEndpoints.checkEmail,
   ];
 
   @override
@@ -30,8 +31,9 @@ class AuthInterceptor extends Interceptor {
     if (!isPublicEndpoint) {
       try {
         final token = await authLocalDatasource.getAccessToken();
+
         if (token != null && token.isNotEmpty) {
-          print(token);
+          //  print(token);
           options.headers['Authorization'] = 'Bearer $token';
         }
       } catch (e) {

@@ -10,8 +10,8 @@ const PORT = process.env.PORT || 3000;
 // Enable CORS for all routes
 app.use(cors());
 
-// Middleware to parse JSON
-app.use(express.json());
+// Middleware to parse JSON with increased limit for image uploads (10MB)
+app.use(express.json({ limit: '10mb' }));
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -25,18 +25,18 @@ app.use('/api', profileRoutes);
 app.get('/api/topselling', (req, res) => {
   try {
     const filePath = path.join(__dirname, 'data', 'topselling.json');
-    
+
     // Read the JSON file
     const jsonData = fs.readFileSync(filePath, 'utf8');
     const data = JSON.parse(jsonData);
-    
+
     // Return the data as JSON response
     res.status(200).json(data);
   } catch (error) {
     console.error('Error reading topselling.json:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       error: 'Failed to fetch top selling items',
-      message: error.message 
+      message: error.message
     });
   }
 });
@@ -72,6 +72,7 @@ app.listen(PORT, () => {
   console.log(`  - POST http://localhost:${PORT}/api/verify-otp`);
   console.log(`  - POST http://localhost:${PORT}/api/login`);
   console.log(`  - POST http://localhost:${PORT}/api/refresh-token`);
+  console.log(`  - POST http://localhost:${PORT}/api/check-email`);
   console.log(`  - GET  http://localhost:${PORT}/api/profile`);
   console.log(`  - PUT  http://localhost:${PORT}/api/profile`);
   console.log(`  - GET  http://localhost:${PORT}/health`);

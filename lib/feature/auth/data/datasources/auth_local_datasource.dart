@@ -13,6 +13,10 @@ abstract class AuthLocalDatasource {
   Future<bool> clearTokens();
 
   Future<bool> isLoggedIn();
+
+  Future<void> saveEmail(String email);
+
+  Future<String?> getEmail();
 }
 
 class AuthLocalDatasourceImpl implements AuthLocalDatasource {
@@ -22,6 +26,7 @@ class AuthLocalDatasourceImpl implements AuthLocalDatasource {
 
   static const _accessKey = 'ACCESS_TOKEN';
   static const _refreshKey = 'REFRESH_TOKEN';
+  static const _email = 'Email';
 
   @override
   Future<bool> clearTokens() async {
@@ -71,6 +76,26 @@ class AuthLocalDatasourceImpl implements AuthLocalDatasource {
       final token = await flutterSecureStorage.read(key: _accessKey);
       final isLoggedIn = token != null && token.isNotEmpty;
       return isLoggedIn;
+    } catch (e) {
+      log('Unknown error', error: e);
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<void> saveEmail(String email) async {
+    try {
+      await flutterSecureStorage.write(key: _email, value: email);
+    } catch (e) {
+      log('Unknown error', error: e);
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<String?> getEmail() async {
+    try {
+      return await flutterSecureStorage.read(key: _email);
     } catch (e) {
       log('Unknown error', error: e);
       throw CacheException();
