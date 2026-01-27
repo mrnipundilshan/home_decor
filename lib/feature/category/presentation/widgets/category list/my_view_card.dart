@@ -36,7 +36,7 @@ class MyCarouselViewCard extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
               side: isSelected
-                  ? BorderSide()
+                  ? BorderSide(color: Colors.transparent)
                   : BorderSide(color: themeData.colorScheme.inversePrimary),
             ),
             elevation: 0, // match flat Container look (optional)

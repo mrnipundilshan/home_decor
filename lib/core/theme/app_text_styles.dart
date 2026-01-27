@@ -6,8 +6,8 @@ class AppTextStyles {
   static const TextTheme lightTextTheme = TextTheme(
     headlineSmall: TextStyle(
       fontFamily: "Rubik",
-      fontSize: 20,
-      fontWeight: FontWeight.bold,
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
       color: AppColors.lightTextPrimary,
     ),
 
@@ -30,8 +30,8 @@ class AppTextStyles {
   static const TextTheme darkTextTheme = TextTheme(
     headlineSmall: TextStyle(
       fontFamily: "Rubik",
-      fontSize: 20,
-      fontWeight: FontWeight.bold,
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
       color: AppColors.darkTextPrimary,
     ),
 
