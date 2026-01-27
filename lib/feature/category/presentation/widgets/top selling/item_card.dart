@@ -35,6 +35,7 @@ class _ItemCardState extends State<ItemCard> {
       ),
 
       child: Column(
+        mainAxisSize: .min,
         crossAxisAlignment: .start,
         children: [
           ClipRRect(

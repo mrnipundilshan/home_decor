@@ -32,47 +32,45 @@ class _TopSellingState extends State<TopSelling> {
               baseColor: themeData.colorScheme.inversePrimary,
               highlightColor: themeData.colorScheme.primary,
               enabled: true,
-              child: SizedBox(
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: .vertical,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return ItemCard(
-                      title: "",
-                      subtitle: "",
-                      imageUrl: "",
-                      price: 0,
-                      rating: 0,
-                    );
-                  },
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisExtent: 300,
                 ),
+                physics: BouncingScrollPhysics(),
+                scrollDirection: .vertical,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return ItemCard(
+                    title: "",
+                    subtitle: "",
+                    imageUrl: "",
+                    price: 0,
+                    rating: 0,
+                  );
+                },
               ),
             );
           }
           if (state is HomeTopSellingLoadedState) {
-            return SizedBox(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                physics: BouncingScrollPhysics(),
-                scrollDirection: .vertical,
-                itemCount: state.topSellingItems.length,
-                itemBuilder: (context, index) {
-                  final topSellingItem = state.topSellingItems[index];
-                  return ItemCard(
-                    title: topSellingItem.title,
-                    subtitle: topSellingItem.subtitle,
-                    imageUrl: topSellingItem.imageUrl,
-                    price: topSellingItem.price,
-                    rating: topSellingItem.rating,
-                  );
-                },
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisExtent: 300,
               ),
+              physics: BouncingScrollPhysics(),
+              scrollDirection: .vertical,
+              itemCount: state.topSellingItems.length,
+              itemBuilder: (context, index) {
+                final topSellingItem = state.topSellingItems[index];
+                return ItemCard(
+                  title: topSellingItem.title,
+                  subtitle: topSellingItem.subtitle,
+                  imageUrl: topSellingItem.imageUrl,
+                  price: topSellingItem.price,
+                  rating: topSellingItem.rating,
+                );
+              },
             );
           }
 
