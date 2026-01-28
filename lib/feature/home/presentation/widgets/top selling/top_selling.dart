@@ -69,11 +69,11 @@ class _TopSellingState extends State<TopSelling> {
                     itemBuilder: (context, index) {
                       final topSellingItem = state.topSellingItems[index];
                       return TopSellingCard(
-                        title: topSellingItem.title,
-                        subtitle: topSellingItem.subtitle,
-                        imageUrl: topSellingItem.imageUrl,
-                        price: topSellingItem.price,
-                        rating: topSellingItem.rating,
+                        title: topSellingItem.title ?? '',
+                        subtitle: topSellingItem.subtitle ?? '',
+                        imageUrl: topSellingItem.imageUrl ?? '',
+                        price: topSellingItem.price ?? 0,
+                        rating: topSellingItem.rating ?? 0,
                       );
                     },
                   ),
@@ -82,7 +82,10 @@ class _TopSellingState extends State<TopSelling> {
 
               if (state is HomeTopSellingErrorState) {
                 return Center(
-                  child: Text(context.translate('error_state'), style: themeData.textTheme.labelLarge),
+                  child: Text(
+                    context.translate('error_state'),
+                    style: themeData.textTheme.labelLarge,
+                  ),
                 );
               }
               return SizedBox.shrink();
