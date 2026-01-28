@@ -2,12 +2,12 @@ import 'package:home_decor/feature/category/domain/entity/item_entity.dart';
 
 class ItemModel extends ItemEntity {
   ItemModel({
-    required super.title,
-    required super.subtitle,
-    required super.category,
-    required super.imageUrl,
-    required super.price,
-    required super.rating,
+    super.title,
+    super.subtitle,
+    super.imageUrl,
+    super.category,
+    super.price,
+    super.rating,
   });
 
   factory ItemModel.fromJson(Map<String, dynamic> json) {

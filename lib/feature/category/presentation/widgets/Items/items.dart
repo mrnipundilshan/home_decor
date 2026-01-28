@@ -64,11 +64,11 @@ class _ItemsState extends State<Items> {
               itemBuilder: (context, index) {
                 final topSellingItem = state.itemList[index];
                 return ItemCard(
-                  title: topSellingItem.title,
-                  subtitle: topSellingItem.subtitle,
-                  imageUrl: topSellingItem.imageUrl,
-                  price: topSellingItem.price,
-                  rating: topSellingItem.rating,
+                  title: topSellingItem.title ?? '',
+                  subtitle: topSellingItem.subtitle ?? '',
+                  imageUrl: topSellingItem.imageUrl ?? '',
+                  price: topSellingItem.price ?? 0,
+                  rating: topSellingItem.rating ?? 0,
                 );
               },
             );

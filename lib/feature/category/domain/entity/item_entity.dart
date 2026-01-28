@@ -1,17 +1,17 @@
 class ItemEntity {
-  final String title;
-  final String subtitle;
-  final String category;
-  final String imageUrl;
-  final double price;
-  final double rating;
+  final String? title;
+  final String? subtitle;
+  final String? category;
+  final String? imageUrl;
+  final double? price;
+  final double? rating;
 
   ItemEntity({
-    required this.title,
-    required this.subtitle,
-    required this.category,
-    required this.imageUrl,
-    required this.price,
-    required this.rating,
+    this.title,
+    this.subtitle,
+    this.category,
+    this.imageUrl,
+    this.price,
+    this.rating,
   });
 }
