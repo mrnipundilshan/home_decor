@@ -39,7 +39,13 @@ flutter:
 
   assets:
     - assets/
-    - assets/catagory/
+    - assets/category/
     - assets/topselling/
+    - assets/category/beds/
+    - assets/category/sofa/
+    - assets/category/chairs/
+    - assets/category/tables/
+    - assets/category/lights/
+    - assets/category/decors/
 
     - .env

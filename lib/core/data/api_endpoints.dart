@@ -11,4 +11,7 @@ class ApiEndpoints {
 
   // profile
   static const String profile = 'profile';
+
+  // category
+  static const String items = 'items';
 }

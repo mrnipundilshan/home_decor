@@ -41,6 +41,33 @@ app.get('/api/topselling', (req, res) => {
   }
 });
 
+// GET endpoint for all selling items
+// GET endpoint for items with category filtering
+app.get('/api/items', (req, res) => {
+  try {
+    const { category } = req.query;
+    const filePath = path.join(__dirname, 'data', 'items.json');
+
+    // Read the JSON file
+    const jsonData = fs.readFileSync(filePath, 'utf8');
+    let data = JSON.parse(jsonData);
+
+    // Filter by category if provided and not 'all'
+    if (category && category.toLowerCase() !== 'all') {
+      data = data.filter(item => item.category.toLowerCase() === category.toLowerCase());
+    }
+
+    // Return the data as JSON response
+    res.status(200).json(data);
+  } catch (error) {
+    console.error('Error reading items.json:', error);
+    res.status(500).json({
+      error: 'Failed to fetch items',
+      message: error.message
+    });
+  }
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
@@ -76,5 +103,6 @@ app.listen(PORT, () => {
   console.log(`  - GET  http://localhost:${PORT}/api/profile`);
   console.log(`  - PUT  http://localhost:${PORT}/api/profile`);
   console.log(`  - GET  http://localhost:${PORT}/health`);
+  console.log(`  - GET  http://localhost:${PORT}/items`);
 });
 
