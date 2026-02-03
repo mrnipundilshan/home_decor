@@ -15,7 +15,9 @@ class Items extends StatefulWidget {
 class _ItemsState extends State<Items> {
   @override
   void initState() {
-    BlocProvider.of<CategoryBloc>(context).add(CategoryInitialEvent());
+    BlocProvider.of<CategoryBloc>(
+      context,
+    ).add(CategoryInitialEvent(category: "all"));
     super.initState();
   }
 

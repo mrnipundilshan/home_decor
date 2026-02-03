@@ -8,7 +8,7 @@ class CategoryUsecases {
 
   CategoryUsecases({required this.categoryRepository});
 
-  Future<Either<Failure, List<ItemEntity>>> getTopSelling() {
-    return categoryRepository.getTopSellingItemsFromDatasources();
+  Future<Either<Failure, List<ItemEntity>>> getTopSelling(String category) {
+    return categoryRepository.getTopSellingItemsFromDatasources(category);
   }
 }

@@ -11,10 +11,13 @@ class CategoryRepositoryImpl implements CategoryRepository {
   CategoryRepositoryImpl({required this.categoryDatasource});
 
   @override
-  Future<Either<Failure, List<ItemEntity>>>
-  getTopSellingItemsFromDatasources() async {
+  Future<Either<Failure, List<ItemEntity>>> getTopSellingItemsFromDatasources(
+    String category,
+  ) async {
     try {
-      final itemList = await categoryDatasource.getTopSellingItemsFromAPI();
+      final itemList = await categoryDatasource.getTopSellingItemsFromAPI(
+        category,
+      );
       return right(itemList);
     } on ServerException catch (_) {
       return left(ServerFailure());

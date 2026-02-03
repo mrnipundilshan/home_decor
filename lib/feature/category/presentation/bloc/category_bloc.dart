@@ -23,7 +23,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   ) async {
     emit(CategoryLoadingState());
 
-    final failureOritemList = await categoryUsecases.getTopSelling();
+    final failureOritemList = await categoryUsecases.getTopSelling(
+      event.category,
+    );
 
     failureOritemList.fold(
       (failure) => emit(CategoryErrorState()),

@@ -42,13 +42,20 @@ app.get('/api/topselling', (req, res) => {
 });
 
 // GET endpoint for all selling items
+// GET endpoint for items with category filtering
 app.get('/api/items', (req, res) => {
   try {
+    const { category } = req.query;
     const filePath = path.join(__dirname, 'data', 'items.json');
 
     // Read the JSON file
     const jsonData = fs.readFileSync(filePath, 'utf8');
-    const data = JSON.parse(jsonData);
+    let data = JSON.parse(jsonData);
+
+    // Filter by category if provided and not 'all'
+    if (category && category.toLowerCase() !== 'all') {
+      data = data.filter(item => item.category.toLowerCase() === category.toLowerCase());
+    }
 
     // Return the data as JSON response
     res.status(200).json(data);

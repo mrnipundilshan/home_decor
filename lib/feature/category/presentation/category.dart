@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/feature/category/presentation/widgets/category%20list/my_category_list_view.dart';
-import 'package:home_decor/feature/category/presentation/widgets/home_page_app_bar.dart';
+import 'package:home_decor/feature/category/presentation/widgets/category_app_bar.dart';
 import 'package:home_decor/feature/category/presentation/widgets/Items/items.dart';
 
 class Category extends StatefulWidget {
