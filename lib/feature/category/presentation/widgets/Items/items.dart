@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/feature/category/presentation/bloc/category_bloc.dart';
-import 'package:home_decor/feature/category/presentation/widgets/Items/item_card.dart';
+import 'package:home_decor/core/widgets/my_item_card.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Items extends StatefulWidget {
@@ -37,13 +37,15 @@ class _ItemsState extends State<Items> {
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 5,
                   mainAxisExtent: 300,
                 ),
                 physics: BouncingScrollPhysics(),
                 scrollDirection: .vertical,
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return ItemCard(
+                  return MyItemCard(
                     title: "",
                     subtitle: "",
                     imageUrl: "",
@@ -59,13 +61,15 @@ class _ItemsState extends State<Items> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisExtent: 300,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 5,
               ),
               physics: BouncingScrollPhysics(),
               scrollDirection: .vertical,
               itemCount: state.itemList.length,
               itemBuilder: (context, index) {
                 final topSellingItem = state.itemList[index];
-                return ItemCard(
+                return MyItemCard(
                   title: topSellingItem.title ?? '',
                   subtitle: topSellingItem.subtitle ?? '',
                   imageUrl: topSellingItem.imageUrl ?? '',

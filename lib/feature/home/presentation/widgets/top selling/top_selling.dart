@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import 'package:home_decor/core/widgets/my_item_card.dart';
 import 'package:home_decor/feature/home/presentation/bloc/home_bloc.dart';
-import 'package:home_decor/feature/home/presentation/widgets/top%20selling/top_selling_card.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TopSelling extends StatefulWidget {
@@ -45,9 +45,10 @@ class _TopSellingState extends State<TopSelling> {
                     child: ListView.builder(
                       physics: BouncingScrollPhysics(),
                       scrollDirection: .horizontal,
+
                       itemCount: 5,
                       itemBuilder: (context, index) {
-                        return TopSellingCard(
+                        return MyItemCard(
                           title: "",
                           subtitle: "",
                           imageUrl: "",
@@ -62,13 +63,15 @@ class _TopSellingState extends State<TopSelling> {
               if (state is HomeTopSellingLoadedState) {
                 return SizedBox(
                   height: width * 0.66,
-                  child: ListView.builder(
+                  child: ListView.separated(
                     physics: BouncingScrollPhysics(),
                     scrollDirection: .horizontal,
                     itemCount: state.topSellingItems.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 12),
                     itemBuilder: (context, index) {
                       final topSellingItem = state.topSellingItems[index];
-                      return TopSellingCard(
+                      return MyItemCard(
                         title: topSellingItem.title ?? '',
                         subtitle: topSellingItem.subtitle ?? '',
                         imageUrl: topSellingItem.imageUrl ?? '',

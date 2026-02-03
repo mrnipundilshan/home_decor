@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 
-class TopSellingCard extends StatefulWidget {
+class MyItemCard extends StatefulWidget {
   final String title;
   final String subtitle;
   final String imageUrl;
   final double price;
   final double rating;
-  const TopSellingCard({
+  const MyItemCard({
     super.key,
     required this.title,
     required this.subtitle,
@@ -18,26 +18,25 @@ class TopSellingCard extends StatefulWidget {
   });
 
   @override
-  State<TopSellingCard> createState() => _TopSellingCardState();
+  State<MyItemCard> createState() => _MyItemCardState();
 }
 
-class _TopSellingCardState extends State<TopSellingCard> {
+class _MyItemCardState extends State<MyItemCard> {
   bool isFav = false;
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-
     final double width = AppSizes.screenWidth(context);
-
     return Container(
-      margin: EdgeInsets.only(right: width * 0.03),
+      margin: EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: themeData.colorScheme.inversePrimary.withAlpha(25),
       ),
       width: width * 0.4,
       child: Column(
+        mainAxisSize: .min,
         crossAxisAlignment: .start,
         children: [
           ClipRRect(
@@ -47,8 +46,10 @@ class _TopSellingCardState extends State<TopSellingCard> {
                 : Stack(
                     children: [
                       Image(
+                        width: double.infinity,
                         image: AssetImage(widget.imageUrl),
                         fit: BoxFit.fitWidth,
+                        height: 130,
                       ),
 
                       Positioned(

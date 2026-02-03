@@ -3,35 +3,40 @@
     "title": "Modern white Light Sofa",
     "subtitle": "Sofa",
     "imageUrl": "assets/topselling/sofa.png",
-    "price": 5137.40,
-    "rating": 4.5
+    "price": 5137.4,
+    "rating": 4.5,
+    "uuid": "73e47455-48d5-433a-896c-7df60962d430"
   },
   {
     "title": "Workspace with Chair & Lamp",
     "subtitle": "Writing Desk",
     "imageUrl": "assets/topselling/writtingdesk.png",
     "price": 149.99,
-    "rating": 4.2
+    "rating": 4.2,
+    "uuid": "16e3b658-9736-45d5-a0b5-08b9c109aedd"
   },
   {
     "title": "Vintage Modern Light Pillow Case",
     "subtitle": "Pillow Case",
     "imageUrl": "assets/topselling/pillow.png",
     "price": 89.99,
-    "rating": 4.9
+    "rating": 4.9,
+    "uuid": "ce600819-6d19-4da6-ac36-8548a1a9d933"
   },
   {
     "title": "Himalayan Salt Lamp Night Light",
     "subtitle": "Nightlight",
     "imageUrl": "assets/topselling/nightlight.png",
     "price": 699.99,
-    "rating": 4.7
+    "rating": 4.7,
+    "uuid": "fb0f766d-67eb-4bb6-aace-3c2f266b72b2"
   },
   {
     "title": "Purple Elegance Ottoman Chair",
     "subtitle": "Ottoman ",
     "imageUrl": "assets/topselling/ottoman.png",
     "price": 899.99,
-    "rating": 4.6
+    "rating": 4.6,
+    "uuid": "d4eedf4e-908c-4bc8-8a4f-e357e6584d75"
   }
 ]
