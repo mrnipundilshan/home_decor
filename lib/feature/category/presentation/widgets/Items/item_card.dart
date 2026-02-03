@@ -48,6 +48,7 @@ class _ItemCardState extends State<ItemCard> {
                         width: double.infinity,
                         image: AssetImage(widget.imageUrl),
                         fit: BoxFit.fitWidth,
+                        height: 130,
                       ),
 
                       Positioned(
