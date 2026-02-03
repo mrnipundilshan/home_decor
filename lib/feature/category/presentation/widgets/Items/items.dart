@@ -75,6 +75,7 @@ class _ItemsState extends State<Items> {
                   imageUrl: topSellingItem.imageUrl ?? '',
                   price: topSellingItem.price ?? 0,
                   rating: topSellingItem.rating ?? 0,
+                  uuid: topSellingItem.uuid ?? '',
                 );
               },
             );

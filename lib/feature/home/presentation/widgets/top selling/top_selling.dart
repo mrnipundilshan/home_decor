@@ -42,8 +42,10 @@ class _TopSellingState extends State<TopSelling> {
                   enabled: true,
                   child: SizedBox(
                     height: width * 0.66,
-                    child: ListView.builder(
+                    child: ListView.separated(
                       physics: BouncingScrollPhysics(),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 12),
                       scrollDirection: .horizontal,
 
                       itemCount: 5,
@@ -77,6 +79,7 @@ class _TopSellingState extends State<TopSelling> {
                         imageUrl: topSellingItem.imageUrl ?? '',
                         price: topSellingItem.price ?? 0,
                         rating: topSellingItem.rating ?? 0,
+                        uuid: topSellingItem.uuid ?? '',
                       );
                     },
                   ),
