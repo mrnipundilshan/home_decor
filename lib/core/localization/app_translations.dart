@@ -88,6 +88,9 @@ class AppTranslations {
       "light": "Lights",
       "table": "Tables",
       "all": "All",
+
+      // cart
+      "cart": "Cart",
     },
     'si': {
       // Auth
@@ -178,6 +181,9 @@ class AppTranslations {
       "chair": "පුටු",
       "table": "මේස",
       "all": "සියලුම",
+
+      // cart
+      "cart": "බෑගය",
     },
   };
 

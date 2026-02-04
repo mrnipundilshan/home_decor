@@ -39,7 +39,7 @@ class _ItemsState extends State<Items> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 5,
-                  mainAxisExtent: 300,
+                  mainAxisExtent: 280,
                 ),
                 physics: BouncingScrollPhysics(),
                 scrollDirection: .vertical,
@@ -60,7 +60,7 @@ class _ItemsState extends State<Items> {
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisExtent: 300,
+                mainAxisExtent: 280,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 5,
               ),

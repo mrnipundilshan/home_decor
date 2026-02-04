@@ -18,7 +18,7 @@ class _NavBarState extends State<NavBar> {
   List<Widget> _pages(BuildContext context) => [
     HomePage(),
     Category(),
-    Center(child: Text(context.translate('search'))),
+    Center(child: Text(context.translate('cart'))),
     Profile(),
   ];
 
@@ -69,9 +69,9 @@ class _NavBarState extends State<NavBar> {
             BottomNavigationBarItem(
               icon: Padding(
                 padding: EdgeInsets.only(top: 6.0),
-                child: Icon(Icons.search),
+                child: Icon(Icons.shopping_cart),
               ),
-              label: context.translate('search'),
+              label: context.translate('cart'),
             ),
             BottomNavigationBarItem(
               icon: Padding(

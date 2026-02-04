@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
@@ -48,7 +50,7 @@ class _MyItemCardState extends State<MyItemCard> {
             ),
           );
         } else {
-          print("UUID is null or empty");
+          log("UUID is null or empty");
         }
       },
       child: Container(
