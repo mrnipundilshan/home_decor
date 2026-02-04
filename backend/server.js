@@ -16,11 +16,13 @@ app.use(express.json({ limit: '10mb' }));
 // Import routes
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
+const cartRoutes = require('./routes/cart');
 const prisma = require('./prisma/client');
 
 // Use routes
 app.use('/api', authRoutes);
 app.use('/api', profileRoutes);
+app.use('/api', cartRoutes);
 
 // GET endpoint for top selling items
 app.get('/api/topselling', async (req, res) => {
@@ -107,6 +109,10 @@ app.listen(PORT, () => {
   console.log(`  - POST http://localhost:${PORT}/api/check-email`);
   console.log(`  - GET  http://localhost:${PORT}/api/profile`);
   console.log(`  - PUT  http://localhost:${PORT}/api/profile`);
+  console.log(`  - POST http://localhost:${PORT}/api/cart`);
+  console.log(`  - GET  http://localhost:${PORT}/api/cart`);
+  console.log(`  - PUT  http://localhost:${PORT}/api/cart/:id`);
+  console.log(`  - DEL  http://localhost:${PORT}/api/cart/:id`);
   console.log(`  - GET  http://localhost:${PORT}/health`);
   console.log(`  - GET  http://localhost:${PORT}/items`);
 });
