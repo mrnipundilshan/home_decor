@@ -19,7 +19,7 @@ class ProfileDatasourceImpl implements ProfileDatasource {
     log("Calling Top Profile Data Fetch API");
     await Future.delayed(const Duration(seconds: 3));
     final response = await dio.get(ApiEndpoints.profile);
-
+    // print(response.statusCode);
     if (response.statusCode != 200) {
       throw ServerException();
     } else {
@@ -34,7 +34,7 @@ class ProfileDatasourceImpl implements ProfileDatasource {
   @override
   Future<bool> setUserDetailsFromAPI(ProfileModel userProfile) async {
     log("Setting new User Profile Data From API");
-
+    print(userProfile.toJson());
     final response = await dio.put(
       ApiEndpoints.profile,
       data: userProfile.toJson(),

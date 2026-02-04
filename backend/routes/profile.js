@@ -82,11 +82,12 @@ router.put('/profile', authenticateToken, async (req, res) => {
 
     // Prepare update data (only include provided fields)
     const updateData = {};
-    
+
     // Handle profile image upload to R2 if it's a base64 string
     if (profileImage !== undefined) {
       if (isBase64Image(profileImage)) {
         try {
+
           // Delete old profile image if it exists
           if (user.profile && user.profile.profileImage) {
             const oldFileName = extractFileNameFromUrl(user.profile.profileImage);
@@ -113,8 +114,8 @@ router.put('/profile', authenticateToken, async (req, res) => {
             message: uploadError.message || 'Image upload failed',
           });
         }
-      } else if (profileImage === null || profileImage === '') {
-        // Allow clearing the profile image
+      } else if (profileImage === '') {
+        // Allow clearing the profile image ONLY with empty string, not null
         // Delete old profile image if it exists
         if (user.profile && user.profile.profileImage) {
           const oldFileName = extractFileNameFromUrl(user.profile.profileImage);
@@ -129,12 +130,12 @@ router.put('/profile', authenticateToken, async (req, res) => {
           }
         }
         updateData.profileImage = null;
-      } else {
-        // Already a URL, use as-is
+      } else if (profileImage !== null) {
+        // Already a URL, use as-is (ignore if null)
         updateData.profileImage = profileImage;
       }
     }
-    
+
     if (firstName !== undefined) updateData.firstName = firstName;
     if (lastName !== undefined) updateData.lastName = lastName;
     if (dob !== undefined) updateData.dob = dob;
