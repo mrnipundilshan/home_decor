@@ -26,4 +26,29 @@ class AppCustomTextStyles {
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+
+  static const priceText = TextStyle(
+    fontFamily: "Rubik",
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+    color: AppColors.commonPrimary,
+  );
+
+  static const ratingText = TextStyle(
+    fontFamily: "Rubik",
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: AppColors.commonPrimary,
+  );
+
+  static const subtitleText = TextStyle(
+    fontFamily: "Rubik",
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: Colors.grey,
+  );
+
+  static final descriptionText = subtitleText.copyWith(
+    color: Colors.grey.shade600,
+  );
 }

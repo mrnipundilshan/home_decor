@@ -5,6 +5,7 @@ class ItemEntity {
   final String? imageUrl;
   final double? price;
   final double? rating;
+  final String? uuid;
 
   ItemEntity({
     this.title,
@@ -13,5 +14,6 @@ class ItemEntity {
     this.imageUrl,
     this.price,
     this.rating,
+    this.uuid,
   });
 }

@@ -4,6 +4,12 @@ import 'app_colors.dart';
 class AppTextStyles {
   // Light text theme
   static const TextTheme lightTextTheme = TextTheme(
+    titleLarge: TextStyle(
+      fontFamily: "Rubik",
+      fontSize: 28,
+      fontWeight: FontWeight.bold,
+      color: AppColors.lightTextPrimary,
+    ),
     headlineSmall: TextStyle(
       fontFamily: "Rubik",
       fontSize: 18,
@@ -28,6 +34,12 @@ class AppTextStyles {
 
   // Dark text theme
   static const TextTheme darkTextTheme = TextTheme(
+    titleLarge: TextStyle(
+      fontFamily: "Rubik",
+      fontSize: 28,
+      fontWeight: FontWeight.bold,
+      color: AppColors.darkTextPrimary,
+    ),
     headlineSmall: TextStyle(
       fontFamily: "Rubik",
       fontSize: 18,

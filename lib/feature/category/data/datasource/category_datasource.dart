@@ -27,7 +27,7 @@ class CategoryDatasourceImpl implements CategoryDatasource {
     } else {
       //final responseBody = json.decode(response.data);
       final responseBody = response.data;
-      print(responseBody);
+      //print(responseBody);
       final itemList = (responseBody as List)
           .map((json) => ItemModel.fromJson(json))
           .toList();

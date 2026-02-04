@@ -4,120 +4,135 @@
     "subtitle": "Bed",
     "category": "beds",
     "imageUrl": "assets/category/beds/bed1.png",
-    "price": 8999.00,
-    "rating": 4.6
+    "price": 8999,
+    "rating": 4.6,
+    "uuid": "dbe6447f-6ee7-413b-8fe0-82dba3ddb4b0"
   },
   {
     "title": "Minimal Wooden Bed",
     "subtitle": "Bed",
     "category": "beds",
     "imageUrl": "assets/category/beds/bed2.png",
-    "price": 7499.00,
-    "rating": 4.4
+    "price": 7499,
+    "rating": 4.4,
+    "uuid": "fd1e1ccc-3377-426d-9ad3-d601bb52594e"
   },
   {
     "title": "Luxury Upholstered Bed",
     "subtitle": "Bed",
     "category": "beds",
     "imageUrl": "assets/category/beds/bed3.png",
-    "price": 10999.00,
-    "rating": 4.8
+    "price": 10999,
+    "rating": 4.8,
+    "uuid": "c72d00d8-81e5-4254-a91c-1581e0c24be5"
   },
   {
     "title": "Classic Storage Bed",
     "subtitle": "Bed",
     "category": "beds",
     "imageUrl": "assets/category/beds/bed4.png",
-    "price": 8299.00,
-    "rating": 4.5
+    "price": 8299,
+    "rating": 4.5,
+    "uuid": "630f40e9-90e6-4fb3-8744-6de21dda88fe"
   },
   {
     "title": "Modern Queen Bed",
     "subtitle": "Bed",
     "category": "beds",
     "imageUrl": "assets/category/beds/bed5.png",
-    "price": 6999.00,
-    "rating": 4.3
+    "price": 6999,
+    "rating": 4.3,
+    "uuid": "85f048c9-c888-4286-b0f1-69e7b2046e7d"
   },
   {
     "title": "Comfort Lounge Chair",
     "subtitle": "Chair",
     "category": "chairs",
     "imageUrl": "assets/category/chairs/chair_1.png",
-    "price": 1299.00,
-    "rating": 4.4
+    "price": 1299,
+    "rating": 4.4,
+    "uuid": "a3a3c0e5-1507-4874-9fbb-316c90a65740"
   },
   {
     "title": "Modern Arm Chair",
     "subtitle": "Chair",
     "category": "chairs",
     "imageUrl": "assets/category/chairs/chair_2.png",
-    "price": 1599.00,
-    "rating": 4.6
+    "price": 1599,
+    "rating": 4.6,
+    "uuid": "93ca4244-4edb-4eca-9641-d5b8c4b2a102"
   },
   {
     "title": "Velvet Accent Chair",
     "subtitle": "Chair",
     "category": "chairs",
     "imageUrl": "assets/category/chairs/chair_3.png",
-    "price": 1799.00,
-    "rating": 4.5
+    "price": 1799,
+    "rating": 4.5,
+    "uuid": "df9f86e0-f0bb-4251-9017-5cf29de7de52"
   },
   {
     "title": "Minimal Dining Chair",
     "subtitle": "Chair",
     "category": "chairs",
     "imageUrl": "assets/category/chairs/chair_4.png",
-    "price": 999.00,
-    "rating": 4.2
+    "price": 999,
+    "rating": 4.2,
+    "uuid": "e7e42b12-6045-47c0-8fa7-5aa68cd9818f"
   },
   {
     "title": "Classic Wooden Chair",
     "subtitle": "Chair",
     "category": "chairs",
     "imageUrl": "assets/category/chairs/chair_5.png",
-    "price": 1199.00,
-    "rating": 4.3
+    "price": 1199,
+    "rating": 4.3,
+    "uuid": "fb855254-33a5-4df5-b3e5-ee106a3257b8"
   },
   {
     "title": "Modern White Sofa",
     "subtitle": "Sofa",
     "category": "sofas",
     "imageUrl": "assets/category/sofa/sofa1.png",
-    "price": 5137.00,
-    "rating": 4.5
+    "price": 5137,
+    "rating": 4.5,
+    "uuid": "3c784bc0-fb16-438e-8605-3495ff6c88d8"
   },
   {
     "title": "Luxury 3-Seater Sofa",
     "subtitle": "Sofa",
     "category": "sofas",
     "imageUrl": "assets/category/sofa/sofa2.png",
-    "price": 6899.00,
-    "rating": 4.7
+    "price": 6899,
+    "rating": 4.7,
+    "uuid": "ba73a874-f7ca-4d68-a8cb-c84718945c18"
   },
   {
     "title": "Compact Fabric Sofa",
     "subtitle": "Sofa",
     "category": "sofas",
     "imageUrl": "assets/category/sofa/sofa1.png",
-    "price": 4599.00,
-    "rating": 4.3
+    "price": 4599,
+    "rating": 4.3,
+    "uuid": "8b036e09-e826-4add-89f6-8c91a0bee731"
   },
   {
     "title": "Scandinavian Sofa",
     "subtitle": "Sofa",
     "category": "sofas",
     "imageUrl": "assets/category/sofa/sofa3.png",
-    "price": 5999.00,
-    "rating": 4.6
+    "price": 5999,
+    "rating": 4.6,
+    "uuid": "8152fed9-19e0-4d40-b308-c864c629c20c"
   },
   {
     "title": "Corner Sectional Sofa",
     "subtitle": "Sofa",
     "category": "sofas",
     "imageUrl": "assets/category/sofa/sofa4.png",
-    "price": 7999.00,
-    "rating": 4.8
+    "price": 7999,
+    "rating": 4.8,
+    "uuid": "5de997be-ed63-4640-9e0b-9a2b2c18cd83"
   },
   {
     "title": "Vintage Pillow Case",
@@ -125,7 +140,8 @@
     "category": "decors",
     "imageUrl": "assets/category/decors/decor_1.png",
     "price": 89.99,
-    "rating": 4.0
+    "rating": 4,
+    "uuid": "7d7558ce-110e-4cb6-9890-41749be30666"
   },
   {
     "title": "Decorative Vase",
@@ -133,7 +149,8 @@
     "category": "decors",
     "imageUrl": "assets/category/decors/decor_2.png",
     "price": 249.99,
-    "rating": 4.3
+    "rating": 4.3,
+    "uuid": "6ce3c549-b39f-4c4f-89f0-d90f8c18761c"
   },
   {
     "title": "Wall Art Frame",
@@ -141,7 +158,8 @@
     "category": "decors",
     "imageUrl": "assets/category/decors/decor_3.png",
     "price": 399.99,
-    "rating": 4.5
+    "rating": 4.5,
+    "uuid": "95804de7-85e1-4ffe-876c-bb24a3e89900"
   },
   {
     "title": "Purple Ottoman Chair",
@@ -149,7 +167,8 @@
     "category": "decors",
     "imageUrl": "assets/category/decors/decor_4.png",
     "price": 899.99,
-    "rating": 4.6
+    "rating": 4.6,
+    "uuid": "9bcf819d-cf7f-4fae-8b60-82d990104fdf"
   },
   {
     "title": "Modern Sculpture Decor",
@@ -157,47 +176,53 @@
     "category": "decors",
     "imageUrl": "assets/category/decors/decor_5.png",
     "price": 699.99,
-    "rating": 4.4
+    "rating": 4.4,
+    "uuid": "b35e84f8-acc4-44c2-a305-c7d584678fea"
   },
   {
     "title": "Writing Desk",
     "subtitle": "Table",
     "category": "tables",
     "imageUrl": "assets/category/tables/table_1.png",
-    "price": 1499.00,
-    "rating": 4.2
+    "price": 1499,
+    "rating": 4.2,
+    "uuid": "39c397fe-6ab8-46f6-8720-b57b98c629a6"
   },
   {
     "title": "Modern Coffee Table",
     "subtitle": "Table",
     "category": "tables",
     "imageUrl": "assets/category/tables/table_2.png",
-    "price": 1999.00,
-    "rating": 4.5
+    "price": 1999,
+    "rating": 4.5,
+    "uuid": "a1b935cc-aae0-47fb-bba5-acae48bfc0e4"
   },
   {
     "title": "Minimal Side Table",
     "subtitle": "Table",
     "category": "tables",
     "imageUrl": "assets/category/tables/table_3.png",
-    "price": 899.00,
-    "rating": 4.3
+    "price": 899,
+    "rating": 4.3,
+    "uuid": "7bd07e95-d582-46ac-8dfa-432fb839f61e"
   },
   {
     "title": "Dining Table Set",
     "subtitle": "Table",
     "category": "tables",
     "imageUrl": "assets/category/tables/table_4.png",
-    "price": 5599.00,
-    "rating": 4.6
+    "price": 5599,
+    "rating": 4.6,
+    "uuid": "f30ea4a6-179b-4c09-8f14-c57aa948bcab"
   },
   {
     "title": "Wooden Console Table",
     "subtitle": "Table",
     "category": "tables",
     "imageUrl": "assets/category/tables/table_5.png",
-    "price": 2899.00,
-    "rating": 4.4
+    "price": 2899,
+    "rating": 4.4,
+    "uuid": "07bc6620-4528-4292-a97a-7d223cdb0dc1"
   },
   {
     "title": "Himalayan Salt Lamp",
@@ -205,38 +230,43 @@
     "category": "lights",
     "imageUrl": "assets/category/lights/light_1.png",
     "price": 699.99,
-    "rating": 4.7
+    "rating": 4.7,
+    "uuid": "3997c366-3d35-4e6a-a537-de2f64950f35"
   },
   {
     "title": "Modern Table Lamp",
     "subtitle": "Light",
     "category": "lights",
     "imageUrl": "assets/category/lights/light_2.png",
-    "price": 1299.00,
-    "rating": 4.5
+    "price": 1299,
+    "rating": 4.5,
+    "uuid": "dd4b557d-17d1-46dc-8633-2cd03dac6345"
   },
   {
     "title": "Pendant Ceiling Light",
     "subtitle": "Light",
     "category": "lights",
     "imageUrl": "assets/category/lights/light_3.png",
-    "price": 2199.00,
-    "rating": 4.6
+    "price": 2199,
+    "rating": 4.6,
+    "uuid": "2c71e4fc-6016-4203-ac00-c503b1b01094"
   },
   {
     "title": "Minimal Night Lamp",
     "subtitle": "Light",
     "category": "lights",
     "imageUrl": "assets/category/lights/light_4.png",
-    "price": 899.00,
-    "rating": 4.3
+    "price": 899,
+    "rating": 4.3,
+    "uuid": "5cb7e2ef-2cde-4877-afbb-12521a06abda"
   },
   {
     "title": "Decorative Floor Lamp",
     "subtitle": "Light",
     "category": "lights",
     "imageUrl": "assets/category/lights/light_5.png",
-    "price": 2499.00,
-    "rating": 4.8
+    "price": 2499,
+    "rating": 4.8,
+    "uuid": "2ab4444a-d3fd-44a7-8cab-81ac2e2a2e4a"
   }
 ]

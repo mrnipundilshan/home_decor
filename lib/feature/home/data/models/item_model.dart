@@ -7,6 +7,7 @@ class ItemModel extends ItemEntity {
     super.imageUrl,
     super.price,
     super.rating,
+    super.uuid,
   });
 
   factory ItemModel.fromJson(Map<String, dynamic> json) {
@@ -16,6 +17,7 @@ class ItemModel extends ItemEntity {
       imageUrl: json['imageUrl'],
       price: (json['price'] as num?)?.toDouble(),
       rating: (json['rating'] as num?)?.toDouble(),
+      uuid: json['uuid'],
     );
   }
 }
