@@ -33,7 +33,7 @@ class AuthInterceptor extends Interceptor {
         final token = await authLocalDatasource.getAccessToken();
 
         if (token != null && token.isNotEmpty) {
-          // print(token);
+          print(token);
           options.headers['Authorization'] = 'Bearer $token';
         }
       } catch (e) {
