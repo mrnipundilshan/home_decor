@@ -16,24 +16,22 @@ app.use(express.json({ limit: '10mb' }));
 // Import routes
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
+const prisma = require('./prisma/client');
 
 // Use routes
 app.use('/api', authRoutes);
 app.use('/api', profileRoutes);
 
 // GET endpoint for top selling items
-app.get('/api/topselling', (req, res) => {
+app.get('/api/topselling', async (req, res) => {
   try {
-    const filePath = path.join(__dirname, 'data', 'topselling.json');
-
-    // Read the JSON file
-    const jsonData = fs.readFileSync(filePath, 'utf8');
-    const data = JSON.parse(jsonData);
+    // Fetch 6 random items from the database using Prisma and PostgreSQL specific syntax
+    const data = await prisma.$queryRaw`SELECT * FROM "Item" ORDER BY RANDOM() LIMIT 6`;
 
     // Return the data as JSON response
     res.status(200).json(data);
   } catch (error) {
-    console.error('Error reading topselling.json:', error);
+    console.error('Error fetching top selling items:', error);
     res.status(500).json({
       error: 'Failed to fetch top selling items',
       message: error.message
@@ -43,24 +41,31 @@ app.get('/api/topselling', (req, res) => {
 
 // GET endpoint for all selling items
 // GET endpoint for items with category filtering
-app.get('/api/items', (req, res) => {
+// GET endpoint for items with category filtering
+app.get('/api/items', async (req, res) => {
   try {
     const { category } = req.query;
-    const filePath = path.join(__dirname, 'data', 'items.json');
 
-    // Read the JSON file
-    const jsonData = fs.readFileSync(filePath, 'utf8');
-    let data = JSON.parse(jsonData);
-
-    // Filter by category if provided and not 'all'
+    let where = {};
     if (category && category.toLowerCase() !== 'all') {
-      data = data.filter(item => item.category.toLowerCase() === category.toLowerCase());
+      where.category = {
+        equals: category,
+        mode: 'insensitive' // Case-insensitive filtering
+      };
     }
+
+    // Fetch items from database using Prisma
+    const data = await prisma.item.findMany({
+      where: where,
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
 
     // Return the data as JSON response
     res.status(200).json(data);
   } catch (error) {
-    console.error('Error reading items.json:', error);
+    console.error('Error fetching items:', error);
     res.status(500).json({
       error: 'Failed to fetch items',
       message: error.message

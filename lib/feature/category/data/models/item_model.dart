@@ -19,7 +19,7 @@ class ItemModel extends ItemEntity {
       imageUrl: json['imageUrl'],
       price: (json['price'] as num?)?.toDouble(),
       rating: (json['rating'] as num?)?.toDouble(),
-      uuid: json['uuid'],
+      uuid: json['id'],
     );
   }
 }

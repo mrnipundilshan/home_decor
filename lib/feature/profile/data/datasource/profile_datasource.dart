@@ -34,7 +34,7 @@ class ProfileDatasourceImpl implements ProfileDatasource {
   @override
   Future<bool> setUserDetailsFromAPI(ProfileModel userProfile) async {
     log("Setting new User Profile Data From API");
-    print(userProfile.toJson());
+
     final response = await dio.put(
       ApiEndpoints.profile,
       data: userProfile.toJson(),
