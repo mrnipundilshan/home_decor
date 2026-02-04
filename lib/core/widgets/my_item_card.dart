@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import '../../feature/product_detail/product_detail_page.dart';
 
 class MyItemCard extends StatefulWidget {
   final String title;
@@ -32,9 +33,22 @@ class _MyItemCardState extends State<MyItemCard> {
     final double width = AppSizes.screenWidth(context);
     return GestureDetector(
       onTap: () {
-        if (widget.uuid!.isEmpty || widget.uuid == '' || widget.uuid == null) {
+        if (widget.uuid != null && widget.uuid!.isNotEmpty) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetailPage(
+                title: widget.title,
+                subtitle: widget.subtitle,
+                imageUrl: widget.imageUrl,
+                price: widget.price,
+                rating: widget.rating,
+                uuid: widget.uuid!,
+              ),
+            ),
+          );
         } else {
-          print(widget.uuid);
+          print("UUID is null or empty");
         }
       },
       child: Container(
@@ -54,11 +68,14 @@ class _MyItemCardState extends State<MyItemCard> {
                   ? SizedBox.shrink()
                   : Stack(
                       children: [
-                        Image(
-                          width: double.infinity,
-                          image: AssetImage(widget.imageUrl),
-                          fit: BoxFit.fitWidth,
-                          height: 130,
+                        Hero(
+                          tag: widget.uuid ?? widget.title,
+                          child: Image(
+                            width: double.infinity,
+                            image: AssetImage(widget.imageUrl),
+                            fit: BoxFit.fitWidth,
+                            height: 130,
+                          ),
                         ),
 
                         Positioned(
