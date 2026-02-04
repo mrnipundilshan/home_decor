@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_custom_text_styles.dart';
 
-class ProductDetailPage extends StatelessWidget {
+class ProductDetailPage extends StatefulWidget {
   final String title;
   final String subtitle;
   final String imageUrl;
@@ -20,6 +20,12 @@ class ProductDetailPage extends StatelessWidget {
     required this.uuid,
   });
 
+  @override
+  State<ProductDetailPage> createState() => _ProductDetailPageState();
+}
+
+class _ProductDetailPageState extends State<ProductDetailPage> {
+  int count = 1;
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -48,8 +54,8 @@ class ProductDetailPage extends StatelessWidget {
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
-                tag: uuid,
-                child: Image.asset(imageUrl, fit: BoxFit.cover),
+                tag: widget.uuid,
+                child: Image.asset(widget.imageUrl, fit: BoxFit.cover),
               ),
             ),
           ),
@@ -69,7 +75,7 @@ class ProductDetailPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          title,
+                          widget.title,
                           style: themeData.textTheme.titleLarge,
                         ),
                       ),
@@ -92,7 +98,7 @@ class ProductDetailPage extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              rating.toString(),
+                              widget.rating.toString(),
                               style: AppCustomTextStyles.ratingText,
                             ),
                           ],
@@ -101,13 +107,16 @@ class ProductDetailPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 4),
-                  Text(subtitle, style: AppCustomTextStyles.subtitleText),
+                  Text(
+                    widget.subtitle,
+                    style: AppCustomTextStyles.subtitleText,
+                  ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "\$${price.toStringAsFixed(2)}",
+                        "\$${widget.price.toStringAsFixed(2)}",
                         style: AppCustomTextStyles.priceText,
                       ),
                       Container(
@@ -118,18 +127,32 @@ class ProductDetailPage extends StatelessWidget {
                         child: Row(
                           children: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (count == 1) return;
+                                setState(() {
+                                  count--;
+                                });
+                              },
                               icon: const Icon(Icons.remove),
-                              color: Colors.grey,
+                              color: count == 1
+                                  ? Colors.grey
+                                  : AppColors.commonPrimary,
                             ),
                             Text(
-                              "1",
+                              "$count",
                               style: themeData.appBarTheme.titleTextStyle,
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (count == 25) return;
+                                setState(() {
+                                  count++;
+                                });
+                              },
                               icon: const Icon(Icons.add),
-                              color: AppColors.commonPrimary,
+                              color: count == 25
+                                  ? Colors.grey
+                                  : AppColors.commonPrimary,
                             ),
                           ],
                         ),
