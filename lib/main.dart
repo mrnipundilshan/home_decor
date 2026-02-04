@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:home_decor/base_app.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:home_decor/feature/cart/presentation/bloc/cart_bloc.dart';
 import 'package:home_decor/feature/category/presentation/bloc/category_bloc.dart';
 import 'package:home_decor/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:home_decor/feature/profile/presentation/bloc/profile_bloc.dart';
@@ -24,6 +25,7 @@ void main() async {
         BlocProvider(create: (context) => di.sl<HomeBloc>()),
         BlocProvider(create: (context) => di.sl<ProfileBloc>()),
         BlocProvider(create: (context) => di.sl<CategoryBloc>()),
+        BlocProvider(create: (context) => di.sl<CartBloc>()),
       ],
 
       child: const BaseApp(),

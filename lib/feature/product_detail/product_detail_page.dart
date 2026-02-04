@@ -28,6 +28,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   int count = 1;
   @override
   Widget build(BuildContext context) {
+    print(widget.uuid);
     final height = MediaQuery.of(context).size.height;
     final themeData = Theme.of(context);
     return Scaffold(

@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
-import 'package:home_decor/feature/category/domain/entity/item_entity.dart';
-import 'package:home_decor/feature/category/domain/failure/failure.dart';
-import 'package:home_decor/feature/category/domain/repository/category_repository.dart';
+import 'package:home_decor/feature/cart/domain/entity/cart_entity.dart';
+import 'package:home_decor/feature/cart/domain/failure/failure.dart';
+import 'package:home_decor/feature/cart/domain/repository/cart_repository.dart';
 
-class CategoryUsecases {
-  final CategoryRepository categoryRepository;
+class CartUsecases {
+  final CartRepository cartRepository;
 
-  CategoryUsecases({required this.categoryRepository});
+  CartUsecases({required this.cartRepository});
 
-  Future<Either<Failure, List<ItemEntity>>> getTopSelling(String category) {
-    return categoryRepository.getTopSellingItemsFromDatasources(category);
+  Future<Either<Failure, List<CartEntity>>> getCartItems() {
+    return cartRepository.getCartItemsFromDatasources();
   }
 }

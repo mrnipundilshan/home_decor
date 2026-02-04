@@ -14,4 +14,7 @@ class ApiEndpoints {
 
   // category
   static const String items = 'items';
+
+  // cart
+  static const String cart = 'cart';
 }

@@ -8,6 +8,12 @@ import 'package:home_decor/feature/auth/data/repository/auth_repository_impl.dar
 import 'package:home_decor/feature/auth/domain/repository/auth_repository.dart';
 import 'package:home_decor/feature/auth/domain/usecases/auth_usecases.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:home_decor/feature/cart/data/datasource/cart_datasource.dart';
+import 'package:home_decor/feature/cart/data/repository/cart_repository_impl.dart'
+    show CartRepositoryImpl;
+import 'package:home_decor/feature/cart/domain/repository/cart_repository.dart';
+import 'package:home_decor/feature/cart/domain/usecases/cart_usecases.dart';
+import 'package:home_decor/feature/cart/presentation/bloc/cart_bloc.dart';
 import 'package:home_decor/feature/category/data/datasource/category_datasource.dart';
 import 'package:home_decor/feature/category/data/repository/category_repository_impl.dart';
 import 'package:home_decor/feature/category/domain/repository/category_repository.dart';
@@ -32,12 +38,14 @@ Future<void> init() async {
   sl.registerFactory(() => AuthBloc(authUsecases: sl()));
   sl.registerFactory(() => ProfileBloc(profileUsecases: sl()));
   sl.registerFactory(() => CategoryBloc(categoryUsecases: sl()));
+  sl.registerFactory(() => CartBloc(cartUsecases: sl()));
 
   // domain layer
   sl.registerFactory(() => ItemUsecases(itemRepository: sl()));
   sl.registerFactory(() => AuthUsecases(authRepository: sl()));
   sl.registerFactory(() => ProfileUsecases(profileRepository: sl()));
   sl.registerFactory(() => CategoryUsecases(categoryRepository: sl()));
+  sl.registerFactory(() => CartUsecases(cartRepository: sl()));
 
   // data layer
   sl.registerFactory<ItemRepository>(
@@ -57,6 +65,12 @@ Future<void> init() async {
     () => CategoryRepositoryImpl(categoryDatasource: sl()),
   );
 
+  sl.registerFactory<CartRepository>(
+    () => CartRepositoryImpl(cartDatasource: sl()),
+  );
+
+  // Data sources
+
   sl.registerFactory<ItemDatasource>(() => ItemDatasourceImpl(dio: sl()));
   sl.registerFactory<AuthRemoteDatasource>(
     () => AuthRemoteDatasourceImpl(dio: sl()),
@@ -68,6 +82,8 @@ Future<void> init() async {
   sl.registerFactory<CategoryDatasource>(
     () => CategoryDatasourceImpl(dio: sl()),
   );
+
+  sl.registerFactory<CartDatasource>(() => CartDatasourceImpl(dio: sl()));
 
   // Dio client
   sl.registerLazySingleton<DioClient>(

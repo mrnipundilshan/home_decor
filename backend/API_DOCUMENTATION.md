@@ -440,6 +440,323 @@ Authorization: Bearer <access_token>
 
 ---
 
+### Cart Endpoints
+
+#### 9. Add Item to Cart
+
+Add an item to the authenticated user's cart or increment quantity if already exists.
+
+**Endpoint**: `POST /api/cart`
+
+**Authentication**: Required (Access Token)
+
+**Headers**:
+
+```
+Authorization: Bearer <access_token>
+```
+
+**Request Body**:
+
+```json
+{
+  "itemId": 1,
+  "quantity": 2
+}
+```
+
+**Response** (201 Created):
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "cart-item-uuid",
+    "userId": "user-uuid",
+    "itemId": 1,
+    "quantity": 2,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z",
+    "item": {
+      "id": 1,
+      "name": "Product Name",
+      "price": 99.99,
+      ...
+    }
+  },
+  "message": "Item added to cart successfully"
+}
+```
+
+**Error Responses**:
+
+- **400 Bad Request**: Missing item ID
+
+  ```json
+  {
+    "success": false,
+    "error": "Item ID is required"
+  }
+  ```
+
+- **400 Bad Request**: Invalid quantity
+
+  ```json
+  {
+    "success": false,
+    "error": "Quantity must be at least 1"
+  }
+  ```
+
+- **404 Not Found**: Item not found
+
+  ```json
+  {
+    "success": false,
+    "error": "Item not found"
+  }
+  ```
+
+- **401 Unauthorized**: Missing or invalid access token
+
+  ```json
+  {
+    "success": false,
+    "error": "Access token is required"
+  }
+  ```
+
+**Notes**:
+- If `quantity` is not provided, it defaults to 1
+- If item already exists in cart, the quantity will be incremented by the specified amount
+- The response includes the full item details
+
+---
+
+#### 10. Get Cart Items
+
+Retrieve all items in the authenticated user's cart.
+
+**Endpoint**: `GET /api/cart`
+
+**Authentication**: Required (Access Token)
+
+**Headers**:
+
+```
+Authorization: Bearer <access_token>
+```
+
+**Response** (200 OK):
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "cart-item-uuid-1",
+      "userId": "user-uuid",
+      "itemId": 1,
+      "quantity": 2,
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "item": {
+        "id": 1,
+        "name": "Product Name",
+        "price": 99.99,
+        ...
+      }
+    },
+    {
+      "id": "cart-item-uuid-2",
+      "userId": "user-uuid",
+      "itemId": 2,
+      "quantity": 1,
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "item": {
+        "id": 2,
+        "name": "Another Product",
+        "price": 49.99,
+        ...
+      }
+    }
+  ]
+}
+```
+
+**Error Responses**:
+
+- **401 Unauthorized**: Missing or invalid access token
+
+  ```json
+  {
+    "success": false,
+    "error": "Access token is required"
+  }
+  ```
+
+**Notes**:
+- Cart items are returned in descending order by creation date (newest first)
+- Each cart item includes the complete item details
+- Returns an empty array if cart is empty
+
+---
+
+#### 11. Update Cart Item Quantity
+
+Update the quantity of a specific item in the cart.
+
+**Endpoint**: `PUT /api/cart/:id`
+
+**Authentication**: Required (Access Token)
+
+**Headers**:
+
+```
+Authorization: Bearer <access_token>
+```
+
+**URL Parameters**:
+- `id` (string): The cart item ID
+
+**Request Body**:
+
+```json
+{
+  "quantity": 5
+}
+```
+
+**Response** (200 OK):
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "cart-item-uuid",
+    "userId": "user-uuid",
+    "itemId": 1,
+    "quantity": 5,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z",
+    "item": {
+      "id": 1,
+      "name": "Product Name",
+      "price": 99.99,
+      ...
+    }
+  },
+  "message": "Cart item updated successfully"
+}
+```
+
+**Error Responses**:
+
+- **400 Bad Request**: Invalid quantity
+
+  ```json
+  {
+    "success": false,
+    "error": "Quantity must be at least 1"
+  }
+  ```
+
+- **404 Not Found**: Cart item not found
+
+  ```json
+  {
+    "success": false,
+    "error": "Cart item not found"
+  }
+  ```
+
+- **403 Forbidden**: Unauthorized to update cart item
+
+  ```json
+  {
+    "success": false,
+    "error": "Unauthorized to update this cart item"
+  }
+  ```
+
+- **401 Unauthorized**: Missing or invalid access token
+
+  ```json
+  {
+    "success": false,
+    "error": "Access token is required"
+  }
+  ```
+
+**Notes**:
+- This endpoint sets the absolute quantity (not incrementing)
+- Users can only update their own cart items
+- Minimum quantity is 1
+
+---
+
+#### 12. Remove Item from Cart
+
+Delete a specific item from the cart.
+
+**Endpoint**: `DELETE /api/cart/:id`
+
+**Authentication**: Required (Access Token)
+
+**Headers**:
+
+```
+Authorization: Bearer <access_token>
+```
+
+**URL Parameters**:
+- `id` (string): The cart item ID
+
+**Response** (200 OK):
+
+```json
+{
+  "success": true,
+  "message": "Item removed from cart successfully"
+}
+```
+
+**Error Responses**:
+
+- **404 Not Found**: Cart item not found
+
+  ```json
+  {
+    "success": false,
+    "error": "Cart item not found"
+  }
+  ```
+
+- **403 Forbidden**: Unauthorized to delete cart item
+
+  ```json
+  {
+    "success": false,
+    "error": "Unauthorized to delete this cart item"
+  }
+  ```
+
+- **401 Unauthorized**: Missing or invalid access token
+
+  ```json
+  {
+    "success": false,
+    "error": "Access token is required"
+  }
+  ```
+
+**Notes**:
+- Users can only delete their own cart items
+- The operation is permanent and cannot be undone
+
+---
+
 ### Product Endpoints
 
 #### 7. Get Top Selling Items

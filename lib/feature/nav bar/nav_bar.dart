@@ -19,7 +19,7 @@ class _NavBarState extends State<NavBar> {
   List<Widget> _pages(BuildContext context) => [
     HomePage(),
     Category(),
-    Text("data"),
+    Cart(),
     Profile(),
   ];
 

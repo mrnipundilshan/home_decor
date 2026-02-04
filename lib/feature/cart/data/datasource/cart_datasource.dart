@@ -1,38 +1,37 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:home_decor/core/data/api_endpoints.dart';
+import 'package:home_decor/feature/cart/data/models/cart_model.dart';
 import 'package:home_decor/feature/category/data/exception/exceptions.dart';
-import 'package:home_decor/feature/category/data/models/item_model.dart';
 
-abstract class CategoryDatasource {
-  Future<List<ItemModel>> getTopSellingItemsFromAPI(String category);
+abstract class CartDatasource {
+  Future<List<CartModel>> getCartItemsFromAPI();
 }
 
-class CategoryDatasourceImpl implements CategoryDatasource {
+class CartDatasourceImpl implements CartDatasource {
   final Dio dio;
 
-  CategoryDatasourceImpl({required this.dio});
+  CartDatasourceImpl({required this.dio});
 
   @override
-  Future<List<ItemModel>> getTopSellingItemsFromAPI(String category) async {
-    log("Calling Category List");
+  Future<List<CartModel>> getCartItemsFromAPI() async {
+    log("Calling Cart List");
     await Future.delayed(const Duration(seconds: 4));
-    final response = await dio.get(
-      ApiEndpoints.items,
-      queryParameters: {'category': category},
-    );
+    final response = await dio.get(ApiEndpoints.cart);
 
     if (response.statusCode != 200) {
       throw ServerException();
     } else {
-      //final responseBody = json.decode(response.data);
       final responseBody = response.data;
-      //print(responseBody);
-      final itemList = (responseBody as List)
-          .map((json) => ItemModel.fromJson(json))
-          .toList();
 
-      return itemList;
+      if (responseBody['success'] == true) {
+        final cartList = (responseBody['data'] as List)
+            .map((json) => CartModel.fromJson(json))
+            .toList();
+        return cartList;
+      } else {
+        throw ServerException();
+      }
     }
   }
 }

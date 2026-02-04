@@ -2,34 +2,32 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:home_decor/feature/category/domain/entity/item_entity.dart';
-import 'package:home_decor/feature/category/domain/usecases/category_usecases.dart';
+import 'package:home_decor/feature/cart/domain/entity/cart_entity.dart';
+import 'package:home_decor/feature/cart/domain/usecases/cart_usecases.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
 
-class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
-  final CategoryUsecases categoryUsecases;
+class CartBloc extends Bloc<CartEvent, CartState> {
+  final CartUsecases cartUsecases;
 
-  CategoryBloc({required this.categoryUsecases}) : super(HomeInitial()) {
-    on<CategoryEvent>((event, emit) {});
+  CartBloc({required this.cartUsecases}) : super(HomeInitial()) {
+    on<CartEvent>((event, emit) {});
 
-    on<CategoryInitialEvent>(_categoryInitialEvent);
+    on<CartInitialEvent>(_cartInitialEvent);
   }
 
-  FutureOr<void> _categoryInitialEvent(
-    CategoryInitialEvent event,
-    Emitter<CategoryState> emit,
+  FutureOr<void> _cartInitialEvent(
+    CartInitialEvent event,
+    Emitter<CartState> emit,
   ) async {
-    emit(CategoryLoadingState());
+    emit(CartLoadingState());
 
-    final failureOritemList = await categoryUsecases.getTopSelling(
-      event.category,
-    );
+    final failureOrCartList = await cartUsecases.getCartItems();
 
-    failureOritemList.fold(
-      (failure) => emit(CategoryErrorState()),
-      (itemList) => emit(CategoryLoadedState(itemList: itemList)),
+    failureOrCartList.fold(
+      (failure) => emit(CartErrorState()),
+      (cartList) => emit(CartLoadedState(cartList: cartList)),
     );
   }
 }

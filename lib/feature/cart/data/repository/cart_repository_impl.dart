@@ -1,24 +1,21 @@
 import 'package:dartz/dartz.dart';
-import 'package:home_decor/feature/category/data/datasource/category_datasource.dart';
+import 'package:home_decor/feature/cart/data/datasource/cart_datasource.dart';
+import 'package:home_decor/feature/cart/domain/entity/cart_entity.dart';
+import 'package:home_decor/feature/cart/domain/failure/failure.dart';
+import 'package:home_decor/feature/cart/domain/repository/cart_repository.dart';
 import 'package:home_decor/feature/category/data/exception/exceptions.dart';
-import 'package:home_decor/feature/category/domain/entity/item_entity.dart';
-import 'package:home_decor/feature/category/domain/failure/failure.dart';
-import 'package:home_decor/feature/category/domain/repository/category_repository.dart';
 
-class CategoryRepositoryImpl implements CategoryRepository {
-  final CategoryDatasource categoryDatasource;
+class CartRepositoryImpl implements CartRepository {
+  final CartDatasource cartDatasource;
 
-  CategoryRepositoryImpl({required this.categoryDatasource});
+  CartRepositoryImpl({required this.cartDatasource});
 
   @override
-  Future<Either<Failure, List<ItemEntity>>> getTopSellingItemsFromDatasources(
-    String category,
-  ) async {
+  Future<Either<Failure, List<CartEntity>>>
+  getCartItemsFromDatasources() async {
     try {
-      final itemList = await categoryDatasource.getTopSellingItemsFromAPI(
-        category,
-      );
-      return right(itemList);
+      final cartList = await cartDatasource.getCartItemsFromAPI();
+      return right(cartList);
     } on ServerException catch (_) {
       return left(ServerFailure());
     } catch (e) {
