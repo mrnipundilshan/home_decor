@@ -11,4 +11,8 @@ class CartUsecases {
   Future<Either<Failure, List<CartEntity>>> getCartItems() {
     return cartRepository.getCartItemsFromDatasources();
   }
+
+  Future<Either<Failure, bool>> deleteCartItem(String id) {
+    return cartRepository.deleteCartItem(id);
+  }
 }

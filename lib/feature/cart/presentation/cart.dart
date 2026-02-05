@@ -42,7 +42,25 @@ class _CartState extends State<Cart> {
                 itemCount: state.cartList.length,
                 itemBuilder: (context, index) {
                   final cart = state.cartList[index];
-                  return CartItemCard(cartItem: cart);
+                  return CartItemCard(
+                    cartItem: cart,
+                    onIncrement: () {
+                      setState(() {
+                        cart.quantity = (cart.quantity ?? 1) + 1;
+                      });
+                    },
+                    onDecrement: () {
+                      if ((cart.quantity ?? 1) > 1) {
+                        setState(() {
+                          cart.quantity = (cart.quantity ?? 1) - 1;
+                        });
+                      } else {
+                        BlocProvider.of<CartBloc>(
+                          context,
+                        ).add(CartDeleteEvent(id: cart.id!));
+                      }
+                    },
+                  );
                 },
               );
             } else {

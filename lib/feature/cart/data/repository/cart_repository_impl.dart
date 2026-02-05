@@ -22,4 +22,16 @@ class CartRepositoryImpl implements CartRepository {
       return left(GeneralFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> deleteCartItem(String id) async {
+    try {
+      final isDeleted = await cartDatasource.deleteCartItem(id);
+      return right(isDeleted);
+    } on ServerException catch (_) {
+      return left(ServerFailure());
+    } catch (e) {
+      return left(GeneralFailure());
+    }
+  }
 }

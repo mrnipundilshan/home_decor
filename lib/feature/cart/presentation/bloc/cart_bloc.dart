@@ -15,6 +15,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartEvent>((event, emit) {});
 
     on<CartInitialEvent>(_cartInitialEvent);
+    on<CartDeleteEvent>(_cartDeleteEvent);
   }
 
   FutureOr<void> _cartInitialEvent(
@@ -28,6 +29,20 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     failureOrCartList.fold(
       (failure) => emit(CartErrorState()),
       (cartList) => emit(CartLoadedState(cartList: cartList)),
+    );
+  }
+
+  FutureOr<void> _cartDeleteEvent(
+    CartDeleteEvent event,
+    Emitter<CartState> emit,
+  ) async {
+    emit(CartLoadingState());
+
+    final failureOrIsDeleted = await cartUsecases.deleteCartItem(event.id);
+
+    failureOrIsDeleted.fold(
+      (failure) => emit(CartErrorState()),
+      (isDeleted) => emit(CartLoadedState(cartList: [])),
     );
   }
 }

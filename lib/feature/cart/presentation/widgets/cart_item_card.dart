@@ -1,29 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
-
 import 'package:home_decor/feature/cart/domain/entity/cart_entity.dart';
 
-class CartItemCard extends StatefulWidget {
+class CartItemCard extends StatelessWidget {
   final CartEntity cartItem;
-
-  const CartItemCard({super.key, required this.cartItem});
-
-  @override
-  State<CartItemCard> createState() => _CartItemCardState();
-}
-
-class _CartItemCardState extends State<CartItemCard> {
-  int quantity = 0;
-  @override
-  void initState() {
-    super.initState();
-    quantity = widget.cartItem.quantity!.toInt();
-  }
+  final VoidCallback onIncrement;
+  final VoidCallback onDecrement;
+  const CartItemCard({
+    super.key,
+    required this.cartItem,
+    required this.onIncrement,
+    required this.onDecrement,
+  });
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    final item = widget.cartItem.itemEntity;
+    final item = cartItem.itemEntity;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -87,28 +80,17 @@ class _CartItemCardState extends State<CartItemCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      _QuantityButton(
-                        icon: Icons.remove,
-                        onTap: () {
-                          setState(() {
-                            quantity--;
-                          });
-                        },
-                      ),
+                      _QuantityButton(icon: Icons.remove, onTap: onDecrement),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Text(
-                          '$quantity',
+                          '${cartItem.quantity}',
                           style: themeData.textTheme.bodyMedium,
                         ),
                       ),
                       _QuantityButton(
                         icon: Icons.add,
-                        onTap: () {
-                          setState(() {
-                            quantity++;
-                          });
-                        },
+                        onTap: onIncrement,
                         isFilled: true,
                       ),
                     ],

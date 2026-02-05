@@ -10,3 +10,9 @@ sealed class CartEvent extends Equatable {
 class CartInitialEvent extends CartEvent {
   const CartInitialEvent();
 }
+
+class CartDeleteEvent extends CartEvent {
+  final String id;
+
+  const CartDeleteEvent({required this.id});
+}
