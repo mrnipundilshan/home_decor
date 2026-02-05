@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/feature/cart/presentation/bloc/cart_bloc.dart';
 import 'package:home_decor/feature/cart/presentation/widgets/cart_page_app_bar.dart';
+import 'package:home_decor/feature/cart/presentation/widgets/cart_item_card.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
@@ -41,10 +42,7 @@ class _CartState extends State<Cart> {
                 itemCount: state.cartList.length,
                 itemBuilder: (context, index) {
                   final cart = state.cartList[index];
-                  return ListTile(
-                    title: Text(cart.itemEntity!.price!.toString()),
-                    subtitle: Text(cart.itemEntity!.price!.toString()),
-                  );
+                  return CartItemCard(cartItem: cart);
                 },
               );
             } else {
