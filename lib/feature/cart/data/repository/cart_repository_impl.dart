@@ -34,4 +34,19 @@ class CartRepositoryImpl implements CartRepository {
       return left(GeneralFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, CartEntity>> addCartItem(
+    String itemId,
+    int quantity,
+  ) async {
+    try {
+      final cartItem = await cartDatasource.addCartItem(itemId, quantity);
+      return right(cartItem);
+    } on ServerException catch (_) {
+      return left(ServerFailure());
+    } catch (e) {
+      return left(GeneralFailure());
+    }
+  }
 }

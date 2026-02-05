@@ -15,4 +15,8 @@ class CartUsecases {
   Future<Either<Failure, bool>> deleteCartItem(String id) {
     return cartRepository.deleteCartItem(id);
   }
+
+  Future<Either<Failure, CartEntity>> addCartItem(String itemId, int quantity) {
+    return cartRepository.addCartItem(itemId, quantity);
+  }
 }

@@ -18,3 +18,5 @@ class CartLoadedState extends CartState {
 
   const CartLoadedState({required this.cartList});
 }
+
+class CartAddedSuccessState extends CartState {}

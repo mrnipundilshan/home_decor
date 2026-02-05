@@ -8,6 +8,8 @@ abstract class CartDatasource {
   Future<List<CartModel>> getCartItemsFromAPI();
 
   Future<bool> deleteCartItem(String id);
+
+  Future<CartModel> addCartItem(String itemId, int quantity);
 }
 
 class CartDatasourceImpl implements CartDatasource {
@@ -50,6 +52,28 @@ class CartDatasourceImpl implements CartDatasource {
 
       if (responseBody['success'] == true) {
         return true;
+      } else {
+        throw ServerException();
+      }
+    }
+  }
+
+  @override
+  Future<CartModel> addCartItem(String itemId, int quantity) async {
+    log("Calling Add Cart Item");
+    await Future.delayed(const Duration(seconds: 4));
+    final response = await dio.post(
+      ApiEndpoints.cart,
+      data: {'itemId': itemId, 'quantity': quantity},
+    );
+
+    if (response.statusCode != 200) {
+      throw ServerException();
+    } else {
+      final responseBody = response.data;
+
+      if (responseBody['success'] == true) {
+        return CartModel.fromJson(responseBody);
       } else {
         throw ServerException();
       }
