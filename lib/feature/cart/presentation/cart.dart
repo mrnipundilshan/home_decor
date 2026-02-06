@@ -43,45 +43,42 @@ class _CartState extends State<Cart> {
                 child: ListView.builder(
                   itemCount: 2,
                   itemBuilder: (context, index) {
-                    return CartItemCard(
-                      cartItem: CartEntity(),
-                      onIncrement: () {},
-                      onDecrement: () {},
-                    );
+                    return CartItemCard(cartItem: CartEntity());
                   },
                 ),
               );
             } else if (state is CartErrorState) {
               return const Center(child: Text("Error"));
             } else if (state is CartLoadedState) {
-              return ListView.builder(
-                itemCount: state.cartList.length,
-                itemBuilder: (context, index) {
-                  final cart = state.cartList[index];
-                  return CartItemCard(
-                    cartItem: cart,
-                    onIncrement: () {
-                      setState(() {
-                        cart.quantity = (cart.quantity ?? 1) + 1;
-                      });
-                    },
-                    onDecrement: () {
-                      if ((cart.quantity ?? 1) > 1) {
-                        setState(() {
-                          cart.quantity = (cart.quantity ?? 1) - 1;
-                        });
-                      } else {
-                        BlocProvider.of<CartBloc>(
-                          context,
-                        ).add(CartDeleteEvent(id: cart.id!));
-                      }
-                    },
-                  );
-                },
-              );
-            } else {
-              return const Center(child: Text("Cart is empty"));
+              return state.cartList.isEmpty
+                  ? const Center(child: Text("Cart is empty"))
+                  : ListView.builder(
+                      itemCount: state.cartList.length,
+                      itemBuilder: (context, index) {
+                        final cart = state.cartList[index];
+                        return CartItemCard(
+                          cartItem: cart,
+                          onIncrement: () {
+                            setState(() {
+                              cart.quantity = (cart.quantity ?? 1) + 1;
+                            });
+                          },
+                          onDecrement: () {
+                            if ((cart.quantity ?? 1) > 1) {
+                              setState(() {
+                                cart.quantity = (cart.quantity ?? 1) - 1;
+                              });
+                            } else {
+                              BlocProvider.of<CartBloc>(
+                                context,
+                              ).add(CartDeleteEvent(id: cart.id!));
+                            }
+                          },
+                        );
+                      },
+                    );
             }
+            return const Center(child: Text("Cart is empty"));
           },
         ),
       ),

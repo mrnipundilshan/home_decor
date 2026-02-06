@@ -39,11 +39,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   ) async {
     emit(CartLoadingState());
 
-    final failureOrIsDeleted = await cartUsecases.deleteCartItem(event.id);
+    final failureOrCartList = await cartUsecases.deleteCartItem(event.id);
 
-    failureOrIsDeleted.fold(
+    failureOrCartList.fold(
       (failure) => emit(CartErrorState()),
-      (isDeleted) => emit(CartLoadedState(cartList: [])),
+      (cartList) => emit(CartLoadedState(cartList: cartList)),
     );
   }
 

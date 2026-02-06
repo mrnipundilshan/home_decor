@@ -12,7 +12,7 @@ class CartUsecases {
     return cartRepository.getCartItemsFromDatasources();
   }
 
-  Future<Either<Failure, bool>> deleteCartItem(String id) {
+  Future<Either<Failure, List<CartEntity>>> deleteCartItem(String id) {
     return cartRepository.deleteCartItem(id);
   }
 

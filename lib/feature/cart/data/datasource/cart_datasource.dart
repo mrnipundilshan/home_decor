@@ -7,7 +7,7 @@ import 'package:home_decor/feature/category/data/exception/exceptions.dart';
 abstract class CartDatasource {
   Future<List<CartModel>> getCartItemsFromAPI();
 
-  Future<bool> deleteCartItem(String id);
+  Future<List<CartModel>> deleteCartItem(String id);
 
   Future<CartModel> addCartItem(String itemId, int quantity);
 }
@@ -40,7 +40,7 @@ class CartDatasourceImpl implements CartDatasource {
   }
 
   @override
-  Future<bool> deleteCartItem(String id) async {
+  Future<List<CartModel>> deleteCartItem(String id) async {
     log("Calling Delete Cart Item");
     await Future.delayed(const Duration(seconds: 4));
     final response = await dio.delete('${ApiEndpoints.cart}/$id');
@@ -51,7 +51,8 @@ class CartDatasourceImpl implements CartDatasource {
       final responseBody = response.data;
 
       if (responseBody['success'] == true) {
-        return true;
+        final cartList = await getCartItemsFromAPI();
+        return cartList;
       } else {
         throw ServerException();
       }
@@ -67,13 +68,13 @@ class CartDatasourceImpl implements CartDatasource {
       data: {'itemId': itemId, 'quantity': quantity},
     );
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != 201) {
       throw ServerException();
     } else {
       final responseBody = response.data;
 
       if (responseBody['success'] == true) {
-        return CartModel.fromJson(responseBody);
+        return CartModel.fromJson(responseBody['data']);
       } else {
         throw ServerException();
       }

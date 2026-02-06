@@ -24,10 +24,10 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> deleteCartItem(String id) async {
+  Future<Either<Failure, List<CartEntity>>> deleteCartItem(String id) async {
     try {
-      final isDeleted = await cartDatasource.deleteCartItem(id);
-      return right(isDeleted);
+      final cartList = await cartDatasource.deleteCartItem(id);
+      return right(cartList);
     } on ServerException catch (_) {
       return left(ServerFailure());
     } catch (e) {
