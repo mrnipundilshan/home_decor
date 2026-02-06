@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import 'package:home_decor/feature/cart/domain/entity/cart_entity.dart';
 import 'package:home_decor/feature/cart/presentation/bloc/cart_bloc.dart';
 import 'package:home_decor/feature/cart/presentation/widgets/cart_page_app_bar.dart';
 import 'package:home_decor/feature/cart/presentation/widgets/cart_item_card.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
@@ -34,7 +36,21 @@ class _CartState extends State<Cart> {
         child: BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
             if (state is CartLoadingState) {
-              return const Center(child: CircularProgressIndicator());
+              return Shimmer.fromColors(
+                baseColor: themeData.colorScheme.inversePrimary,
+                highlightColor: themeData.colorScheme.primary,
+                enabled: true,
+                child: ListView.builder(
+                  itemCount: 2,
+                  itemBuilder: (context, index) {
+                    return CartItemCard(
+                      cartItem: CartEntity(),
+                      onIncrement: () {},
+                      onDecrement: () {},
+                    );
+                  },
+                ),
+              );
             } else if (state is CartErrorState) {
               return const Center(child: Text("Error"));
             } else if (state is CartLoadedState) {
@@ -64,7 +80,7 @@ class _CartState extends State<Cart> {
                 },
               );
             } else {
-              return const Center(child: Text("No data"));
+              return const Center(child: Text("Cart is empty"));
             }
           },
         ),

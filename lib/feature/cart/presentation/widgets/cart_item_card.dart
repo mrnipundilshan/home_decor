@@ -3,20 +3,20 @@ import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/feature/cart/domain/entity/cart_entity.dart';
 
 class CartItemCard extends StatelessWidget {
-  final CartEntity cartItem;
-  final VoidCallback onIncrement;
-  final VoidCallback onDecrement;
+  final CartEntity? cartItem;
+  final VoidCallback? onIncrement;
+  final VoidCallback? onDecrement;
   const CartItemCard({
     super.key,
-    required this.cartItem,
-    required this.onIncrement,
-    required this.onDecrement,
+    this.cartItem,
+    this.onIncrement,
+    this.onDecrement,
   });
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    final item = cartItem.itemEntity;
+    final item = cartItem!.itemEntity;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -59,7 +59,7 @@ class CartItemCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        item?.title ?? 'Unknown Item',
+                        item?.title ?? '',
                         style: const TextStyle(
                           color: AppColors.commonPrimary,
                           fontSize: 16,
@@ -70,31 +70,40 @@ class CartItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        '\$ ${item?.price?.toStringAsFixed(2) ?? "0.00"}',
+                        item?.price != null
+                            ? '\$ ${item!.price!.toStringAsFixed(2)}'
+                            : '',
                         style: themeData.textTheme.bodyMedium,
                       ),
                     ],
                   ),
 
                   // Quantity Selector (Bottom Right aligned relative to content)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      _QuantityButton(icon: Icons.remove, onTap: onDecrement),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Text(
-                          '${cartItem.quantity}',
-                          style: themeData.textTheme.bodyMedium,
-                        ),
-                      ),
-                      _QuantityButton(
-                        icon: Icons.add,
-                        onTap: onIncrement,
-                        isFilled: true,
-                      ),
-                    ],
-                  ),
+                  cartItem?.quantity != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            _QuantityButton(
+                              icon: Icons.remove,
+                              onTap: onDecrement,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
+                              child: Text(
+                                '${cartItem!.quantity ?? ''}',
+                                style: themeData.textTheme.bodyMedium,
+                              ),
+                            ),
+                            _QuantityButton(
+                              icon: Icons.add,
+                              onTap: onIncrement,
+                              isFilled: true,
+                            ),
+                          ],
+                        )
+                      : SizedBox.shrink(),
                 ],
               ),
             ),
