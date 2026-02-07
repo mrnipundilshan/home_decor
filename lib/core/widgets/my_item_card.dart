@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
-import 'package:home_decor/feature/home/presentation/bloc/favorites/favorites_bloc.dart';
-import 'package:home_decor/feature/home/presentation/bloc/favorites/favorites_state.dart';
-import 'package:home_decor/feature/home/presentation/bloc/favorites/favorites_event.dart';
+import 'package:home_decor/feature/wishlist/presentation/bloc/favorites_bloc.dart';
+import 'package:home_decor/feature/wishlist/presentation/bloc/favorites_state.dart';
+import 'package:home_decor/feature/wishlist/presentation/bloc/favorites_event.dart';
 import '../../feature/product_detail/product_detail_page.dart';
 
 class MyItemCard extends StatefulWidget {
