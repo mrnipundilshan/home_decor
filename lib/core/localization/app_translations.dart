@@ -82,11 +82,11 @@ class AppTranslations {
       // category
       "category": "Category",
       "beds": "Beds",
-      "sofa": "Sofas",
-      "decor": "Decors",
-      "chair": "Chairs",
-      "light": "Lights",
-      "table": "Tables",
+      "sofas": "Sofas",
+      "decors": "Decors",
+      "chairs": "Chairs",
+      "lights": "Lights",
+      "tables": "Tables",
       "all": "All",
 
       // cart
@@ -175,11 +175,11 @@ class AppTranslations {
       // catagory
       "category": "වර්ග",
       "beds": "ඇදන්",
-      "sofa": "සෝෆා",
-      "decor": "සැරසිලි",
-      "light": "බල්බ",
-      "chair": "පුටු",
-      "table": "මේස",
+      "sofas": "සෝෆා",
+      "decors": "සැරසිලි",
+      "lights": "බල්බ",
+      "chairs": "පුටු",
+      "tables": "මේස",
       "all": "සියලුම",
 
       // cart

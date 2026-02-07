@@ -3,10 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/feature/category/presentation/bloc/category_bloc.dart';
 import 'package:home_decor/core/widgets/my_item_card.dart';
+import 'package:home_decor/feature/wishlist/presentation/bloc/favorites_bloc.dart';
+import 'package:home_decor/feature/wishlist/presentation/bloc/favorites_state.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Items extends StatefulWidget {
-  const Items({super.key});
+  final bool isShowingFavorites;
+  const Items({super.key, required this.isShowingFavorites});
 
   @override
   State<Items> createState() => _ItemsState();
@@ -27,69 +30,107 @@ class _ItemsState extends State<Items> {
 
     return SizedBox(
       width: double.infinity,
-      child: BlocBuilder<CategoryBloc, CategoryState>(
-        builder: (context, state) {
-          if (state is CategoryLoadingState) {
-            return Shimmer.fromColors(
-              baseColor: themeData.colorScheme.inversePrimary,
-              highlightColor: themeData.colorScheme.primary,
-              enabled: true,
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 5,
-                  mainAxisExtent: 280,
-                ),
-                physics: BouncingScrollPhysics(),
-                scrollDirection: .vertical,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return MyItemCard(
-                    title: "",
-                    subtitle: "",
-                    imageUrl: "",
-                    price: 0,
-                    rating: 0,
-                  );
-                },
-              ),
-            );
-          }
-          if (state is CategoryLoadedState) {
-            return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisExtent: 280,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 5,
-              ),
-              physics: BouncingScrollPhysics(),
-              scrollDirection: .vertical,
-              itemCount: state.itemList.length,
-              itemBuilder: (context, index) {
-                final topSellingItem = state.itemList[index];
-                return MyItemCard(
-                  title: topSellingItem.title ?? '',
-                  subtitle: topSellingItem.subtitle ?? '',
-                  imageUrl: topSellingItem.imageUrl ?? '',
-                  price: topSellingItem.price ?? 0,
-                  rating: topSellingItem.rating ?? 0,
-                  uuid: topSellingItem.uuid ?? '',
-                );
-              },
-            );
-          }
+      child: widget.isShowingFavorites
+          ? BlocBuilder<FavoritesBloc, FavoritesState>(
+              builder: (context, state) {
+                if (state is FavoritesLoading) {
+                  return _buildShimmer(themeData);
+                }
 
-          if (state is CategoryErrorState) {
-            return Center(
-              child: Text(
-                context.translate('error_state'),
-                style: themeData.textTheme.labelLarge,
-              ),
-            );
-          }
-          return SizedBox.shrink();
+                if (state is FavoritesLoaded) {
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisExtent: 280,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 5,
+                    ),
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: .vertical,
+                    itemCount: state.favorites.length,
+                    itemBuilder: (context, index) {
+                      final topSellingItem = state.favorites[index];
+                      return MyItemCard(
+                        title: topSellingItem.item!.title ?? '',
+                        subtitle: topSellingItem.item!.subtitle ?? '',
+                        imageUrl: topSellingItem.item!.imageUrl ?? '',
+                        price: topSellingItem.item!.price ?? 0,
+                        rating: topSellingItem.item!.rating ?? 0,
+                        uuid: topSellingItem.item!.uuid ?? '',
+                      );
+                    },
+                  );
+                }
+                return Center(child: Text(context.translate("no_favorites")));
+              },
+            )
+          : BlocBuilder<CategoryBloc, CategoryState>(
+              builder: (context, state) {
+                if (state is CategoryLoadingState) {
+                  return _buildShimmer(themeData);
+                }
+                if (state is CategoryLoadedState) {
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisExtent: 280,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 5,
+                    ),
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: .vertical,
+                    itemCount: state.itemList.length,
+                    itemBuilder: (context, index) {
+                      final topSellingItem = state.itemList[index];
+                      return MyItemCard(
+                        title: topSellingItem.title ?? '',
+                        subtitle: topSellingItem.subtitle ?? '',
+                        imageUrl: topSellingItem.imageUrl ?? '',
+                        price: topSellingItem.price ?? 0,
+                        rating: topSellingItem.rating ?? 0,
+                        uuid: topSellingItem.uuid ?? '',
+                      );
+                    },
+                  );
+                }
+
+                if (state is CategoryErrorState) {
+                  return Center(
+                    child: Text(
+                      context.translate('error_state'),
+                      style: themeData.textTheme.labelLarge,
+                    ),
+                  );
+                }
+                return SizedBox.shrink();
+              },
+            ),
+    );
+  }
+
+  Widget _buildShimmer(ThemeData themeData) {
+    return Shimmer.fromColors(
+      baseColor: themeData.colorScheme.inversePrimary,
+      highlightColor: themeData.colorScheme.primary,
+      enabled: true,
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 5,
+          mainAxisExtent: 280,
+        ),
+        physics: BouncingScrollPhysics(),
+        scrollDirection: .vertical,
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return MyItemCard(
+            title: "",
+            subtitle: "",
+            imageUrl: "",
+            price: 0,
+            rating: 0,
+          );
         },
       ),
     );

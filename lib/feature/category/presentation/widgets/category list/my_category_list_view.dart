@@ -51,11 +51,11 @@ class MyCategoryListView extends StatelessWidget {
 
             MyCarouselViewCard(
               title: context.translate('sofa'),
-              category: "sofa",
-              isSelected: selectedCategory == "sofa",
+              category: "sofas",
+              isSelected: selectedCategory == "sofas",
               onTap: () {
-                if (selectedCategory != "sofa") {
-                  onCategorySelected("sofa");
+                if (selectedCategory != "sofas") {
+                  onCategorySelected("sofas");
                   BlocProvider.of<CategoryBloc>(
                     context,
                   ).add(CategoryInitialEvent(category: "sofas"));
@@ -64,12 +64,12 @@ class MyCategoryListView extends StatelessWidget {
             ),
 
             MyCarouselViewCard(
-              title: context.translate('decor'),
-              category: "decor",
-              isSelected: selectedCategory == "decor",
+              title: context.translate('decors'),
+              category: "decors",
+              isSelected: selectedCategory == "decors",
               onTap: () {
-                if (selectedCategory != "decor") {
-                  onCategorySelected("decor");
+                if (selectedCategory != "decors") {
+                  onCategorySelected("decors");
                   BlocProvider.of<CategoryBloc>(
                     context,
                   ).add(CategoryInitialEvent(category: "decors"));
@@ -78,12 +78,12 @@ class MyCategoryListView extends StatelessWidget {
             ),
 
             MyCarouselViewCard(
-              title: context.translate('chair'),
-              category: "chair",
-              isSelected: selectedCategory == "chair",
+              title: context.translate('chairs'),
+              category: "chairs",
+              isSelected: selectedCategory == "chairs",
               onTap: () {
-                if (selectedCategory != "chair") {
-                  onCategorySelected("chair");
+                if (selectedCategory != "chairs") {
+                  onCategorySelected("chairs");
                   BlocProvider.of<CategoryBloc>(
                     context,
                   ).add(CategoryInitialEvent(category: "chairs"));
@@ -92,12 +92,12 @@ class MyCategoryListView extends StatelessWidget {
             ),
 
             MyCarouselViewCard(
-              title: context.translate('light'),
-              category: "light",
-              isSelected: selectedCategory == "light",
+              title: context.translate('lights'),
+              category: "lights",
+              isSelected: selectedCategory == "lights",
               onTap: () {
-                if (selectedCategory != "light") {
-                  onCategorySelected("light");
+                if (selectedCategory != "lights") {
+                  onCategorySelected("lights");
                   BlocProvider.of<CategoryBloc>(
                     context,
                   ).add(CategoryInitialEvent(category: "lights"));
@@ -106,12 +106,12 @@ class MyCategoryListView extends StatelessWidget {
             ),
 
             MyCarouselViewCard(
-              title: context.translate('table'),
-              category: "table",
-              isSelected: selectedCategory == "table",
+              title: context.translate('tables'),
+              category: "tables",
+              isSelected: selectedCategory == "tables",
               onTap: () {
-                if (selectedCategory != "table") {
-                  onCategorySelected("table");
+                if (selectedCategory != "tables") {
+                  onCategorySelected("tables");
                   BlocProvider.of<CategoryBloc>(
                     context,
                   ).add(CategoryInitialEvent(category: "tables"));
