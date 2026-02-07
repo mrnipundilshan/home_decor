@@ -1,8 +1,12 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import 'package:home_decor/feature/home/presentation/bloc/favorites/favorites_bloc.dart';
+import 'package:home_decor/feature/home/presentation/bloc/favorites/favorites_state.dart';
+import 'package:home_decor/feature/home/presentation/bloc/favorites/favorites_event.dart';
 import '../../feature/product_detail/product_detail_page.dart';
 
 class MyItemCard extends StatefulWidget {
@@ -27,8 +31,6 @@ class MyItemCard extends StatefulWidget {
 }
 
 class _MyItemCardState extends State<MyItemCard> {
-  bool isFav = false;
-
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
@@ -83,29 +85,41 @@ class _MyItemCardState extends State<MyItemCard> {
                         Positioned(
                           top: 8,
                           right: 8,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(20),
-                            onTap: () {
-                              setState(() {
-                                isFav = !isFav;
-                              });
+                          child: BlocBuilder<FavoritesBloc, FavoritesState>(
+                            builder: (context, state) {
+                              bool isCurrentlyFav = false;
+                              if (state is FavoritesLoaded) {
+                                isCurrentlyFav = state.isFavorite(
+                                  widget.uuid ?? '',
+                                );
+                              }
+                              return InkWell(
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () {
+                                  if (widget.uuid != null) {
+                                    context.read<FavoritesBloc>().add(
+                                      ToggleFavoriteEvent(itemId: widget.uuid!),
+                                    );
+                                  }
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(6),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black54,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    isCurrentlyFav
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: isCurrentlyFav
+                                        ? AppColors.commonPrimary
+                                        : Colors.white,
+                                    size: 20,
+                                  ),
+                                ),
+                              );
                             },
-                            child: Container(
-                              padding: const EdgeInsets.all(6),
-                              decoration: BoxDecoration(
-                                color: Colors.black54,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                isFav == true
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                color: isFav == true
-                                    ? AppColors.commonPrimary
-                                    : Colors.white,
-                                size: 20,
-                              ),
-                            ),
                           ),
                         ),
                       ],

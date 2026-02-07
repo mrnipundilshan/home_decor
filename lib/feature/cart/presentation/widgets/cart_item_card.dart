@@ -71,7 +71,7 @@ class CartItemCard extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         item?.price != null
-                            ? '\$ ${item!.price!.toStringAsFixed(2)}'
+                            ? '\$ ${(item!.price! * cartItem!.quantity!).toStringAsFixed(2)}'
                             : '',
                         style: themeData.textTheme.bodyMedium,
                       ),

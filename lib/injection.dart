@@ -29,12 +29,14 @@ import 'package:home_decor/feature/profile/data/repository/profile_repository_im
 import 'package:home_decor/feature/profile/domain/repository/profile_repository.dart';
 import 'package:home_decor/feature/profile/domain/usecases/profile_usecases.dart';
 import 'package:home_decor/feature/profile/presentation/bloc/profile_bloc.dart';
+import 'package:home_decor/feature/home/presentation/bloc/favorites/favorites_bloc.dart';
 
 final sl = GetIt.I; // service locator
 
 Future<void> init() async {
   // application layer
   sl.registerFactory(() => HomeBloc(itemUsecases: sl()));
+  sl.registerFactory(() => FavoritesBloc(itemRepository: sl()));
   sl.registerFactory(() => AuthBloc(authUsecases: sl()));
   sl.registerFactory(() => ProfileBloc(profileUsecases: sl()));
   sl.registerFactory(() => CategoryBloc(categoryUsecases: sl()));

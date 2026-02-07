@@ -37,6 +37,7 @@ class _NavBarState extends State<NavBar> {
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
+
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (index) {

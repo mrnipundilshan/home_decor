@@ -21,6 +21,7 @@ model User {
   updatedAt DateTime @updatedAt
   profile   Profile?
   cartItems CartItem[]
+  favoriteItems FavoriteItem[]
 }
 
 model Profile {
@@ -48,6 +49,7 @@ model Item {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   cartItems CartItem[]
+  favoriteItems FavoriteItem[]
 }
 
 model CartItem {
@@ -59,6 +61,18 @@ model CartItem {
   quantity  Int      @default(1)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([userId, itemId])
+  @@index([userId])
+}
+
+model FavoriteItem {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  itemId    String
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 
   @@unique([userId, itemId])
   @@index([userId])
