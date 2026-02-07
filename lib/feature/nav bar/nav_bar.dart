@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
+import 'package:home_decor/feature/cart/presentation/cart.dart';
 import 'package:home_decor/feature/category/presentation/category.dart';
 import 'package:home_decor/feature/home/presentation/home_page.dart';
 import 'package:home_decor/feature/profile/presentation/profile.dart';
@@ -18,7 +19,7 @@ class _NavBarState extends State<NavBar> {
   List<Widget> _pages(BuildContext context) => [
     HomePage(),
     Category(),
-    Center(child: Text(context.translate('cart'))),
+    Cart(),
     Profile(),
   ];
 
@@ -36,6 +37,7 @@ class _NavBarState extends State<NavBar> {
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
+
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (index) {
@@ -73,6 +75,7 @@ class _NavBarState extends State<NavBar> {
               ),
               label: context.translate('cart'),
             ),
+
             BottomNavigationBarItem(
               icon: Padding(
                 padding: EdgeInsets.only(top: 6.0),

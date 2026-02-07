@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:home_decor/base_app.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:home_decor/feature/cart/presentation/bloc/cart_bloc.dart';
 import 'package:home_decor/feature/category/presentation/bloc/category_bloc.dart';
 import 'package:home_decor/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:home_decor/feature/home/presentation/bloc/favorites/favorites_bloc.dart';
+import 'package:home_decor/feature/home/presentation/bloc/favorites/favorites_event.dart';
 import 'package:home_decor/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:home_decor/injection.dart' as di;
 import 'package:provider/provider.dart';
@@ -22,8 +25,13 @@ void main() async {
         ChangeNotifierProvider(create: (context) => LocaleService()),
         BlocProvider(create: (context) => di.sl<AuthBloc>()),
         BlocProvider(create: (context) => di.sl<HomeBloc>()),
+        BlocProvider(
+          create: (context) =>
+              di.sl<FavoritesBloc>()..add(LoadFavoritesEvent()),
+        ),
         BlocProvider(create: (context) => di.sl<ProfileBloc>()),
         BlocProvider(create: (context) => di.sl<CategoryBloc>()),
+        BlocProvider(create: (context) => di.sl<CartBloc>()),
       ],
 
       child: const BaseApp(),

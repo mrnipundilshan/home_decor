@@ -17,12 +17,14 @@ app.use(express.json({ limit: '10mb' }));
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
 const cartRoutes = require('./routes/cart');
+const favoritesRoutes = require('./routes/favorites');
 const prisma = require('./prisma/client');
 
 // Use routes
 app.use('/api', authRoutes);
 app.use('/api', profileRoutes);
 app.use('/api', cartRoutes);
+app.use('/api', favoritesRoutes);
 
 // GET endpoint for top selling items
 app.get('/api/topselling', async (req, res) => {
