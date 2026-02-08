@@ -108,7 +108,15 @@ class _CartState extends State<Cart> {
                           tax: tax,
                           delivery: delivery,
                           total: total,
-                          nextpage: () => context.push('/checkout'),
+                          nextpage: () => context.push(
+                            '/checkout',
+                            extra: {
+                              'total': total,
+                              'subtotal': subtotal,
+                              'tax': tax,
+                              'delivery': delivery,
+                            },
+                          ),
                         ),
                       ],
                     );

@@ -74,7 +74,16 @@ final appRouter = GoRouter(
     GoRoute(
       name: 'checkoutScreen',
       path: '/checkout',
-      builder: (context, state) => Checkout(),
+      builder: (context, state) {
+        final data = state.extra as Map<String, double>;
+
+        return Checkout(
+          total: data['total']!,
+          subtotal: data['subtotal']!,
+          tax: data['tax']!,
+          delivery: data['delivery']!,
+        );
+      },
     ),
   ],
 );
