@@ -88,6 +88,9 @@ class AppTranslations {
       "lights": "Lights",
       "tables": "Tables",
       "all": "All",
+      "description": "Description",
+      "add_to_card": "Add to Cart",
+      "adding": "Adding...",
 
       // cart
       "cart": "Cart",
@@ -181,6 +184,9 @@ class AppTranslations {
       "chairs": "පුටු",
       "tables": "මේස",
       "all": "සියලුම",
+      "description": "විස්තරය",
+      "add_to_card": "බෑගයට දාන්න",
+      "adding": "බෑගයට දමමින්",
 
       // cart
       "cart": "බෑගය",

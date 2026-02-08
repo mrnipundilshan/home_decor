@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_custom_text_styles.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
@@ -172,7 +173,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ],
                     ),
                     const SizedBox(height: 32),
-                    Text("Description", style: themeData.textTheme.titleLarge),
+                    Text(
+                      context.translate('description'),
+                      style: themeData.textTheme.titleLarge,
+                    ),
                     const SizedBox(height: 12),
                     Text(
                       "Elevate your living space with this exquisite piece. Designed with modern aesthetics and premium materials, it offers both comfort and style. Perfect for any contemporary home, this item blends functionality with elegance to create a warm and inviting atmosphere.",
@@ -195,14 +199,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               builder: (context, state) {
                 if (state is CartLoadingState) {
                   return MyButton(
-                    buttonTitle: "Adding...",
+                    buttonTitle: context.translate('adding'),
                     isEnabled: false,
-                    isLoading: true,
+                    isLoading: false,
                     function: () {},
                   );
                 }
                 return MyButton(
-                  buttonTitle: "Add to Cart",
+                  buttonTitle: context.translate('add_to_card'),
                   isLoading: false,
                   function: () {
                     BlocProvider.of<CartBloc>(
