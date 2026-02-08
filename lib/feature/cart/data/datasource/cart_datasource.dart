@@ -9,6 +9,8 @@ abstract class CartDatasource {
 
   Future<List<CartModel>> deleteCartItem(String id);
 
+  Future<bool> updateCartItem(String id, int quantity);
+
   Future<CartModel> addCartItem(String itemId, int quantity);
 }
 
@@ -53,6 +55,28 @@ class CartDatasourceImpl implements CartDatasource {
       if (responseBody['success'] == true) {
         final cartList = await getCartItemsFromAPI();
         return cartList;
+      } else {
+        throw ServerException();
+      }
+    }
+  }
+
+  @override
+  Future<bool> updateCartItem(String id, int quantity) async {
+    log("Calling Update Cart Item");
+
+    final response = await dio.put(
+      '${ApiEndpoints.cart}/$id',
+      data: {'quantity': quantity},
+    );
+
+    if (response.statusCode != 200) {
+      throw ServerException();
+    } else {
+      final responseBody = response.data;
+
+      if (responseBody['success'] == true) {
+        return true;
       } else {
         throw ServerException();
       }

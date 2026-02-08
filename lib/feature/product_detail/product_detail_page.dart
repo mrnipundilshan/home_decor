@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_custom_text_styles.dart';
+import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/feature/cart/presentation/bloc/cart_bloc.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -190,43 +191,65 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               horizontal: 24.0,
               vertical: 12.0,
             ),
-            child: ElevatedButton(
-              onPressed: () {
-                BlocProvider.of<CartBloc>(
-                  context,
-                ).add(CartAddEvent(itemId: widget.uuid, quantity: count));
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.commonPrimary,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                elevation: 0,
-              ),
-              child: BlocBuilder<CartBloc, CartState>(
-                builder: (context, state) {
-                  if (state is CartLoadingState) {
-                    return const Text(
-                      "Adding...",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  }
-                  return const Text(
-                    "Add to Cart",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+            child: BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                if (state is CartLoadingState) {
+                  return MyButton(
+                    buttonTitle: "Adding...",
+                    isEnabled: false,
+                    isLoading: true,
+                    function: () {},
                   );
-                },
-              ),
+                }
+                return MyButton(
+                  buttonTitle: "Add to Cart",
+                  isLoading: false,
+                  function: () {
+                    BlocProvider.of<CartBloc>(
+                      context,
+                    ).add(CartAddEvent(itemId: widget.uuid, quantity: count));
+                  },
+                );
+              },
             ),
+
+            //  ElevatedButton(
+            //   onPressed: () {
+            //     BlocProvider.of<CartBloc>(
+            //       context,
+            //     ).add(CartAddEvent(itemId: widget.uuid, quantity: count));
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: AppColors.commonPrimary,
+            //     padding: const EdgeInsets.symmetric(vertical: 16),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(16),
+            //     ),
+            //     elevation: 0,
+            //   ),
+            //   child: BlocBuilder<CartBloc, CartState>(
+            //     builder: (context, state) {
+            //       if (state is CartLoadingState) {
+            //         return const Text(
+            //           "Adding...",
+            //           style: TextStyle(
+            //             color: Colors.white,
+            //             fontSize: 18,
+            //             fontWeight: FontWeight.bold,
+            //           ),
+            //         );
+            //       }
+            //       return const Text(
+            //         "Add to Cart",
+            //         style: TextStyle(
+            //           color: Colors.white,
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
           ),
         ),
       ),

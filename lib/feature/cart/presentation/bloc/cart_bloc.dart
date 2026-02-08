@@ -17,6 +17,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartInitialEvent>(_cartInitialEvent);
     on<CartDeleteEvent>(_cartDeleteEvent);
     on<CartAddEvent>(_cartAddEvent);
+    on<CartUpdateEvent>(_cartUpdateEvent);
   }
 
   FutureOr<void> _cartInitialEvent(
@@ -62,5 +63,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       (failure) => emit(CartErrorState()),
       (itemAdded) => emit(CartAddedSuccessState()),
     );
+  }
+
+  FutureOr<void> _cartUpdateEvent(
+    CartUpdateEvent event,
+    Emitter<CartState> emit,
+  ) async {
+    await cartUsecases.updateCartItem(event.id, event.quantity);
   }
 }
