@@ -12,6 +12,7 @@ class CartDetails extends StatelessWidget {
     required this.delivery,
     required this.total,
     required this.nextpage,
+    this.isCheckout = false,
   });
 
   final ThemeData themeData;
@@ -20,12 +21,13 @@ class CartDetails extends StatelessWidget {
   final double delivery;
   final double total;
   final VoidCallback? nextpage;
+  final bool isCheckout;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      height: 330,
+      height: isCheckout ? 280 : 330,
       decoration: BoxDecoration(
         color: themeData.cardColor,
         borderRadius: const BorderRadius.only(
