@@ -8,6 +8,7 @@ class CartPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     return AppBar(
+      iconTheme: IconThemeData(color: themeData.colorScheme.inversePrimary),
       centerTitle: true,
       title: Text(
         context.translate('cart'),

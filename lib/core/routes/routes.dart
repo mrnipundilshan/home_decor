@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:home_decor/feature/auth/presentation/otp_page.dart';
 import 'package:home_decor/feature/auth/presentation/sign_in_page.dart';
 import 'package:home_decor/feature/cart/presentation/cart.dart';
+import 'package:home_decor/feature/cart/presentation/checkout.dart';
 import 'package:home_decor/feature/home/presentation/home_page.dart';
 import 'package:home_decor/feature/nav%20bar/nav_bar.dart';
 import 'package:home_decor/feature/splash%20screen/splash_screen.dart';
@@ -68,6 +69,12 @@ final appRouter = GoRouter(
       name: 'cartScreen',
       path: '/cart',
       builder: (context, state) => Cart(),
+    ),
+
+    GoRoute(
+      name: 'checkoutScreen',
+      path: '/checkout',
+      builder: (context, state) => Checkout(),
     ),
   ],
 );
