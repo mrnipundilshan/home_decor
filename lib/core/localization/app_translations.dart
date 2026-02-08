@@ -94,6 +94,11 @@ class AppTranslations {
 
       // cart
       "cart": "Cart",
+      "checkout": "Checkout",
+      "subtotal": "Subtotal",
+      "tax": "Tax and Fees",
+      "delivery": "Delivery",
+      "total": "Total",
     },
     'si': {
       // Auth
@@ -190,6 +195,11 @@ class AppTranslations {
 
       // cart
       "cart": "බෑගය",
+      "subtotal": "එකතුව",
+      "tax": "බදු",
+      "delivery": "ප්‍රවාහන ගාස්තු",
+      "total": "මුලු මුදල",
+      "checkout": "ඉදිරියට",
     },
   };
 

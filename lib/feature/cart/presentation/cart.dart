@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/feature/cart/domain/entity/cart_entity.dart';
@@ -131,7 +132,7 @@ class _CartState extends State<Cart> {
                               Row(
                                 children: [
                                   Text(
-                                    "Subtotal",
+                                    context.translate("subtotal"),
                                     style: themeData.textTheme.titleMedium,
                                   ),
                                   const Spacer(),
@@ -144,7 +145,7 @@ class _CartState extends State<Cart> {
                               Row(
                                 children: [
                                   Text(
-                                    "Tax and Fees",
+                                    context.translate("tax"),
                                     style: themeData.textTheme.titleMedium,
                                   ),
                                   const Spacer(),
@@ -157,7 +158,7 @@ class _CartState extends State<Cart> {
                               Row(
                                 children: [
                                   Text(
-                                    "Delivery",
+                                    context.translate("delivery"),
                                     style: themeData.textTheme.titleMedium,
                                   ),
                                   const Spacer(),
@@ -171,7 +172,7 @@ class _CartState extends State<Cart> {
                               Row(
                                 children: [
                                   Text(
-                                    "Total",
+                                    context.translate("total"),
                                     style: themeData.textTheme.titleMedium,
                                   ),
                                   const Spacer(),
@@ -183,7 +184,7 @@ class _CartState extends State<Cart> {
                               ),
                               SizedBox(height: 15),
                               MyButton(
-                                buttonTitle: "Checkout",
+                                buttonTitle: context.translate("checkout"),
                                 isLoading: false,
                                 function: () {},
                               ),
