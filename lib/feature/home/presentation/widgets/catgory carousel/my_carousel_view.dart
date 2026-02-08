@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
+import 'package:home_decor/feature/category/presentation/category.dart';
 import 'package:home_decor/feature/home/presentation/widgets/catgory%20carousel/my_carousel_view_card.dart';
 
 class MyCarouselView extends StatelessWidget {
@@ -51,6 +52,12 @@ class MyCarouselView extends StatelessWidget {
             title: context.translate('living'),
           ),
         ],
+        onTap: (index) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Category()),
+          );
+        },
       ),
     );
   }

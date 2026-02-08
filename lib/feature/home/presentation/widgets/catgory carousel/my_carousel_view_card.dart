@@ -20,7 +20,7 @@ class MyCarouselViewCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 3.0),
       decoration: BoxDecoration(color: themeData.canvasColor),
       child: Column(
-        mainAxisAlignment: .center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(imageUrl, semanticsLabel: 'Catagory', height: 25),
           Text(

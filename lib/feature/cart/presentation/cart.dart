@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
+import 'package:home_decor/core/theme/app_custom_text_styles.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/feature/cart/domain/entity/cart_entity.dart';
@@ -107,7 +108,7 @@ class _CartState extends State<Cart> {
                             horizontal: 15,
                             vertical: 10,
                           ),
-                          height: 300,
+                          height: 330,
                           decoration: BoxDecoration(
                             color: themeData.cardColor,
                             borderRadius: const BorderRadius.only(
@@ -173,16 +174,16 @@ class _CartState extends State<Cart> {
                                 children: [
                                   Text(
                                     context.translate("total"),
-                                    style: themeData.textTheme.titleMedium,
+                                    style: themeData.appBarTheme.titleTextStyle,
                                   ),
                                   const Spacer(),
                                   Text(
                                     "\$ $total",
-                                    style: themeData.textTheme.titleMedium,
+                                    style: AppCustomTextStyles.priceText,
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 15),
+                              SizedBox(height: 10),
                               MyButton(
                                 buttonTitle: context.translate("checkout"),
                                 isLoading: false,
