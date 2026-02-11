@@ -6,6 +6,8 @@ class AddressInputer extends StatelessWidget {
   final TextEditingController addressController;
   final TextEditingController cityController;
   final TextEditingController zipController;
+  final TextEditingController addressController2;
+  final TextEditingController addressController3;
 
   const AddressInputer({
     super.key,
@@ -13,6 +15,8 @@ class AddressInputer extends StatelessWidget {
     required this.addressController,
     required this.cityController,
     required this.zipController,
+    required this.addressController2,
+    required this.addressController3,
   });
 
   @override
@@ -66,7 +70,7 @@ class AddressInputer extends StatelessWidget {
             prefixIcon: Icons.home_outlined,
             obsecureText: false,
             maxLines: 1,
-            controller: addressController,
+            controller: addressController2,
           ),
           const SizedBox(height: 12),
           MyTextbox(
@@ -74,7 +78,7 @@ class AddressInputer extends StatelessWidget {
             prefixIcon: Icons.home_outlined,
             obsecureText: false,
             maxLines: 1,
-            controller: addressController,
+            controller: addressController3,
           ),
           const SizedBox(height: 12),
           Row(

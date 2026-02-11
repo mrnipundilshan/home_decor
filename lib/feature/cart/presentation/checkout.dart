@@ -30,6 +30,8 @@ class _CheckoutState extends State<Checkout> {
   final nameController = TextEditingController();
   final addressController = TextEditingController();
   final cityController = TextEditingController();
+  final addressController2 = TextEditingController();
+  final addressController3 = TextEditingController();
   final zipController = TextEditingController();
 
   @override
@@ -76,6 +78,8 @@ class _CheckoutState extends State<Checkout> {
                 addressController: addressController,
                 cityController: cityController,
                 zipController: zipController,
+                addressController2: addressController2,
+                addressController3: addressController3,
               ),
               CartDetails(
                 isCheckout: true,

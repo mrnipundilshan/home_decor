@@ -10,26 +10,26 @@ class SelectionBottomSheet {
     required Function(T) onSelected,
   }) {
     showModalBottomSheet(
+      showDragHandle: true,
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (_) {
         return Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           children: [
             const SizedBox(height: 12),
 
             // drag handle
-            Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade400,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-
+            // Container(
+            //   width: 40,
+            //   height: 4,
+            //   decoration: BoxDecoration(
+            //     color: Colors.grey.shade400,
+            //     borderRadius: BorderRadius.circular(10),
+            //   ),
+            // ),
             const SizedBox(height: 16),
 
             Text(title, style: Theme.of(context).textTheme.titleMedium),
