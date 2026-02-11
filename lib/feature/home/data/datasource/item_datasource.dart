@@ -20,7 +20,7 @@ class ItemDatasourceImpl implements ItemDatasource {
   @override
   Future<List<ItemModel>> getTopSellingItemsFromAPI() async {
     log("Calling Top Selling API");
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 2));
     final response = await dio.get(ApiEndpoints.topSelling);
 
     if (response.statusCode != 200) {
@@ -38,7 +38,7 @@ class ItemDatasourceImpl implements ItemDatasource {
   @override
   Future<List<FavoriteModel>> getFavorites() async {
     log("Calling Get Favorites API");
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 2));
     final response = await dio.get(ApiEndpoints.favorites);
 
     if (response.statusCode != 200) {

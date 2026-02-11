@@ -25,7 +25,7 @@ class CartDatasourceImpl implements CartDatasource {
   @override
   Future<List<CartModel>> getCartItemsFromAPI() async {
     log("Calling Cart List");
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 2));
     final response = await dio.get(ApiEndpoints.cart);
 
     if (response.statusCode != 200) {
@@ -47,7 +47,7 @@ class CartDatasourceImpl implements CartDatasource {
   @override
   Future<List<CartModel>> deleteCartItem(String id) async {
     log("Calling Delete Cart Item");
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 2));
     final response = await dio.delete('${ApiEndpoints.cart}/$id');
 
     if (response.statusCode != 200) {
@@ -89,7 +89,7 @@ class CartDatasourceImpl implements CartDatasource {
   @override
   Future<CartModel> addCartItem(String itemId, int quantity) async {
     log("Calling Add Cart Item");
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 2));
     final response = await dio.post(
       ApiEndpoints.cart,
       data: {'itemId': itemId, 'quantity': quantity},
