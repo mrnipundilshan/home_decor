@@ -20,4 +20,7 @@ class ApiEndpoints {
 
   // favorites
   static const String favorites = 'favorites';
+
+  // payment
+  static const String payment = 'payment';
 }

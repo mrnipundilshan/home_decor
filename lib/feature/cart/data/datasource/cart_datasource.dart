@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:home_decor/core/data/api_endpoints.dart';
 import 'package:home_decor/feature/cart/data/models/cart_model.dart';
 import 'package:home_decor/feature/category/data/exception/exceptions.dart';
@@ -12,6 +13,8 @@ abstract class CartDatasource {
   Future<bool> updateCartItem(String id, int quantity);
 
   Future<CartModel> addCartItem(String itemId, int quantity);
+
+  Future<Map<String, dynamic>> getPaymentIntent(double amount, String currency);
 }
 
 class CartDatasourceImpl implements CartDatasource {
@@ -102,6 +105,28 @@ class CartDatasourceImpl implements CartDatasource {
       } else {
         throw ServerException();
       }
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getPaymentIntent(
+    double amount,
+    String currency,
+  ) async {
+    try {
+      final body = {'amount': amount, 'currency': currency};
+      final response = await dio.post(ApiEndpoints.payment, data: body);
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw ServerException();
+      }
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw ServerException();
     }
   }
 }

@@ -30,3 +30,13 @@ class CartUpdateEvent extends CartEvent {
 
   const CartUpdateEvent({required this.id, required this.quantity});
 }
+
+class CartStripePaymentEvent extends CartEvent {
+  final double amount;
+  final String currency;
+
+  const CartStripePaymentEvent({required this.amount, required this.currency});
+
+  @override
+  List<Object> get props => [amount, currency];
+}

@@ -10,4 +10,6 @@ abstract class CartRepository {
   Future<Either<Failure, bool>> updateCartItem(String id, int quantity);
 
   Future<Either<Failure, CartEntity>> addCartItem(String itemId, int quantity);
+
+  Future<Either<Failure, bool>> makePayment(double amount, String currency);
 }

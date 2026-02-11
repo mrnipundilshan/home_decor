@@ -1,47 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
-import 'package:home_decor/feature/cart/presentation/cart.dart';
-import 'package:home_decor/feature/category/presentation/category.dart';
-import 'package:home_decor/feature/home/presentation/home_page.dart';
-import 'package:home_decor/feature/profile/presentation/profile.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key});
+  final Widget child;
+  const NavBar({super.key, required this.child});
 
   @override
   State<NavBar> createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
-  int _currentIndex = 0;
-
-  List<Widget> _pages(BuildContext context) => [
-    HomePage(),
-    Category(),
-    Cart(),
-    Profile(),
-  ];
+  int _calculateSelectedIndex(BuildContext context) {
+    final String location = GoRouterState.of(context).uri.path;
+    if (location.startsWith('/home')) {
+      return 0;
+    }
+    if (location.startsWith('/category')) {
+      return 1;
+    }
+    if (location.startsWith('/cart')) {
+      return 2;
+    }
+    if (location.startsWith('/profile')) {
+      return 3;
+    }
+    return 0;
+  }
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
+    final int selectedIndex = _calculateSelectedIndex(context);
 
     return Scaffold(
       extendBody: true,
-      body: _pages(context)[_currentIndex],
+      body: widget.child,
       backgroundColor: Colors.transparent,
 
       bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadiusGeometry.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
 
         child: BottomNavigationBar(
-          currentIndex: _currentIndex,
+          currentIndex: selectedIndex,
           onTap: (index) {
-            setState(() => _currentIndex = index);
+            switch (index) {
+              case 0:
+                context.go('/home');
+                break;
+              case 1:
+                context.go('/category');
+                break;
+              case 2:
+                context.go('/cart');
+                break;
+              case 3:
+                context.go('/profile');
+                break;
+            }
           },
 
           type: BottomNavigationBarType.fixed,

@@ -18,6 +18,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartDeleteEvent>(_cartDeleteEvent);
     on<CartAddEvent>(_cartAddEvent);
     on<CartUpdateEvent>(_cartUpdateEvent);
+    on<CartStripePaymentEvent>(_cartStripePaymentEvent);
   }
 
   FutureOr<void> _cartInitialEvent(
@@ -70,5 +71,22 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     Emitter<CartState> emit,
   ) async {
     await cartUsecases.updateCartItem(event.id, event.quantity);
+  }
+
+  FutureOr<void> _cartStripePaymentEvent(
+    CartStripePaymentEvent event,
+    Emitter<CartState> emit,
+  ) async {
+    emit(CartPaymentLoadingState());
+
+    final failureOrSuccess = await cartUsecases.makePayment(
+      event.amount,
+      event.currency,
+    );
+
+    failureOrSuccess.fold(
+      (failure) => emit(const CartPaymentErrorState(message: "Payment Failed")),
+      (success) => emit(CartPaymentSuccessState()),
+    );
   }
 }

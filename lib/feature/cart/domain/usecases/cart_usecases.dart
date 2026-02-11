@@ -23,4 +23,8 @@ class CartUsecases {
   Future<Either<Failure, bool>> updateCartItem(String id, int quantity) {
     return cartRepository.updateCartItem(id, quantity);
   }
+
+  Future<Either<Failure, bool>> makePayment(double amount, String currency) {
+    return cartRepository.makePayment(amount, currency);
+  }
 }

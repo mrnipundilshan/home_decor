@@ -26,10 +26,6 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    double subtotal = 0.0;
-    double tax = 10.0;
-    double delivery = 100.0;
-    double total = 0;
     return Scaffold(
       backgroundColor: themeData.canvasColor,
       appBar: CartPageAppBar(),
@@ -40,6 +36,10 @@ class _CartState extends State<Cart> {
         ),
         child: BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
+            double subtotal = 0.0;
+            double tax = 10.0;
+            double delivery = 100.0;
+            double total = 0;
             if (state is CartLoadingState) {
               return Shimmer.fromColors(
                 baseColor: themeData.colorScheme.inversePrimary,

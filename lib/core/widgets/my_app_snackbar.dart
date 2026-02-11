@@ -4,7 +4,7 @@ class MyAppSnackbar {
   static void show(
     BuildContext context,
     String message, {
-    Color backgroundColor = Colors.red,
+    bool isSuccess = false,
     Duration duration = const Duration(seconds: 2),
   }) {
     ScaffoldMessenger.of(context)
@@ -16,7 +16,7 @@ class MyAppSnackbar {
             textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          backgroundColor: backgroundColor,
+          backgroundColor: isSuccess ? Colors.green : Colors.red,
           duration: duration,
         ),
       );

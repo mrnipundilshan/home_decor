@@ -3,8 +3,10 @@ import 'package:home_decor/feature/auth/presentation/otp_page.dart';
 import 'package:home_decor/feature/auth/presentation/sign_in_page.dart';
 import 'package:home_decor/feature/cart/presentation/cart.dart';
 import 'package:home_decor/feature/cart/presentation/checkout.dart';
+import 'package:home_decor/feature/category/presentation/category.dart';
 import 'package:home_decor/feature/home/presentation/home_page.dart';
 import 'package:home_decor/feature/nav%20bar/nav_bar.dart';
+import 'package:home_decor/feature/profile/presentation/profile.dart';
 import 'package:home_decor/feature/splash%20screen/splash_screen.dart';
 import 'package:home_decor/feature/welcome%20screen/welcome_screen.dart';
 import 'package:home_decor/injection.dart';
@@ -54,24 +56,6 @@ final appRouter = GoRouter(
     ),
 
     GoRoute(
-      name: 'homepageScreen',
-      path: '/homepage',
-      builder: (context, state) => HomePage(),
-    ),
-
-    GoRoute(
-      name: 'navbarScreen',
-      path: '/navbar',
-      builder: (context, state) => NavBar(),
-    ),
-
-    GoRoute(
-      name: 'cartScreen',
-      path: '/cart',
-      builder: (context, state) => Cart(),
-    ),
-
-    GoRoute(
       name: 'checkoutScreen',
       path: '/checkout',
       builder: (context, state) {
@@ -84,6 +68,18 @@ final appRouter = GoRouter(
           delivery: data['delivery']!,
         );
       },
+    ),
+
+    ShellRoute(
+      builder: (context, state, child) {
+        return NavBar(child: child);
+      },
+      routes: [
+        GoRoute(path: '/home', builder: (_, _) => HomePage()),
+        GoRoute(path: '/category', builder: (_, _) => Category()),
+        GoRoute(path: '/cart', builder: (_, _) => Cart()),
+        GoRoute(path: '/profile', builder: (_, _) => Profile()),
+      ],
     ),
   ],
 );

@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context.go('/welcome');
         }
         if (state is AuthonticatedState) {
-          context.go('/navbar');
+          context.go('/home');
         }
       },
       child: Scaffold(

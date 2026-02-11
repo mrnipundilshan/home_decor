@@ -3,6 +3,10 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const Stripe = require('stripe');
+
+const key = process.env.STRIPE_SECRET_KEY;
+const stripe = new Stripe(key);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,6 +29,28 @@ app.use('/api', authRoutes);
 app.use('/api', profileRoutes);
 app.use('/api', cartRoutes);
 app.use('/api', favoritesRoutes);
+
+// Stripe
+app.post('/api/payment', async (req, res) => {
+  try {
+    const { amount, currency } = req.body;
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: currency,
+      automatic_payment_methods: { enabled: true },
+    });
+
+    return res.status(200).json({
+      clientSecret: paymentIntent.client_secret,
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 // GET endpoint for top selling items
 app.get('/api/topselling', async (req, res) => {
