@@ -65,8 +65,35 @@ The app follows **Clean Architecture** principles to ensure maintainability and 
 
 ---
 
-## 📸 Screenshots & Demo
-*(Add your screenshots and demo videos here to showcase your work!)*
+## Screenshots
+
+<table>
+  <!-- Row 1 -->
+  <tr>
+    <td><img src="./assets/Screenshots/1.png" width="200" alt="Screenshot 1"></td>
+    <td><img src="./assets/Screenshots/2.png" width="200" alt="Screenshot 2"></td>
+    <td><img src="./assets/Screenshots/10.png" width="200" alt="Screenshot 3"></td>
+    <td><img src="./assets/Screenshots/4.png" width="200" alt="Screenshot 4"></td>
+    <td><img src="./assets/Screenshots/5.png" width="200" alt="Screenshot 5"></td>
+  </tr>
+  <!-- Row 2 -->
+  <tr>
+    <td><img src="./assets/Screenshots/6.png" width="200" alt="Screenshot 6"></td>
+    <td><img src="./assets/Screenshots/7.png" width="200" alt="Screenshot 7"></td>
+    <td><img src="./assets/Screenshots/8.png" width="200" alt="Screenshot 8"></td>
+    <td><img src="./assets/Screenshots/9.png" width="200" alt="Screenshot 9"></td>
+    <td><img src="./assets/Screenshots/3.png" width="200" alt="Screenshot 10"></td>
+  </tr>
+
+   <!-- Row 3 -->
+  <tr>
+    <td><img src="./assets/Screenshots/11.png" width="200" alt="Screenshot 11"></td>
+    <td><img src="./assets/Screenshots/12.png" width="200" alt="Screenshot 12"></td>
+    <td><img src="./assets/Screenshots/13.png" width="200" alt="Screenshot 13"></td>
+    <td><img src="./assets/Screenshots/14.png" width="200" alt="Screenshot 14"></td>
+    <td><img src="./assets/Screenshots/15.png" width="200" alt="Screenshot 15"></td>
+  </tr>
+</table>
 
 ---
 
