@@ -13,8 +13,8 @@ A production-ready Home Decor marketplace built with Flutter and Node.js. This p
 - **👤 User Profiles**: complete profile management with image uploads (AWS S3).
 - **📦 Category Browsing**: Efficiently browse products by categories (Beds, Sofas, Chairs, etc.).
 - **🎨 Modern UI**: Beautiful, responsive design built with custom Flutter widgets.
-- **🌐 Localization: Multi-language support for a global user base.
-- **🌙 Dark & Light Themes: Seamless switching between dark and light modes for better UX.
+- 🌐 Localization: Multi-language support for a global user base.
+- 🌙 Dark & Light Themes: Seamless switching between dark and light modes for better UX.
 
 ---
 
