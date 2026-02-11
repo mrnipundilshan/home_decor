@@ -50,7 +50,7 @@ class MyCategoryListView extends StatelessWidget {
             ),
 
             MyCarouselViewCard(
-              title: context.translate('sofa'),
+              title: context.translate('sofas'),
               category: "sofas",
               isSelected: selectedCategory == "sofas",
               onTap: () {

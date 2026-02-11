@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_decor/core/theme/app_sizes.dart';
 import 'package:home_decor/feature/cart/domain/entity/cart_entity.dart';
 import 'package:home_decor/feature/cart/presentation/bloc/cart_bloc.dart';
+import 'package:home_decor/feature/cart/presentation/widgets/cart_details.dart';
 import 'package:home_decor/feature/cart/presentation/widgets/cart_page_app_bar.dart';
 import 'package:home_decor/feature/cart/presentation/widgets/cart_item_card.dart';
 import 'package:shimmer/shimmer.dart';
@@ -24,7 +26,6 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-
     return Scaffold(
       backgroundColor: themeData.canvasColor,
       appBar: CartPageAppBar(),
@@ -35,6 +36,10 @@ class _CartState extends State<Cart> {
         ),
         child: BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
+            double subtotal = 0.0;
+            double tax = 10.0;
+            double delivery = 100.0;
+            double total = 0;
             if (state is CartLoadingState) {
               return Shimmer.fromColors(
                 baseColor: themeData.colorScheme.inversePrimary,
@@ -50,32 +55,70 @@ class _CartState extends State<Cart> {
             } else if (state is CartErrorState) {
               return const Center(child: Text("Error"));
             } else if (state is CartLoadedState) {
+              for (var element in state.cartList) {
+                subtotal += element.itemEntity!.price! * element.quantity!;
+              }
+              total = subtotal + tax + delivery;
               return state.cartList.isEmpty
                   ? const Center(child: Text("Cart is empty"))
-                  : ListView.builder(
-                      itemCount: state.cartList.length,
-                      itemBuilder: (context, index) {
-                        final cart = state.cartList[index];
-                        return CartItemCard(
-                          cartItem: cart,
-                          onIncrement: () {
-                            setState(() {
-                              cart.quantity = (cart.quantity ?? 1) + 1;
-                            });
-                          },
-                          onDecrement: () {
-                            if ((cart.quantity ?? 1) > 1) {
-                              setState(() {
-                                cart.quantity = (cart.quantity ?? 1) - 1;
-                              });
-                            } else {
-                              BlocProvider.of<CartBloc>(
-                                context,
-                              ).add(CartDeleteEvent(id: cart.id!));
-                            }
-                          },
-                        );
-                      },
+                  : Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: state.cartList.length,
+                            itemBuilder: (context, index) {
+                              final cart = state.cartList[index];
+                              return CartItemCard(
+                                cartItem: cart,
+                                onIncrement: () {
+                                  BlocProvider.of<CartBloc>(context).add(
+                                    CartUpdateEvent(
+                                      id: cart.id!,
+                                      quantity: (cart.quantity ?? 1) + 1,
+                                    ),
+                                  );
+                                  setState(() {
+                                    cart.quantity = (cart.quantity ?? 1) + 1;
+                                  });
+                                },
+                                onDecrement: () {
+                                  if ((cart.quantity ?? 1) > 1) {
+                                    BlocProvider.of<CartBloc>(context).add(
+                                      CartUpdateEvent(
+                                        id: cart.id!,
+                                        quantity: (cart.quantity ?? 1) - 1,
+                                      ),
+                                    );
+                                    setState(() {
+                                      cart.quantity = (cart.quantity ?? 1) - 1;
+                                    });
+                                  } else {
+                                    BlocProvider.of<CartBloc>(
+                                      context,
+                                    ).add(CartDeleteEvent(id: cart.id!));
+                                  }
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                        CartDetails(
+                          themeData: themeData,
+                          subtotal: subtotal,
+                          tax: tax,
+                          delivery: delivery,
+                          total: total,
+                          nextpage: () => context.push(
+                            '/checkout',
+                            extra: {
+                              'total': total,
+                              'subtotal': subtotal,
+                              'tax': tax,
+                              'delivery': delivery,
+                            },
+                          ),
+                        ),
+                      ],
                     );
             }
             return const Center(child: Text("Cart is empty"));

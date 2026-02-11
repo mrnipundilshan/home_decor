@@ -16,7 +16,7 @@ class CategoryDatasourceImpl implements CategoryDatasource {
   @override
   Future<List<ItemModel>> getTopSellingItemsFromAPI(String category) async {
     log("Calling Category List");
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 2));
     final response = await dio.get(
       ApiEndpoints.items,
       queryParameters: {'category': category},

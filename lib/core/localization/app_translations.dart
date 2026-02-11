@@ -88,9 +88,17 @@ class AppTranslations {
       "lights": "Lights",
       "tables": "Tables",
       "all": "All",
+      "description": "Description",
+      "add_to_card": "Add to Cart",
+      "adding": "Adding...",
 
       // cart
       "cart": "Cart",
+      "checkout": "Checkout",
+      "subtotal": "Subtotal",
+      "tax": "Tax and Fees",
+      "delivery": "Delivery",
+      "total": "Total",
     },
     'si': {
       // Auth
@@ -181,9 +189,17 @@ class AppTranslations {
       "chairs": "පුටු",
       "tables": "මේස",
       "all": "සියලුම",
+      "description": "විස්තරය",
+      "add_to_card": "බෑගයට දාන්න",
+      "adding": "බෑගයට දමමින්",
 
       // cart
       "cart": "බෑගය",
+      "subtotal": "එකතුව",
+      "tax": "බදු",
+      "delivery": "ප්‍රවාහන ගාස්තු",
+      "total": "මුලු මුදල",
+      "checkout": "ඉදිරියට",
     },
   };
 

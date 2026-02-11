@@ -556,8 +556,10 @@ class _ProfileState extends State<Profile> {
         context,
         listen: false,
       ).currentLocale,
+
       items: [
         SelectionItem(value: 'en', label: context.translate('english')),
+
         SelectionItem(value: 'si', label: context.translate('sinhala')),
       ],
       onSelected: (value) {

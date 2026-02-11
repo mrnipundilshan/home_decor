@@ -9,11 +9,13 @@ class MyTextbox extends StatefulWidget {
   final TextInputAction? textInputAction;
   final FocusNode? focusNode;
   final Function(String)? onSubmitted;
+  final int? maxLines;
 
   const MyTextbox({
     super.key,
     required this.placeholder,
     this.prefixIcon,
+    this.maxLines = 1,
     required this.obsecureText,
     required this.controller,
     this.textInputAction,
@@ -41,6 +43,7 @@ class _MyTextboxState extends State<MyTextbox> {
       width: double.infinity,
       height: 50,
       child: CupertinoTextField(
+        maxLines: widget.maxLines,
         onSubmitted: widget.onSubmitted,
         textInputAction: widget.textInputAction,
         focusNode: widget.focusNode,
@@ -67,11 +70,14 @@ class _MyTextboxState extends State<MyTextbox> {
           color: Colors.transparent,
           border: Border.all(color: themeData.colorScheme.inversePrimary),
         ),
+
         prefix: Padding(
           padding: const EdgeInsets.only(left: 18.0),
           child: Icon(widget.prefixIcon),
         ),
+
         placeholder: widget.placeholder,
+
         placeholderStyle: themeData.textTheme.bodyMedium?.copyWith(
           color: themeData.textTheme.bodyMedium?.color?.withValues(alpha: 0.4),
         ),

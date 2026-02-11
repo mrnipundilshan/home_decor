@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_decor/core/localization/translation_helper.dart';
 import 'package:home_decor/core/theme/app_colors.dart';
 import 'package:home_decor/core/theme/app_custom_text_styles.dart';
+import 'package:home_decor/core/widgets/my_button.dart';
 import 'package:home_decor/feature/cart/presentation/bloc/cart_bloc.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -171,7 +173,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ],
                     ),
                     const SizedBox(height: 32),
-                    Text("Description", style: themeData.textTheme.titleLarge),
+                    Text(
+                      context.translate('description'),
+                      style: themeData.textTheme.titleLarge,
+                    ),
                     const SizedBox(height: 12),
                     Text(
                       "Elevate your living space with this exquisite piece. Designed with modern aesthetics and premium materials, it offers both comfort and style. Perfect for any contemporary home, this item blends functionality with elegance to create a warm and inviting atmosphere.",
@@ -190,43 +195,65 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               horizontal: 24.0,
               vertical: 12.0,
             ),
-            child: ElevatedButton(
-              onPressed: () {
-                BlocProvider.of<CartBloc>(
-                  context,
-                ).add(CartAddEvent(itemId: widget.uuid, quantity: count));
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.commonPrimary,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                elevation: 0,
-              ),
-              child: BlocBuilder<CartBloc, CartState>(
-                builder: (context, state) {
-                  if (state is CartLoadingState) {
-                    return const Text(
-                      "Adding...",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  }
-                  return const Text(
-                    "Add to Cart",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+            child: BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                if (state is CartLoadingState) {
+                  return MyButton(
+                    buttonTitle: context.translate('adding'),
+                    isEnabled: false,
+                    isLoading: false,
+                    function: () {},
                   );
-                },
-              ),
+                }
+                return MyButton(
+                  buttonTitle: context.translate('add_to_card'),
+                  isLoading: false,
+                  function: () {
+                    BlocProvider.of<CartBloc>(
+                      context,
+                    ).add(CartAddEvent(itemId: widget.uuid, quantity: count));
+                  },
+                );
+              },
             ),
+
+            //  ElevatedButton(
+            //   onPressed: () {
+            //     BlocProvider.of<CartBloc>(
+            //       context,
+            //     ).add(CartAddEvent(itemId: widget.uuid, quantity: count));
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: AppColors.commonPrimary,
+            //     padding: const EdgeInsets.symmetric(vertical: 16),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(16),
+            //     ),
+            //     elevation: 0,
+            //   ),
+            //   child: BlocBuilder<CartBloc, CartState>(
+            //     builder: (context, state) {
+            //       if (state is CartLoadingState) {
+            //         return const Text(
+            //           "Adding...",
+            //           style: TextStyle(
+            //             color: Colors.white,
+            //             fontSize: 18,
+            //             fontWeight: FontWeight.bold,
+            //           ),
+            //         );
+            //       }
+            //       return const Text(
+            //         "Add to Cart",
+            //         style: TextStyle(
+            //           color: Colors.white,
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
           ),
         ),
       ),

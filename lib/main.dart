@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:home_decor/base_app.dart';
 import 'package:home_decor/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:home_decor/feature/cart/presentation/bloc/cart_bloc.dart';
@@ -18,6 +19,8 @@ import 'core/services/locale_service.dart';
 void main() async {
   await dotenv.load(fileName: ".env");
   await di.init();
+  Stripe.publishableKey =
+      "pk_test_51SyvPB5WSlvwIpTrBVsFzXxy4rVE2cnbza8qmIibs8Lc7hUmXAoOvHmukPyNaWubvpL4Imkmkds7cjDrPco5emWw009TqOIEaU";
   runApp(
     MultiProvider(
       providers: [

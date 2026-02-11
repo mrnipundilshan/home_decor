@@ -34,7 +34,7 @@ class _SignInPageState extends State<SignInPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is LoginSuccessState) {
-          context.go("/navbar");
+          context.go("/home");
         }
         if (state is AuthErrorState) {
           MyAppSnackbar.show(context, state.message);
